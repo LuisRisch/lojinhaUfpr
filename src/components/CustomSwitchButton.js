@@ -1,7 +1,7 @@
 import React, { useState } from 'react'; 
 import { Switch } from 'react-native'; 
 
-import Colors from '../constants/Colors'
+import Colors from 'constants/Colors'
 
 export default function CustomSwitchButton(){ 
 

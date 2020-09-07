@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, StyleSheet } from 'react-native';
 
 // import Colors from '../constants/Colors'
-import Colors from '../constants/Colors'
+import Colors from 'constants/Colors'
 
 export default function CustomInputs ( props ){ 
     return (

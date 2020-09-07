@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, Text, View , Modal } from 'react-native';
-import LoginScreen from './src/screens/Auth/LoginScreen'; 
+import LoginScreen from 'screens/Auth/LoginScreen'; 
 
-import Colors from './src/constants/Colors';
+import Colors from 'constants/Colors';
 
 const App = () => { 
   return (

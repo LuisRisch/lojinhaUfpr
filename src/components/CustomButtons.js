@@ -1,7 +1,7 @@
 import React, { useState} from 'react'; 
 import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'; 
 
-import Colors from '../constants/Colors'
+import Colors from 'constants/Colors'
 
 export default function CustomButtons( props ){ 
     return (

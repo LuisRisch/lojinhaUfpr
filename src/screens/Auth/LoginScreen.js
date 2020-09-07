@@ -7,11 +7,11 @@ import {
     ScrollView 
 } from 'react-native';  
 
-import CustomButtons from '../../components/CustomButtons'; 
-import CustomInputs from '../../components/CustomInputs'; 
-import CustomSwitchButton from '../../components/CustomSwitchButton';
+import CustomButtons from 'components/CustomButtons'; 
+import CustomInputs from 'components/CustomInputs'; 
+import CustomSwitchButton from 'components/CustomSwitchButton';
 
-import Colors from '../../constants/Colors';
+import Colors from 'constants/Colors';
 
 const LoginScreen = () => {    
     return (
@@ -22,7 +22,7 @@ const LoginScreen = () => {
                 </View>           
                 <View> 
                     <Image
-                        source = {require('../../../assets/logo_com_nome.png')} 
+                        source = {require('assets/logo_com_nome.png')} 
                         style = {styles.image}
                     />
                 </View> 
