@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, Text, View , Modal } from 'react-native';
-import LoginScreen from 'screens/Auth/LoginScreen'; 
+
+import AppNavigator from "./src/navigation/AppNavigator"
 
 import Colors from 'constants/Colors';
 
 const App = () => { 
+  let { signed, setSigned } = useState(true);
+  let Drawer = AppNavigator(signed)
+
   return (
-    <View style = {styles.screen}>
-      <LoginScreen/>
+    <View style={styles.container}>
+      <Drawer />
     </View>
   );
 }

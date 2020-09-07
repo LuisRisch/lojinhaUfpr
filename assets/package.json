@@ -1,3 +1,6 @@
 {
-    "name": "assets"
+    "name": "assets",
+    "dependencies": {
+        "react-native-reanimated": "^1.13.0"
+    }
 }
