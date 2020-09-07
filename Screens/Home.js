@@ -1,18 +1,27 @@
-import React from 'react'; 
+import React , { useState } from 'react'; 
 import { 
     View , 
     Text , 
     StyleSheet , 
     Image ,  
-    ScrollView 
+    ScrollView, 
+    Modal,
+    TouchableHighlight,
+    Dimensions, 
 } from 'react-native';  
-
 import CustomButtons from '../Components/CustomButtons/CustomButtons'; 
+import Icon from 'react-native-vector-icons/FontAwesome';
 import CustomInputs from '../Components/CustomInputs/CustomInputs'; 
 import CustomSwitchButton from '../Components/CustomSwitchButton/CustomSwitchButton';
 
-const Home = () => {    
-    return (
+const Home = () => {   
+    const [ modalVisible , setModalVisible ] = useState(false); 
+
+    const changeStateModal = () =>{
+        setModalVisible(!modalVisible); 
+    }
+
+    return ( 
         <View style = {styles.screen}>
                 <View style = {styles.topContaine}>
                     <View style = {styles.redContainer}></View> 
@@ -23,7 +32,35 @@ const Home = () => {
                         source = {require('../assets/logo_com_nome.png')} 
                         style = {styles.image}
                     />
-                </View> 
+                </View>  
+
+                 {/* O Modal irá mostrar a sessão para recuperar a senha */}
+                 
+                 <Modal
+                    animationType = 'slide' 
+                    transparent = {true} 
+                    visible = {modalVisible}
+                > 
+                    <View style = {styles.modalContainer}>
+                        <ScrollView>
+                            <View style = {{flexDirection : 'row' , justifyContent : 'flex-end'}}>
+                                <TouchableHighlight onPress = {changeStateModal}>
+                                    <Icon 
+                                        color = {'#ed524a'}
+                                        size = {15}
+                                        name = 'close'
+                                    />
+                                </TouchableHighlight>
+                            </View> 
+                            <Text style = {styles.normalText}>Redefinir senha</Text> 
+                            <CustomInputs hintText = 'Digite seu email '/> 
+                            <Text style = {styles.lowerTexT}>
+                                Enviaremos um email com as informações necessárias para a redefinação da senha
+                            </Text> 
+                            <CustomButtons Label = 'Enviar' Color = {{ Color : '#ed524a' }}/>
+                        </ScrollView>
+                    </View>
+                </Modal>
                 <View style = {styles.inputsContainer}>
                     <ScrollView>
                         <Text style = {styles.normalText}>CPF</Text>
@@ -35,7 +72,9 @@ const Home = () => {
                                 <CustomSwitchButton />
                                 <Text style = {styles.lowerTexT}>Lembrar</Text>
                             </View> 
-                            <Text style = {styles.redText}>Esqueceu a senha?</Text>
+                            <TouchableHighlight onPress = {changeStateModal}>
+                                <Text style = {styles.redText}>Esqueceu a senha?</Text>
+                            </TouchableHighlight>
                         </View>
                         <CustomButtons Label='Fazer login' Color={{Color:'#ed524a'}}/>   
                         <CustomButtons Label='Entrar sem fazer login' Color={{Color:'#FA8072'}}/>   
@@ -49,7 +88,9 @@ const Home = () => {
     );
 } 
 
-export default Home;  
+export default Home; 
+
+const height = Dimensions.get('window').height; 
 
 const styles = StyleSheet.create({
     screen : {
@@ -91,7 +132,7 @@ const styles = StyleSheet.create({
     lowerTexT : {
         color : '#666666' , 
         fontSize : 12 , 
-        fontWeight : '500'
+        fontWeight : '500', 
     }, 
 
     redText : {
@@ -117,8 +158,36 @@ const styles = StyleSheet.create({
         borderRadius : 16, 
         backgroundColor : 'white', 
         paddingHorizontal : 18,
-        paddingVertical : 24,  
-    }, 
+        paddingVertical : 24, 
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },   
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5
+    },  
+
+    modalContainer : {  
+        flex : 1 , 
+        justifyContent : 'space-around', 
+        alignContent : 'stretch', 
+        marginTop : height * 0.4,
+        marginHorizontal : 18,
+        borderRadius : 16, 
+        backgroundColor : 'white', 
+        paddingHorizontal : 18,
+        paddingVertical : 24, 
+        shadowColor: "#000",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },   
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,  
+    },
 
     loginButton : { 
         width : '100%',

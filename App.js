@@ -1,11 +1,12 @@
 import React from 'react';
 import { StyleSheet, Text, View , Modal } from 'react-native';
 import Home from './Screens/Home'; 
+import Register from './Screens/Register';
 
 const App = () => { 
   return (
     <View style = {styles.screen}>
-      <Home/>
+      <Register/>
     </View>
   );
 }

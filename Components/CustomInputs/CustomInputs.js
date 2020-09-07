@@ -15,7 +15,15 @@ const styles = StyleSheet.create({
         height : 35 , borderRadius : 16 , 
         justifyContent : 'center' , 
         paddingStart : 8 , 
-        marginVertical : 5
+        marginVertical : 5, 
+        shadowColor: "black",
+        shadowOffset: {
+        width: 0,
+        height: 2
+        },   
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 1.5
     }
 })
 
