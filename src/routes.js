@@ -1,8 +1,8 @@
-import React from 'react';
-import { createStackNavigator } from '@react-navigation/stack';
-import { MaterialCommunityIcons as Icon } from '@expo/vector-icons';
+import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { MaterialCommunityIcons as Icon } from "@expo/vector-icons";
 
-import LoginScreen from 'screens/Auth';
+import LoginScreen from "screens/Auth/LoginScreen";
 
 const Stack = createStackNavigator();
 
@@ -11,10 +11,10 @@ export default function Routes() {
     <Stack.Navigator
       initialRouteName="Login"
       screenOptions={{
-        headerTitleAlign: 'center',
+        headerTitleAlign: "center",
         headerShown: true,
         headerStyle: {
-          backgroundColor: '#fcf1df',
+          backgroundColor: "#fcf1df",
         },
         headerBackImage: () => (
           <Icon name="chevron-left" size={25} color="#000" />
