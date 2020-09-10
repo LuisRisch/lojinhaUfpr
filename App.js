@@ -1,23 +1,25 @@
 import React from 'react';
-import { StyleSheet, Text, View , Modal } from 'react-native';
-import Home from './Screens/Home'; 
-import Register from './Screens/Register';
+import { StyleSheet, View } from 'react-native';
+import Home from './Screens/ScreensFullComponents/Home';
+import Register from './Screens/ScreensFullComponents/Register';
+import Spacing from './Constants/Spacing'; 
+import Colors from './Constants/Colors';
 
-const App = () => { 
-  return (
-    <View style = {styles.screen}>
-      <Register/>
-    </View>
-  );
+const App = () => {
+    return (
+        <View style={styles.screen}>
+            <Home />
+        </View>
+    );
 }
 
 var styles = StyleSheet.create({
-  screen : {
-    paddingTop : 48,
-    paddingHorizontal : 18, 
-    flex : 1,  
-    backgroundColor : '#fcf1e1'
-  }
+    screen: {
+        paddingTop: Spacing.TopSpacingScreen,
+        paddingHorizontal: Spacing.MainPadding,
+        flex: 1,
+        backgroundColor: Colors.backgroundWhite,
+    }
 });
 
 export default App; 
