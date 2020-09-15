@@ -17,6 +17,7 @@ import CustomCloseIcon from '../../Components/CustomCloseIcon/CustomCloseIcon';
 import {styles} from '../ScreensStyles/HomeStyling';
 
 const Home = () => {
+
     const [loginModalVisible, setModalLoginVisible] = useState(true);
     const [isModalResetPassVisible, setIsModalResetPassVisible] = useState(false);
 
@@ -33,7 +34,7 @@ const Home = () => {
     const[ Cpf , setCpf ] = useState(''); 
     const[ Pass, setPass] = useState(''); 
 
-    const height = Dimensions.get("window").height;
+    const height = Dimensions.get("window").height;  
 
     // Na tela de login, nas telas menores de celulares menores o Keyboard estava 
     // ocupando espaço dos inputs, tanto na parte de login quanto de resetar a senha. 
@@ -121,7 +122,8 @@ const Home = () => {
 
     return (
         <View>
-            {/* O Modal irá mostrar os inputs para o login */}
+    
+             {/* O Modal irá mostrar os inputs para o login */}
 
             <Modal animationType="fade" visible={loginModalVisible} transparent={true}>
                 {height < 670 ? (

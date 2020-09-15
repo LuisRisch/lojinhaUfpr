@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
         justifyContent: 'flex-start', 
         alignItems: 'center', 
         marginVertical: 18,
-    }
+    }, 
 }); 
 
 export {styles};

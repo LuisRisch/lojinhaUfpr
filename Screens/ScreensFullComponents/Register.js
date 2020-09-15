@@ -6,6 +6,7 @@ import {
     CheckBox,
     TouchableOpacity,
     Modal,
+    Image,
     TouchableWithoutFeedback,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -33,12 +34,13 @@ const Register = () =>{
     const [isConfirmRegisterModalVisible, setIsConfirmRegisterModalVisible] = useState(false);
     const changeStateConfirmModal = () => {
         setIsConfirmRegisterModalVisible(!isConfirmRegisterModalVisible);
+        
         // console.log(Name);
         // console.log(Email);
         // console.log(Cpf);
         // console.log(Grr);
-        console.log(DefinePass);
-        console.log(ConfirmPass);
+        // console.log(DefinePass);
+        // console.log(ConfirmPass);
 
     }
 
@@ -197,9 +199,15 @@ const Register = () =>{
                                 Li e aceito os termos de responsabilidade com a plataforma
                             </Text>
                         </TouchableWithoutFeedback>
-                    </View>
+                    </View> 
                 </View>
-            </ScrollView>
+                {/* Está acontecendo algum bug, por algum motivo separa-se o estilo da imagem em um file 
+                    diferente a imagem nao é redenrizada no app*/}
+                <Image
+                    source={require('../../assets/logo.png')} 
+                    style = {{ alignSelf: "center", width: 100, height: 100,}}
+                />
+            </ScrollView> 
         </View>
     );
 };
