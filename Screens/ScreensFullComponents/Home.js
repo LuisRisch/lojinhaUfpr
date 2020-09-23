@@ -177,7 +177,6 @@ const Home = () => {
                         <CustomButtons 
                             Label='Não sou estudante da UFPR' 
                             onButtonPressed={changeStateAlertModal} 
-
                         />
                     </View>
                 </View>
