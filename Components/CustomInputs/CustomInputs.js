@@ -12,7 +12,8 @@ export default function CustomInputs ( props ){
         <View style = {styles.textInputContainer}>
             <TextInput 
                 placeholder = {props.hintText} 
-                onChangeText = {this , props.onChangeText} 
+                onChangeText = {this , props.onChangeText}  
+                value = {props.value}
             /> 
         </View> 
     );

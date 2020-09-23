@@ -7,7 +7,7 @@ const styles = StyleSheet.create({
     screen: {
         flex: 1,
         justifyContent: "space-between",
-        marginTop: Spacing.MainMargin,
+        paddingTop : Spacing.MainMargin,
         marginHorizontal: Spacing.MainMargin,
     },
 

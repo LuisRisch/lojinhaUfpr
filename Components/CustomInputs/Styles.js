@@ -4,6 +4,7 @@ import Colors from '../../Constants/Colors';
 const styles = StyleSheet.create({
     textInputContainer : { 
         justifyContent :  'center',
+        flex : 1,
         backgroundColor : Colors.ultraLightGrey , 
         height : 35 , 
         borderRadius : 16 , 
