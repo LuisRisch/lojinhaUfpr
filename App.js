@@ -4,11 +4,13 @@ import Home from './Screens/ScreensFullComponents/Home';
 import Register from './Screens/ScreensFullComponents/Register';
 import Spacing from './Constants/Spacing'; 
 import Colors from './Constants/Colors';
-import MainProducts from './Screens/ScreensFullComponents/MainProducts';
+import MainProducts from './Screens/ScreensFullComponents/MainProducts'; 
+import ProductScreen from './Screens/ScreensFullComponents/ProductScreen'; 
+import ChatScreen from './Screens/ScreensFullComponents/ChatScreen'; 
 const App = () => {
     return (
         <View style={styles.screen}>
-            <MainProducts/>
+            <ChatScreen/>
         </View>
     );
 }
