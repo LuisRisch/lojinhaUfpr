@@ -6,12 +6,16 @@ import {
     Image,
     Modal,
     TouchableOpacity,
+    TouchableWithoutFeedback,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import Colors from "../../Constants/Colors"; 
-import {styles} from '../ScreensStyles/MainProductsStlying';
+import Colors from "../../Constants/Colors";
+import { styles } from '../ScreensStyles/MainProductsStlying';
 
 const MainProducts = () => {
+
+    // Produtos ficticios para teste de Layout
+
     var product1 = {
         Title: "Vaso de flores feito em casa!",
         Description:
@@ -88,8 +92,7 @@ const MainProducts = () => {
         product6,
     ];
 
-    const [
-        isListVisualisationSelected,
+    const [isListVisualisationSelected,
         setIsListVisualisationSelected,
     ] = useState(false);
 
@@ -97,42 +100,53 @@ const MainProducts = () => {
     const changeStateOfModalOptionsSelected = () => {
         setIsModalOptionsSelected(!isModalOfOptionsSelected);
         setIsListVisualisationSelected(!isListVisualisationSelected);
-    };
+    }; 
+
+    const onProductCardPressed = (name , productId) => { 
+        // Essa função é responsável por ir para a tela de produto
+        // navegação não foi feita ainda.
+
+        console.log(name , productId); //Teste para ver se recebe os dados direito.
+    }
 
     const renderItemCard = ({ item }) =>
         isListVisualisationSelected ? (
-            <View style={styles.Products_Card_Horizontally}>
-                <Image
-                    source={{ uri: item.imgUrl }}
-                    style={styles.Image_Horizontaly_Display}
-                    resizeMode="cover"
-                />
-                <View style={styles.Products_Card_Informations}>
-                    <Text style={styles.Products_Title_Horizontally}>{item.Title}</Text>
-                    <View style={styles.Price_Box_Horizontally}>
-                        <Text style={styles.Price_Layout}>R$ {item.Price}</Text>
-                        {/* Espaçamento entre palavras de 5px */}
-                        <View style={{ width: 5 }}></View>
-
-                        <Text style={styles.Per_Unity_Horizontally}>a unidade</Text>
-                    </View>
-                    <View>
-                        <Text style={styles.AnnouncedBy_Horizontally_Label}>
-                            Anunciado por:
-                        </Text>
-                        <Text style={styles.AnnouncedBy_Horizontally_Name}>
-                            {item.AnnouncedBy}
-                        </Text>
-                    </View>
-                </View>
-            </View>
-        ) : (
-                <View style={styles.Box_Card_Grid_Products}>
+            <TouchableOpacity onPress={() => onProductCardPressed(item.AnnouncedBy , item.id)}>
+                <View style={styles.Products_Card_Horizontally}>
                     <Image
                         source={{ uri: item.imgUrl }}
-                        style={styles.Image_Layout_Grid}
+                        style={styles.Image_Horizontaly_Display}
                         resizeMode="cover"
                     />
+                    <View style={styles.Products_Card_Informations}>
+                        <Text style={styles.Products_Title_Horizontally}>{item.Title}</Text>
+                        <View style={styles.Price_Box_Horizontally}>
+                            <Text style={styles.Price_Layout}>R$ {item.Price}</Text>
+                            {/* Espaçamento entre palavras de 5px */}
+                            <View style={{ width: 5 }}></View>
+
+                            <Text style={styles.Per_Unity_Horizontally}>a unidade</Text>
+                        </View>
+                        <View>
+                            <Text style={styles.AnnouncedBy_Horizontally_Label}>
+                                Anunciado por:
+                        </Text>
+                            <Text style={styles.AnnouncedBy_Horizontally_Name}>
+                                {item.AnnouncedBy}
+                            </Text>
+                        </View>
+                    </View>
+                </View>
+            </TouchableOpacity>
+        ) : (
+                <View style={styles.Box_Card_Grid_Products}>
+                    <TouchableOpacity onPress={() => onProductCardPressed(item.AnnouncedBy , item.id)}>
+                        <Image
+                            source={{ uri: item.imgUrl }}
+                            style={styles.Image_Layout_Grid}
+                            resizeMode="cover"
+                        />
+                    </TouchableOpacity>
                     <Text style={styles.Product_Title_Grid}>{item.Title}</Text>
                     <View style={styles.Box_Price_Grid}>
                         <Text style={styles.Price_Layout_Grid}>R$ {item.Price}</Text>
@@ -155,20 +169,25 @@ const MainProducts = () => {
     return (
         <View style={{ flex: 1 }}>
             <View style={styles.Top_Container_Icons}>
+                {/* Não foi adicionado a funcionalidade de quando for pressionado, mas quando
+                    for implementado aparecerá um Drawer com informações do usuário */}
                 <Icon
                     name="bars"
-                    // color = '#b8b8b8'
                     size={20}
                 />
+                {/* Não foi implementado a funcionalidade de quando for pressionado, mas quando 
+                    for implementado aparecerá uma área de pesquisa de produtos */}
                 <Icon
                     name="search"
-                    // color = '#b8b8b8'
                     size={20}
                 />
             </View>
             <View>
                 <View style={styles.Top_Secundary_Informations}>
                     <Text style={styles.Top_Secundary_Layout_Informations}>Início</Text>
+
+                    {/* Implementado para ter maior interatividade com o usuário, permitindo-lhe
+                        escolher a forma que deseja navegar pelos produtos */}
 
                     <TouchableOpacity
                         onPress={() => setIsModalOptionsSelected(!isModalOfOptionsSelected)}
@@ -209,6 +228,9 @@ const MainProducts = () => {
                     <View style={styles.Bottom_Container_Options_Of_Navigation}>
                         <View style={styles.Bottom_Spacing_Icons}>
                             <TouchableOpacity onPress={changeStateOfModalOptionsSelected}>
+
+                                {/* Icone de grade */}
+
                                 <Icon
                                     name="th"
                                     size={20}
@@ -220,6 +242,9 @@ const MainProducts = () => {
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={changeStateOfModalOptionsSelected}>
+
+                                {/* Icone de Lista */}
+
                                 <Icon
                                     name="list"
                                     size={20}
