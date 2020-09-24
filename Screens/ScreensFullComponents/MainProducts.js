@@ -6,14 +6,13 @@ import {
     Image,
     Modal,
     TouchableOpacity,
-    TouchableWithoutFeedback,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Colors from "../../Constants/Colors";
-import { styles } from '../ScreensStyles/MainProductsStlying';
+import { styles } from "../ScreensStyles/MainProductsStlying";
+import Spacing from "../../Constants/Spacing";
 
 const MainProducts = () => {
-
     // Produtos ficticios para teste de Layout
 
     var product1 = {
@@ -92,7 +91,8 @@ const MainProducts = () => {
         product6,
     ];
 
-    const [isListVisualisationSelected,
+    const [
+        isListVisualisationSelected,
         setIsListVisualisationSelected,
     ] = useState(false);
 
@@ -100,18 +100,41 @@ const MainProducts = () => {
     const changeStateOfModalOptionsSelected = () => {
         setIsModalOptionsSelected(!isModalOfOptionsSelected);
         setIsListVisualisationSelected(!isListVisualisationSelected);
-    }; 
+    };
 
-    const onProductCardPressed = (name , productId) => { 
+    const [isModalUserAreaVisible, setIsModalUserAreaVisible] = useState(true);
+
+    const onProductCardPressed = (name, productId) => {
         // Essa função é responsável por ir para a tela de produto
         // navegação não foi feita ainda.
 
-        console.log(name , productId); //Teste para ver se recebe os dados direito.
-    }
+        console.log(name, productId); //Teste para ver se recebe os dados direito.
+    };
+
+    const Items = [
+        {
+            label: 'Sua conta',
+            icon: 'user'
+        },
+        {
+            label: 'Loja',
+            icon: 'shopping-cart'
+        },
+        {
+            label: 'Chat',
+            icon: 'comments'
+        },
+        {
+            label: 'Sair',
+            icon: 'sign-out'
+        }
+    ]
 
     const renderItemCard = ({ item }) =>
         isListVisualisationSelected ? (
-            <TouchableOpacity onPress={() => onProductCardPressed(item.AnnouncedBy , item.id)}>
+            <TouchableOpacity
+                onPress={() => onProductCardPressed(item.AnnouncedBy, item.id)}
+            >
                 <View style={styles.Products_Card_Horizontally}>
                     <Image
                         source={{ uri: item.imgUrl }}
@@ -119,7 +142,7 @@ const MainProducts = () => {
                         resizeMode="cover"
                     />
                     <View style={styles.Products_Card_Informations}>
-                        <Text style={styles.Products_Title_Horizontally}>{item.Title}</Text>
+                        <Text numberOfLines={2} style={styles.Products_Title_Horizontally}>{item.Title}</Text>
                         <View style={styles.Price_Box_Horizontally}>
                             <Text style={styles.Price_Layout}>R$ {item.Price}</Text>
                             {/* Espaçamento entre palavras de 5px */}
@@ -130,7 +153,7 @@ const MainProducts = () => {
                         <View>
                             <Text style={styles.AnnouncedBy_Horizontally_Label}>
                                 Anunciado por:
-                        </Text>
+                            </Text>
                             <Text style={styles.AnnouncedBy_Horizontally_Name}>
                                 {item.AnnouncedBy}
                             </Text>
@@ -140,14 +163,16 @@ const MainProducts = () => {
             </TouchableOpacity>
         ) : (
                 <View style={styles.Box_Card_Grid_Products}>
-                    <TouchableOpacity onPress={() => onProductCardPressed(item.AnnouncedBy , item.id)}>
+                    <TouchableOpacity
+                        onPress={() => onProductCardPressed(item.AnnouncedBy, item.id)}
+                    >
                         <Image
                             source={{ uri: item.imgUrl }}
                             style={styles.Image_Layout_Grid}
                             resizeMode="cover"
                         />
                     </TouchableOpacity>
-                    <Text style={styles.Product_Title_Grid}>{item.Title}</Text>
+                    <Text lineBreakMode={true} style={styles.Product_Title_Grid}>{item.Title}</Text>
                     <View style={styles.Box_Price_Grid}>
                         <Text style={styles.Price_Layout_Grid}>R$ {item.Price}</Text>
                         {/* Espaçamento entre palavras de 5px */}
@@ -171,16 +196,14 @@ const MainProducts = () => {
             <View style={styles.Top_Container_Icons}>
                 {/* Não foi adicionado a funcionalidade de quando for pressionado, mas quando
                     for implementado aparecerá um Drawer com informações do usuário */}
-                <Icon
-                    name="bars"
-                    size={20}
-                />
+                <TouchableOpacity
+                    onPress={() => setIsModalUserAreaVisible(!isModalUserAreaVisible)}
+                >
+                    <Icon name="bars" size={20} />
+                </TouchableOpacity>
                 {/* Não foi implementado a funcionalidade de quando for pressionado, mas quando 
                     for implementado aparecerá uma área de pesquisa de produtos */}
-                <Icon
-                    name="search"
-                    size={20}
-                />
+                <Icon name="search" size={20} />
             </View>
             <View>
                 <View style={styles.Top_Secundary_Informations}>
@@ -219,6 +242,68 @@ const MainProducts = () => {
                         />
                     )}
             </View>
+            {/* Este modal mostra a area do usuário */}
+            <Modal
+                visible={isModalUserAreaVisible}
+                transparent={true}
+                animationType="slide"
+            >
+                <View
+                    style={styles.User_Modal_Container}
+                >
+                    <View>
+                        <View style={{ alignSelf: "flex-end" }}>
+                            <TouchableOpacity
+                                onPress={() => setIsModalUserAreaVisible(!isModalUserAreaVisible)}
+                            >
+                                <Icon name="arrow-circle-left" size={20} color={Colors.mainPink} />
+                            </TouchableOpacity>
+                        </View>
+                        <View
+                            style={styles.User_Top_Information}
+                        >
+                            <View
+                                style={styles.Circle_Box_Photo}
+                            >
+                                <Icon name="camera" size={15} color="white" />
+                            </View>
+                            <View
+                                style={{
+                                    marginLeft: Spacing.MainMargin - 9, //9px
+                                }}
+                            >
+                                <Text
+                                    style={styles.User_Name}
+                                >
+                                    Luis Felipe Risch
+                                </Text>
+                                <Text style={styles.User_Email}>
+                                    lfr20@inf.ufpr.br
+                                </Text>
+                            </View>
+                        </View>
+                        {/* Função que cria as abas da área do usuário */}
+                        {Items.map((item, index) => (
+                            <View style={{ marginTop: Spacing.MainMargin }} key={index}>
+                                <View style={styles.Tabs_User_Area}>
+                                    <Icon
+                                        name={item.icon}
+                                        size={20}
+                                        color={Colors.mainRed}
+                                    />
+                                    <Text style={styles.Tabs_User_Label}>{item.label}</Text>
+                                </View>
+                            </View>
+                        ))}
+                    </View>
+                    <Image
+                        source={require('../../assets/logo.png')}
+                        style={styles.Bottom_Logo}
+                    />
+                </View>
+            </Modal>
+            {/* Este modal mostra a área a barra horizontal no final da tela com as opções d
+                de visualizar os dados em forma de lista ou grade*/}
             <Modal
                 visible={isModalOfOptionsSelected}
                 animationType="slide"
@@ -228,7 +313,6 @@ const MainProducts = () => {
                     <View style={styles.Bottom_Container_Options_Of_Navigation}>
                         <View style={styles.Bottom_Spacing_Icons}>
                             <TouchableOpacity onPress={changeStateOfModalOptionsSelected}>
-
                                 {/* Icone de grade */}
 
                                 <Icon
@@ -242,7 +326,6 @@ const MainProducts = () => {
                                 />
                             </TouchableOpacity>
                             <TouchableOpacity onPress={changeStateOfModalOptionsSelected}>
-
                                 {/* Icone de Lista */}
 
                                 <Icon
