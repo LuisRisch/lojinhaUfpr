@@ -1,7 +1,7 @@
-import {StyleSheet} from 'react-native'; 
+import { StyleSheet } from "react-native";
 import Spacing from "../../Constants/Spacing";
 import FontSize from "../../Constants/FontSizes";
-import Colors from "../../Constants/Colors"; 
+import Colors from "../../Constants/Colors";
 
 const styles = StyleSheet.create({
     Products_Card_Horizontally: {
@@ -119,6 +119,62 @@ const styles = StyleSheet.create({
         justifyContent: "space-around",
         alignContent: "center",
     },
-}); 
+    User_Modal_Container: {
+        flex: 1,
+        width: "70%",
+        backgroundColor: "white",
+        paddingHorizontal: Spacing.MainPadding,
+        justifyContent: "space-between",
+        paddingTop: Spacing.MainPadding,
+        backgroundColor: Colors.backgroundWhite,
+        shadowColor: "black",
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+    },
+    User_Top_Information: {
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center",
+    },
+    Circle_Box_Photo: {
+        height: 50,
+        width: 50,
+        borderRadius: 25,
+        backgroundColor: Colors.mainGrey,
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    User_Name: {
+        fontSize: FontSize.Tall,
+        color: "black",
+        fontWeight: "bold",
+    },
+    User_Email: {
+        color: Colors.mainGrey,
+        fontWeight: "500",
+        fontSize: FontSize.Lower,
+    },
+    Tabs_User_Area: {
+        flexDirection: "row",
+        alignItems: "center",
+        justifyContent: "flex-start",
+        marginTop: Spacing.MainMargin - 9,
+    },
+    Tabs_User_Label: {
+        color: Colors.mainGrey,
+        fontSize: FontSize.Tall,
+        marginLeft: Spacing.MainMargin,
+    }, 
+    Bottom_Logo : {
+        alignSelf: "center", 
+        width: 70, 
+        height: 70 
+    }
+});
 
-export{styles}; 
+export { styles };
