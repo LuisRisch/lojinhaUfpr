@@ -10,7 +10,7 @@ import ChatScreen from './Screens/ScreensFullComponents/ChatScreen';
 const App = () => {
     return (
         <View style={styles.screen}>
-            <ChatScreen/>
+            <MainProducts/>
         </View>
     );
 }
