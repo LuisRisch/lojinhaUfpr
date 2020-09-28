@@ -102,7 +102,7 @@ const MainProducts = () => {
         setIsListVisualisationSelected(!isListVisualisationSelected);
     };
 
-    const [isModalUserAreaVisible, setIsModalUserAreaVisible] = useState(true);
+    const [isModalUserAreaVisible, setIsModalUserAreaVisible] = useState(false);
 
     const onProductCardPressed = (name, productId) => {
         // Essa função é responsável por ir para a tela de produto

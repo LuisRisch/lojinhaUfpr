@@ -4,6 +4,6 @@ import { styles } from './Styles';
 
 export default function CustomTopLabelInput( props ){
     return(
-        <Text style = { styles.normalText }> { props.label } </Text>
+        <Text style = { styles.normalText }>{ props.label } </Text>
     );
 } 

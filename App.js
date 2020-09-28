@@ -7,10 +7,11 @@ import Colors from './Constants/Colors';
 import MainProducts from './Screens/ScreensFullComponents/MainProducts'; 
 import ProductScreen from './Screens/ScreensFullComponents/ProductScreen'; 
 import ChatScreen from './Screens/ScreensFullComponents/ChatScreen'; 
+import CreateAnnouncement from './Screens/ScreensFullComponents/CreataAnnouncement';
 const App = () => {
     return (
         <View style={styles.screen}>
-            <MainProducts/>
+            <CreateAnnouncement/>
         </View>
     );
 }
