@@ -174,7 +174,44 @@ const styles = StyleSheet.create({
         alignSelf: "center", 
         width: 70, 
         height: 70 
-    }
+    },
+    category_text : {
+        color : Colors.mainRed , 
+        fontSize : FontSize.Tall , 
+        fontWeight : '500'
+    },
+    sizedBox : {
+        height : 18
+    },   
+    BackModalScreen: {
+        paddingVertical : Spacing.TopSpacingScreen,
+        flex: 1,
+        backgroundColor: '#bfbfbf',
+        opacity: 0.88,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
+    BackModalAlert: {
+        backgroundColor: 'white',
+        marginHorizontal: Spacing.MainMargin,
+        padding: Spacing.MainPadding,
+        width: '90%',
+        opacity: 1,
+        borderRadius: 28
+    },
+    TitleModalStyle: {
+        alignSelf: 'center',
+        color: Colors.mainGrey,
+        fontSize: FontSize.Tall,
+        fontWeight: 'bold'
+    },
+    SubTitleModalStyle: {
+        alignSelf: 'center',
+        color: Colors.lightGrey,
+        fontSize: FontSize.Normal,
+        fontWeight: '500', 
+        textAlign : 'justify'
+    }, 
 });
 
 export { styles };

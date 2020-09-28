@@ -8,89 +8,18 @@ import {
     TouchableOpacity,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import CustomCloseIcon from '../../Components/CustomCloseIcon/CustomCloseIcon';
 import Colors from "../../Constants/Colors";
+import Spacing from "../../Constants/Spacing"; 
+import { ListOfGeneral } from '../../Products/General';
+import { ListOfSweets } from '../../Products/Sweets';   
+import { ListOfCrafts } from '../../Products/Crafts/';
+import { Items } from '../../DrawerTabs/Tabs';
 import { styles } from "../ScreensStyles/MainProductsStlying";
-import Spacing from "../../Constants/Spacing";
+import { CategoryList } from '../../Categories/Categories'; 
 
 const MainProducts = () => {
-    // Produtos ficticios para teste de Layout
-
-    var product1 = {
-        Title: "Vaso de flores feito em casa!",
-        Description:
-            "Lindo vaso de flores, em que o vaso feito foi á mão. As flores provém do exterior",
-        Category: "Artesanato",
-        Price: "34.4",
-        AnnouncedBy: "Maria Noga Risch",
-        imgUrl:
-            "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/artesanato.jpg?alt=media&token=e2cb9924-0e7f-4d84-83cd-2265e236fdc0",
-        id: "1",
-    };
-    var product2 = {
-        Title: "Brigadeiro",
-        Description:
-            "Brigadeiros delicioso e caseiros de todos os tipos de sabores",
-        Category: "Doce",
-        Price: "2.50",
-        AnnouncedBy: "Sandra Noga Risch",
-        imgUrl:
-            "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/Doces.jpeg?alt=media&token=9b8dc0ec-fe2b-4b00-b28d-893e2ed27075",
-        id: "2",
-    };
-    var product3 = {
-        Title: "Vaso de flores feito em casa!",
-        Description:
-            "Lindo vaso de flores, em que o vaso feito foi á mão. As flores provém do exterior",
-        Category: "Artesanato",
-        Price: "34.4",
-        AnnouncedBy: "Maria Noga Risch",
-        imgUrl:
-            "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/artesanato.jpg?alt=media&token=e2cb9924-0e7f-4d84-83cd-2265e236fdc0",
-        id: "3",
-    };
-    var product4 = {
-        Title: "Brigadeiro",
-        Description:
-            "Brigadeiros delicioso e caseiros de todos os tipos de sabores",
-        Category: "Doce",
-        Price: "2.50",
-        AnnouncedBy: "Sandra Noga Risch",
-        imgUrl:
-            "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/Doces.jpeg?alt=media&token=9b8dc0ec-fe2b-4b00-b28d-893e2ed27075",
-        id: "4",
-    };
-    var product5 = {
-        Title: "Vaso de flores feito em casa!",
-        Description:
-            "Lindo vaso de flores, em que o vaso feito foi á mão. As flores provém do exterior",
-        Category: "Artesanato",
-        Price: "34.4",
-        AnnouncedBy: "Maria Noga Risch",
-        imgUrl:
-            "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/artesanato.jpg?alt=media&token=e2cb9924-0e7f-4d84-83cd-2265e236fdc0",
-        id: "5",
-    };
-    var product6 = {
-        Title: "Brigadeiro",
-        Description:
-            "Brigadeiros delicioso e caseiros de todos os tipos de sabores",
-        Category: "Doce",
-        Price: "2.50",
-        AnnouncedBy: "Sandra Noga Risch",
-        imgUrl:
-            "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/Doces.jpeg?alt=media&token=9b8dc0ec-fe2b-4b00-b28d-893e2ed27075",
-        id: "6",
-    };
-
-    const ListOfProducts = [
-        product1,
-        product2,
-        product3,
-        product4,
-        product5,
-        product6,
-    ];
-
+    const defaultTitle = 'Início';
     const [
         isListVisualisationSelected,
         setIsListVisualisationSelected,
@@ -103,32 +32,59 @@ const MainProducts = () => {
     };
 
     const [isModalUserAreaVisible, setIsModalUserAreaVisible] = useState(false);
+    const [showFilter, setShowFilter] = useState(false); 
 
     const onProductCardPressed = (name, productId) => {
         // Essa função é responsável por ir para a tela de produto
         // navegação não foi feita ainda.
 
         console.log(name, productId); //Teste para ver se recebe os dados direito.
-    };
+    };  
+    const [title , setTitle] = useState(defaultTitle);
 
-    const Items = [
-        {
-            label: 'Sua conta',
-            icon: 'user'
-        },
-        {
-            label: 'Loja',
-            icon: 'shopping-cart'
-        },
-        {
-            label: 'Chat',
-            icon: 'comments'
-        },
-        {
-            label: 'Sair',
-            icon: 'sign-out'
-        }
-    ]
+    const [ListOfProducts , setListOfProduct] = useState(ListOfGeneral);
+
+    // Filtrará os produtos por uma certa categoria
+    const ChangeCategory = (i) => {
+        setTitle(defaultTitle + ' > ' + CategoryList[i]); 
+        if(i === 0){
+            //Como nao há um arquivo para esse tipo de categoria coloque a lista geral, mas quando haver o backend
+            //deve-se ser a lista de salgados aqui
+            setListOfProduct(ListOfGeneral)
+        } else if(i === 1){
+            //deve-se ser a lista de doces
+            setListOfProduct(ListOfSweets);
+        } else if(i === 2){
+            //deve-se ser a lista de artesanatos
+            setListOfProduct(ListOfCrafts);
+        } else if(i === 3){
+            //deve-se ser a lista de Roupas
+            setListOfProduct(ListOfGeneral);
+        }else if(i === 4){
+            //deve-se ser a lista de Livros
+            setListOfProduct(ListOfGeneral);
+        }else if(i === 5){
+            //deve-se ser a lista de Servicos
+            setListOfProduct(ListOfGeneral);
+        }else if(i === 6){
+            //deve-se ser a lista de eletronicos
+            setListOfProduct(ListOfGeneral);
+        }else if(i === 7){
+            //deve-se ser a lista de moveis
+            setListOfProduct(ListOfGeneral);
+        }else if(i === 8){
+            //deve-se ser a lista de esporte
+            setListOfProduct(ListOfGeneral);
+        }else if(i === 9){
+            //deve-se ser a lista de calaçados
+            setListOfProduct(ListOfGeneral);
+        }else if(i === 10){
+            //deve-se ser a lista de outros
+            setListOfProduct(ListOfGeneral);
+        } 
+        setShowFilter(!showFilter);
+    }; 
+
 
     const renderItemCard = ({ item }) =>
         isListVisualisationSelected ? (
@@ -145,6 +101,7 @@ const MainProducts = () => {
                         <Text numberOfLines={2} style={styles.Products_Title_Horizontally}>{item.Title}</Text>
                         <View style={styles.Price_Box_Horizontally}>
                             <Text style={styles.Price_Layout}>R$ {item.Price}</Text>
+
                             {/* Espaçamento entre palavras de 5px */}
                             <View style={{ width: 5 }}></View>
 
@@ -207,7 +164,7 @@ const MainProducts = () => {
             </View>
             <View>
                 <View style={styles.Top_Secundary_Informations}>
-                    <Text style={styles.Top_Secundary_Layout_Informations}>Início</Text>
+                    <Text style={styles.Top_Secundary_Layout_Informations}>{title}</Text>
 
                     {/* Implementado para ter maior interatividade com o usuário, permitindo-lhe
                         escolher a forma que deseja navegar pelos produtos */}
@@ -219,8 +176,9 @@ const MainProducts = () => {
                             Navegar por: {isListVisualisationSelected ? "Linhas" : "Grades"}
                         </Text>
                     </TouchableOpacity>
-
-                    <Text style={styles.Filter_Layout}>Filtrar</Text>
+                    <TouchableOpacity onPress={() => setShowFilter(!showFilter)}>
+                        <Text style={styles.Filter_Layout}>Filtrar</Text>
+                    </TouchableOpacity>
                 </View>
                 {isListVisualisationSelected ? (
                     <FlatList
@@ -242,7 +200,9 @@ const MainProducts = () => {
                         />
                     )}
             </View>
-            {/* Este modal mostra a area do usuário */}
+
+            {/**************** Este modal mostra a area do usuário ***************/}
+
             <Modal
                 visible={isModalUserAreaVisible}
                 transparent={true}
@@ -282,7 +242,9 @@ const MainProducts = () => {
                                 </Text>
                             </View>
                         </View>
+
                         {/* Função que cria as abas da área do usuário */}
+
                         {Items.map((item, index) => (
                             <View style={{ marginTop: Spacing.MainMargin }} key={index}>
                                 <View style={styles.Tabs_User_Area}>
@@ -302,8 +264,10 @@ const MainProducts = () => {
                     />
                 </View>
             </Modal>
-            {/* Este modal mostra a área a barra horizontal no final da tela com as opções d
-                de visualizar os dados em forma de lista ou grade*/}
+
+            {/*****************  Este modal mostra a área a barra horizontal no final da tela com as opções d
+                de visualizar os dados em forma de lista ou grade *****************/}
+
             <Modal
                 visible={isModalOfOptionsSelected}
                 animationType="slide"
@@ -339,6 +303,33 @@ const MainProducts = () => {
                                 />
                             </TouchableOpacity>
                         </View>
+                    </View>
+                </View>
+            </Modal>
+
+            {/**************** Este modal irá mostra o filtro de categorias ****************/}
+            
+            <Modal
+                visible={showFilter}
+                transparent={true}
+                animationType={'slide'}
+
+            >
+                <View style={styles.BackModalScreen}>
+                    <View style={styles.BackModalAlert}>
+                        <CustomCloseIcon onIconPressed={() => setShowFilter(!showFilter)} />
+                        <Text style={styles.TitleModalStyle}>Categorias</Text>
+                        <View style={styles.sizedBox}></View>
+                        {CategoryList.map((c, index) => (
+                            <View key={index} style={{ alignItems: 'flex-start', marginVertical: 5 }}>
+                                <TouchableOpacity onPress={() => ChangeCategory(index)}>
+                                    <Text style={styles.category_text}
+                                    >
+                                        {c}
+                                    </Text>
+                                </TouchableOpacity>
+                            </View>
+                        ))}
                     </View>
                 </View>
             </Modal>

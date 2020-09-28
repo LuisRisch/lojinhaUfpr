@@ -11,7 +11,7 @@ import CreateAnnouncement from './Screens/ScreensFullComponents/CreataAnnounceme
 const App = () => {
     return (
         <View style={styles.screen}>
-            <CreateAnnouncement/>
+            <MainProducts/>
         </View>
     );
 }

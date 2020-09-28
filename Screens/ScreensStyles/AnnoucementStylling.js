@@ -5,7 +5,7 @@ import Spacing from '../../Constants/Spacing';
 
 const styles = StyleSheet.create({
     screen: {
-        flex: 1,
+        flex: 1, 
     },
     title: {
         fontWeight: "bold",

@@ -6,8 +6,9 @@ import CustomSubLabel from '../../Components/CustomSubLabel/CustomSubLabel'
 import BoxProduct from '../../Components/CustomBoxesProductInformation/BoxProduct';
 import CustomButton from '../../Components/CustomButtons/CustomButtons';
 import CustomCloseIcon from '../../Components/CustomCloseIcon/CustomCloseIcon';
-import Icon from "react-native-vector-icons/FontAwesome";
-import { styles } from '../ScreensStyles/AnnoucementStylling';
+import Icon from "react-native-vector-icons/FontAwesome"; 
+import { styles } from '../ScreensStyles/AnnoucementStylling'; 
+import { CategoryList }  from '../../Categories/Categories';
 
 const CreateAnnouncement = () => {
     const [isShowCategoryOpen, setIsShowCategory] = useState(false);
@@ -17,15 +18,27 @@ const CreateAnnouncement = () => {
     const [payment, setPayment] = useState('');
     const [delivery, setDelivery] = useState('');
     // Categorias pré definidas dos produtos    
-    const CategoryList = [
-        'Salgados', 'Doces', 'Artesanato', 'Roupas', 'Livros', 'Serviços', 'Eletrônicos', 'Móveis',
-        'Esporte', 'Calçados', 'Outros'
-    ];
+    // const CategoryList = [
+    //     'Salgados', 'Doces', 'Artesanato', 'Roupas', 'Livros', 'Serviços', 'Eletrônicos', 'Móveis',
+    //     'Esporte', 'Calçados', 'Outros'
+    // ];
 
     // i = index of the category array
     const CategoryHandler = (i) => {
         setCategory(CategoryList[i])
         setIsShowCategory(!isShowCategoryOpen);
+    } 
+
+    const product = []; 
+
+    const onButtonPressed = () => {
+        product.push({
+            title : productTitle, 
+            category : productcategory, 
+            description : productDescription, 
+            payment : payment, 
+            delivery : delivery,
+        })
     }
     return (
         <View style={styles.screen}>
@@ -111,7 +124,7 @@ const CreateAnnouncement = () => {
                 <View style={{ justifyContent: 'space-between', flex: 1 }}>
                     <CustomButton
                         Label='Anunciar'
-                        onButtonPressed={() => console.log(productTitle, productcategory, productDescription, payment, delivery)}
+                        onButtonPressed={onButtonPressed}
                     />
                     <Image
                         source={require('../../assets/logo.png')}
