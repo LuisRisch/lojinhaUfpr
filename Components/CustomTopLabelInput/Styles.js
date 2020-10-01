@@ -5,7 +5,7 @@ import FontSizes from '../../Constants/FontSizes';
 const styles = StyleSheet.create({
     normalText : {
         color : Colors.mainGrey, 
-        fontSize : FontSizes.LO, 
+        fontSize : FontSizes.Normal, 
         fontWeight : '500',
     },
 }); 

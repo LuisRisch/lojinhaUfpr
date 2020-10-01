@@ -7,7 +7,9 @@ var product5 = {
     AnnouncedBy: "Maria Noga Risch",
     imgUrl:
         "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/artesanato.jpg?alt=media&token=e2cb9924-0e7f-4d84-83cd-2265e236fdc0",
-    id: "5",
+    id: "5", 
+    pay : 'Aceito pagamento somente em dinheiro', 
+    delivery : 'Posso entregar na sua casa, marcamos um local de encontro, ou até mesmo em algum campus da UFPR'
 };
 
 var product3 = {

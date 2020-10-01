@@ -99,7 +99,7 @@ const styles = StyleSheet.create({
         marginTop: Spacing.MainMargin,
     },
     Top_Secundary_Layout_Informations: {
-        fontSize: FontSize.Normal,
+        fontSize: FontSize.Lower,
         color: Colors.mainGrey,
         fontWeight: "500",
     },

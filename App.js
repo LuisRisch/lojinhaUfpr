@@ -5,17 +5,18 @@ import Register from './Screens/ScreensFullComponents/Register';
 import Spacing from './Constants/Spacing'; 
 import Colors from './Constants/Colors';
 import MainProducts from './Screens/ScreensFullComponents/MainProducts'; 
+import UserPage from './Screens/ScreensFullComponents/UserPage';
 import ProductScreen from './Screens/ScreensFullComponents/ProductScreen'; 
 import ChatScreen from './Screens/ScreensFullComponents/ChatScreen'; 
 import CreateAnnouncement from './Screens/ScreensFullComponents/CreataAnnouncement';
+import ConfirmAnnouncement from './Screens/ScreensFullComponents/ConfirmAnnouncement';
 const App = () => {
     return (
         <View style={styles.screen}>
-            <MainProducts/>
+            <ConfirmAnnouncement/>
         </View>
     );
 }
-
 var styles = StyleSheet.create({
     screen: {
         paddingTop: Spacing.TopSpacingScreen,
