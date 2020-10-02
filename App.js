@@ -14,7 +14,7 @@ const App = () => {
   return (
     <View style={styles.screen}>
       {/* <ConfirmAnnouncement/> */}
-      <ChatScreen />
+      <MainProducts />
     </View>
   );
 };
