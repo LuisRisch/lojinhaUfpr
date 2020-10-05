@@ -10,7 +10,7 @@ export default function CustomCloseIcon( props ) {
             style={styles.IconContainer}
         >
             <TouchableOpacity onPress={props.onIconPressed}>
-                <Icon color={Colors.mainRed} size={18} name="close" />
+                <Icon color={Colors.mainRed} size={18} name={props.icon} />
             </TouchableOpacity>
         </View>
     );
