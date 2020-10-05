@@ -106,7 +106,7 @@ const Home = () => {
             <View style={styles.inputsContainer}>
                 <View style={{ justifyContent: "space-between" }}>
                     <ScrollView>
-                        <CustomCloseIcon onIconPressed = { changeStateResetPassModal }/>
+                        <CustomCloseIcon onIconPressed = { changeStateResetPassModal } icon='close'/>
                         <CustomTopLabelInput label="Redefinir senha" />
                         <CustomInputs hintText="Digite seu email " />
                         <Text style={styles.lowerTexT}>
@@ -153,7 +153,7 @@ const Home = () => {
             >
                 <View style={styles.BackModalScreen}>
                     <View style={styles.BackModalAlert}>
-                        <CustomCloseIcon onIconPressed = { changeStateAlertModal }/>
+                        <CustomCloseIcon onIconPressed = { changeStateAlertModal } icon='close'/>
                         <Text style={styles.TitleModalStyle}> Importante! </Text>
                         <View style={styles.SizedBox}></View>
                         <Text style={styles.SubTitleModalStyle}>

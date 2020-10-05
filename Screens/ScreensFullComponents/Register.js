@@ -94,7 +94,7 @@ const Register = () =>{
             >
                 <View style={styles.BackModalScreen}>
                     <View style={styles.BackModalAlert}>
-                        <CustomCloseIcon onIconPressed={changeStateTermsModal} />
+                        <CustomCloseIcon onIconPressed={changeStateTermsModal} icon='close' />
                         <Text style={styles.TitleModalStyle}> Termos de consentimento  </Text>
                         <View style={styles.sizedBox}></View>
                         <ScrollView>
@@ -203,10 +203,12 @@ const Register = () =>{
                 </View>
                 {/* Está acontecendo algum bug, por algum motivo separa-se o estilo da imagem em um file 
                     diferente a imagem nao é redenrizada no app*/}
-                <Image
-                    source={require('../../assets/logo.png')} 
-                    style = {{ alignSelf: "center", width: 100, height: 100,}}
-                />
+                <View style={{flexDirection : 'column-reverse', flex : 1, justifyContent : 'space-between'}}>
+                    <Image
+                        source={require('../../assets/logo.png')} 
+                        style = {{ alignSelf: "center", width: 70, height: 70 ,}}
+                    />
+                </View>
             </ScrollView> 
         </View>
     );

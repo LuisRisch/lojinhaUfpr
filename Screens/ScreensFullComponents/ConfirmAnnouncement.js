@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { View, Text, Image, TouchableOpacity, Dimensions, ScrollView } from 'react-native';
 import CustomCloseIcon from '../../Components/CustomCloseIcon/CustomCloseIcon';
 import { ListOfCrafts } from '../../Products/Crafts/';
-import FontSize from '../../Constants/FontSizes';
 import Color from '../../Constants/Colors';
 import Spacing from '../../Constants/Spacing';
 import Icon from 'react-native-vector-icons/FontAwesome';
@@ -40,7 +39,7 @@ const ConfirmAnnouncement = () => {
 
     const content =
         <View style={Styles.screen}>
-            <CustomCloseIcon onIconPressed={ClosePage} />
+            <CustomCloseIcon onIconPressed={ClosePage} icon='arrow-circle-left'/>
 
             {/****************** Box que da espaçamento entre os dois ******************/}
             <View style={Styles.sizedBox}></View>

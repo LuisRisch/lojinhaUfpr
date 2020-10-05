@@ -14,7 +14,7 @@ const UserPage = () => {
     const content =
         <View style={Style.screen}>
             <View style={Style.header}>
-                <CustomCloseIcon />
+                <CustomCloseIcon icon='arrow-circle-left' />
                 <Text style={Style.titleStyle}>
                     Perfil
                 </Text>
