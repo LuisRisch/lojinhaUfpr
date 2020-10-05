@@ -10,21 +10,22 @@ import ProductScreen from "./Screens/ScreensFullComponents/ProductScreen";
 import ChatScreen from "./Screens/ScreensFullComponents/ChatScreen";
 import CreateAnnouncement from "./Screens/ScreensFullComponents/CreataAnnouncement";
 import ConfirmAnnouncement from "./Screens/ScreensFullComponents/ConfirmAnnouncement";
+import SearchProduct from "./Screens/ScreensFullComponents/SearchProduct";
 const App = () => {
-  return (
-    <View style={styles.screen}>
-      {/* <ConfirmAnnouncement/> */}
-      <MainProducts />
-    </View>
-  );
+    return (
+        <View style={styles.screen}>
+            <SearchProduct />
+
+        </View>
+    );
 };
 var styles = StyleSheet.create({
-  screen: {
-    paddingTop: Spacing.TopSpacingScreen,
-    paddingHorizontal: Spacing.MainPadding,
-    flex: 1,
-    backgroundColor: Colors.backgroundWhite,
-  },
+    screen: {
+        paddingTop: Spacing.TopSpacingScreen,
+        paddingHorizontal: Spacing.MainPadding,
+        flex: 1,
+        backgroundColor: Colors.backgroundWhite,
+    },
 });
 
 export default App;
