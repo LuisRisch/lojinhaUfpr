@@ -8,6 +8,7 @@ import MainProducts from "./Screens/ScreensFullComponents/MainProducts";
 import UserPage from "./Screens/ScreensFullComponents/UserPage";
 import ProductScreen from "./Screens/ScreensFullComponents/ProductScreen";
 import ChatScreen from "./Screens/ScreensFullComponents/ChatScreen";
+import ChatList from "./Screens/ScreensFullComponents/ChatList";
 import CreateAnnouncement from "./Screens/ScreensFullComponents/CreataAnnouncement";
 import ConfirmAnnouncement from "./Screens/ScreensFullComponents/ConfirmAnnouncement";
 const App = () => {
