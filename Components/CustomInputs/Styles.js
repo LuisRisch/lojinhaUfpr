@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     width: "100%",
     backgroundColor: Colors.ultraLightGrey,
-    height: 50,
+    height: 35,
     borderRadius: 16,
     paddingStart: 8,
     marginVertical: 5,
