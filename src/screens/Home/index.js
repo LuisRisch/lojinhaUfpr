@@ -8,7 +8,7 @@ import {
     Dimensions,
     TouchableOpacity,
 } from "react-native";
-import CustomButtons from "../../components/CustomButtons";
+import CustomButtons from '../../components/CustomButtons';
 import CustomInputs from "../../components/CustomInputs";
 import CustomSwitchButton from "../../components/CustomSwitchButton";
 import CustomTopLabelInput from "../../components/CustomTopLabelInput";
@@ -73,7 +73,7 @@ const Home = () => {
                             </TouchableOpacity>
                         </View>
                         <CustomButtons
-                            Label="Fazer login"
+                            Label="Fazer Login"
                             Color={{ Color: "#ed524a" }}
                             link='/MainProducts'
                             onButtonPressed={() => console.log(Cpf, Pass)}
@@ -127,7 +127,7 @@ const Home = () => {
                         <Text style={styles.lowerTexT}>
                             Enviaremos um email com as informações necessárias para a
                             redefinação da senha
-            </Text>
+                        </Text>
                         <CustomButtons Label="Enviar" Color={{ Color: "#ed524a" }} />
                     </ScrollView>
                 </View>
