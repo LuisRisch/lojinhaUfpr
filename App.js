@@ -9,7 +9,7 @@ import Routes from "./src/routes";
 const App = () => {
   return (
     <View style={styles.screen}>
-      <Routes />
+      <Routes/>
     </View>
   );
 };
