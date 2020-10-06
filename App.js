@@ -20,6 +20,7 @@ var styles = StyleSheet.create({
     flex: 1,
     backgroundColor: Colors.backgroundWhite,
   },
+
 });
 
 export default App;
