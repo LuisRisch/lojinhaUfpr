@@ -1,5 +1,5 @@
 import React from "react";
-import { NativeRouter, Route, Link, Switch } from 'react-router-native'
+import { NativeRouter, Route, Link } from "react-router-native";
 import Home from "./screens/Home";
 import MainProducts from "./screens/MainProducts";
 import UserPage from "./screens/UserPage";
@@ -12,10 +12,10 @@ import SearchProduct from "./screens/SearchProduct";
 import Register from "./screens/Register";
 
 const routes = () => (
-    <NativeRouter>
-        <Route path='/' exact={true} component={Home} />
-        <Route path='/MainProducts' component={MainProducts} />
-    </NativeRouter>
+  <NativeRouter>
+    <Route path="/" exact={true} component={Home} />
+    <Route path="/MainProducts" component={MainProducts} />
+  </NativeRouter>
 );
 
 export default routes;
