@@ -1,24 +1,26 @@
-import React from 'react';
-import { StyleSheet, Text, View , Modal } from 'react-native';
-import LoginScreen from './src/screens/Auth/LoginScreen'; 
+import React from "react";
+import { StyleSheet, View } from "react-native";
 
-import Colors from './src/constants/Colors';
+import Spacing from "./src/data/Spacing";
+import Colors from "./src/data/Colors";
 
-const App = () => { 
+import Routes from "./src/routes";
+
+const App = () => {
   return (
-    <View style = {styles.screen}>
-      <LoginScreen/>
+    <View style={styles.screen}>
+      <Routes />
     </View>
   );
-}
-
+};
 var styles = StyleSheet.create({
-  screen : {
-    paddingTop : 48,
-    paddingHorizontal : 18, 
-    flex : 1,  
-    backgroundColor : Colors.backgroundWhite,
-  }
+  screen: {
+    paddingTop: Spacing.TopSpacingScreen,
+    paddingHorizontal: Spacing.MainPadding,
+    flex: 1,
+    backgroundColor: Colors.backgroundWhite,
+  },
+
 });
 
-export default App; 
+export default App;
