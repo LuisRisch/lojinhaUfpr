@@ -14,7 +14,10 @@ import CustomSwitchButton from "../../components/CustomSwitchButton";
 import CustomTopLabelInput from "../../components/CustomTopLabelInput";
 import CustomPasswordInput from "../../components/CustomPasswordInput";
 import CustomCloseIcon from "../../components/CustomCloseIcon";
+import Icon from "react-native-vector-icons/FontAwesome";
 import { styles } from "./styles";
+import { Link } from "react-router-native";
+import Colors from "../../data/Colors";
 
 const Home = () => {
     const [loginModalVisible, setModalLoginVisible] = useState(true);
@@ -81,6 +84,7 @@ const Home = () => {
                         <CustomButtons
                             Label="Entrar sem fazer login"
                             Color={{ Color: "#FA8072" }}
+                            link='/MainProducts'
                         />
                         <View
                             style={{
@@ -118,10 +122,15 @@ const Home = () => {
             <View style={styles.inputsContainer}>
                 <View style={{ justifyContent: "space-between" }}>
                     <ScrollView>
-                        <CustomCloseIcon
-                            onIconPressed={changeStateResetPassModal}
-                            icon="close"
-                        />
+                        <View style={styles.iconContainer}>
+                            <TouchableOpacity onPress={changeStateResetPassModal}>
+                                <Icon
+                                    name='close'
+                                    color={Colors.mainRed}
+                                    size={18}
+                                />
+                            </TouchableOpacity>
+                        </View>
                         <CustomTopLabelInput label="Redefinir senha" />
                         <CustomInputs hintText="Digite seu email " />
                         <Text style={styles.lowerTexT}>
@@ -174,17 +183,22 @@ const Home = () => {
             >
                 <View style={styles.BackModalScreen}>
                     <View style={styles.BackModalAlert}>
-                        <CustomCloseIcon
-                            onIconPressed={changeStateAlertModal}
-                            icon="close"
-                        />
+                        <View style={styles.iconContainer}>
+                            <TouchableOpacity onPress={changeStateAlertModal}>
+                                <Icon
+                                    name='close'
+                                    color={Colors.mainRed}
+                                    size={18}
+                                />
+                            </TouchableOpacity>
+                        </View>
                         <Text style={styles.TitleModalStyle}> Importante! </Text>
                         <View style={styles.SizedBox}></View>
                         <Text style={styles.SubTitleModalStyle}>
                             Você é estudante da UFPR? Caso o usuário que não for aluno, não
                             poderá fazer anúncios no aplicativo, mas terá o direito de fazer
                             compras
-            </Text>
+                        </Text>
 
                         {/* A navegação da página de login para a de cadastro, quando
                             o usuário não tiver nenhuma conta, tem que ser feita aqui 
@@ -196,11 +210,13 @@ const Home = () => {
 
                         <CustomButtons
                             Label="Sim, sou estudante da UFPR"
-                            onButtonPressed={changeStateAlertModal}
+                            onButtonPressed={changeStateAlertModal} 
+                            link='/Register'
                         />
                         <CustomButtons
                             Label="Não sou estudante da UFPR"
                             onButtonPressed={changeStateAlertModal}
+                            link='/Register'
                         />
                     </View>
                 </View>

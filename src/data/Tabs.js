@@ -1,19 +1,23 @@
 const Items = [
     {
         label: 'Sua conta',
-        icon: 'user'
+        icon: 'user', 
+        link: '/UserPage'
     },
     {
         label: 'Loja',
-        icon: 'shopping-cart'
+        icon: 'shopping-cart', 
+        link: '/MainProducts'
     },
     {
         label: 'Chat',
-        icon: 'comments'
+        icon: 'comments', 
+        link: '/ChatList',
     },
     {
         label: 'Sair',
-        icon: 'sign-out'
+        icon: 'sign-out', 
+        link: '/',
     }
 ] 
 
