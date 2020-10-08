@@ -3,9 +3,14 @@ import Spacing from "../../data/Spacing";
 import FontSize from "../../data/FontSizes";
 import Color from "../../data/Colors";
 
+import { StatusBar } from "react-native";
+
 const Styles = StyleSheet.create({
   screen: {
     flex: 1,
+    padding: 18,
+    marginTop: StatusBar.currentHeight,
+    backgroundColor: Color.backgroundWhite,
   },
   sizedBox: {
     height: Spacing.MainMargin,

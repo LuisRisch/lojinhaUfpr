@@ -2,8 +2,15 @@ import { StyleSheet } from "react-native";
 import Spacing from "../../data/Spacing";
 import FontSize from "../../data/FontSizes";
 import Colors from "../../data/Colors";
+import { StatusBar } from "react-native";
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    justifyContent: "space-between",
+    marginTop: StatusBar.currentHeight,
+    backgroundColor: Colors.backgroundWhite,
+  },
   Products_Card_Horizontally: {
     marginTop: Spacing.MainMargin,
     backgroundColor: "white",
@@ -92,12 +99,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center",
+    padding: 20,
   },
   Top_Secundary_Informations: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center",
-    marginTop: Spacing.MainMargin,
+    marginTop: -20,
+    padding: 20,
   },
   Top_Secundary_Layout_Informations: {
     fontSize: FontSize.Lower,

@@ -1,5 +1,6 @@
 import React from "react";
-import { NativeRouter, Route, Link } from "react-router-native";
+import { createStackNavigator } from "@react-navigation/stack";
+
 import Home from "./screens/Home";
 import MainProducts from "./screens/MainProducts";
 import UserPage from "./screens/UserPage";
@@ -11,19 +12,29 @@ import ConfirmAnnouncement from "./screens/ConfirmAnnoucement";
 import SearchProduct from "./screens/SearchProduct";
 import Register from "./screens/Register";
 
-const routes = () => (
-    <NativeRouter>
-        <Route path="/" exact={true} component={Home} />
-        <Route path="/MainProducts" component={MainProducts} />
-        <Route path='/Register' component={Register} />
-        <Route path='/ProductScreen' component={ProductScreen} />
-        <Route path='/UserPage' component={UserPage} />
-        <Route path='/ChatScreen' component={ChatScreen} />
-        <Route path='/ChatList' component={ChatList} />
-        <Route path='/CreateAnnouncement' component={CreateAnnouncement} />
-        <Route path='/ConfirmAnnouncement' component={ConfirmAnnouncement} />
-        <Route path='/SearchProduct' component={SearchProduct} />
-    </NativeRouter>
-);
+const Stack = createStackNavigator();
 
-export default routes;
+function Routes() {
+  return (
+    <Stack.Navigator
+      initialRouteName="Home"
+      screenOptions={{ headerShown: false }}
+    >
+      <Stack.Screen name="Home" component={Home} />
+      <Stack.Screen name="MainProducts" component={MainProducts} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="ProductScreen" component={ProductScreen} />
+      <Stack.Screen name="UserPage" component={UserPage} />
+      <Stack.Screen name="ChatScreen" component={ChatScreen} />
+      <Stack.Screen name="ChatList" component={ChatList} />
+      <Stack.Screen name="CreateAnnouncement" component={CreateAnnouncement} />
+      <Stack.Screen
+        name="ConfirmAnnouncement"
+        component={ConfirmAnnouncement}
+      />
+      <Stack.Screen name="SearchProduct" component={SearchProduct} />
+    </Stack.Navigator>
+  );
+}
+
+export default Routes;
