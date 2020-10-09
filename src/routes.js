@@ -1,5 +1,6 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
+import { createDrawerNavigator } from "@react-navigation/drawer";
 
 import Home from "./screens/Home";
 import MainProducts from "./screens/MainProducts";
@@ -14,26 +15,59 @@ import Register from "./screens/Register";
 
 const Stack = createStackNavigator();
 
+const Drawer = createDrawerNavigator();
+
+const StackRoutes = () => (
+  <Stack.Navigator
+    initialRouteName="MainProducts"
+    screenOptions={{ headerShown: false }}
+  >
+    <Stack.Screen name="MainProducts" component={MainProducts} />
+    <Stack.Screen
+      name="ProductScreen"
+      component={ProductScreen}
+      options={{ headerShown: true, title: "" }}
+    />
+    <Stack.Screen
+      name="ChatScreen"
+      component={ChatScreen}
+      options={{ headerShown: true, title: "" }}
+    />
+    <Stack.Screen name="CreateAnnouncement" component={CreateAnnouncement} />
+    <Stack.Screen name="ConfirmAnnouncement" component={ConfirmAnnouncement} />
+    <Stack.Screen name="SearchProduct" component={SearchProduct} />
+  </Stack.Navigator>
+);
+
 function Routes() {
   return (
-    <Stack.Navigator
-      initialRouteName="Home"
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen name="Home" component={Home} />
-      <Stack.Screen name="MainProducts" component={MainProducts} />
-      <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="ProductScreen" component={ProductScreen} />
-      <Stack.Screen name="UserPage" component={UserPage} />
-      <Stack.Screen name="ChatScreen" component={ChatScreen} />
-      <Stack.Screen name="ChatList" component={ChatList} />
-      <Stack.Screen name="CreateAnnouncement" component={CreateAnnouncement} />
-      <Stack.Screen
-        name="ConfirmAnnouncement"
-        component={ConfirmAnnouncement}
+    <Drawer.Navigator initialRouteName="Login">
+      <Drawer.Screen
+        name="UserPage"
+        component={UserPage}
+        options={{ title: "Sua conta" }}
       />
-      <Stack.Screen name="SearchProduct" component={SearchProduct} />
-    </Stack.Navigator>
+      <Drawer.Screen
+        name="MainProducts"
+        component={StackRoutes}
+        options={{ title: "Loja" }}
+      />
+      <Drawer.Screen
+        name="ChatList"
+        component={ChatList}
+        options={{ title: "Chat" }}
+      />
+      <Drawer.Screen
+        name="Register"
+        component={Register}
+        options={{ title: "Anunciar produto/serviço" }}
+      />
+      <Drawer.Screen
+        name="Login"
+        component={Home}
+        options={{ title: "Sair", gestureEnabled: false }}
+      />
+    </Drawer.Navigator>
   );
 }
 

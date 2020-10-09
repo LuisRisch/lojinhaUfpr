@@ -26,7 +26,6 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.SuperTall,
     fontWeight: "bold",
     alignContent: "center",
-    left: widht / 3.3,
   },
 
   backIcon: {

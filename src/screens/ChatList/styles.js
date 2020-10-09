@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, StatusBar } from "react-native";
 import Colors from "../../data/Colors";
 import FontSizes from "../../data/FontSizes";
 
@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#fff",
-    margin: -18,
     padding: 18,
+    marginTop: StatusBar.currentHeight,
   },
   header: {
     flexDirection: "row",
@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
     width: "90%",
     fontSize: FontSizes.SuperTall,
+    fontWeight: "600",
   },
   content: {
     fontSize: FontSizes.Normal,

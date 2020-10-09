@@ -1,13 +1,14 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import Spacing from "../../data/Spacing";
 import FontSize from "../../data/FontSizes";
 import Colors from "../../data/Colors";
 import { StatusBar } from "react-native";
 
+const { width } = Dimensions.get("window");
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    justifyContent: "space-between",
     marginTop: StatusBar.currentHeight,
     backgroundColor: Colors.backgroundWhite,
   },

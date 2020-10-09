@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,10 +6,8 @@ import {
   Image,
   Modal,
   TouchableOpacity,
-  SafeAreaView,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import CustomCloseIcon from "../../components/CustomCloseIcon";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
 import { ListOfGeneral } from "../../../temp/Products/General";
@@ -19,8 +17,26 @@ import { Items } from "../../data/Tabs";
 import { styles } from "./styles";
 import { CategoryList } from "../../data/Categories";
 
+import api from "../../services/api";
+
 const MainProducts = ({ navigation }) => {
   const defaultTitle = "Início";
+  const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral);
+
+  const loadApi = async () => {
+    // const response = await api.get("/products");
+
+    // if (response.status === 200 && response.data) {
+    //   setListOfProduct([...response.data]);
+    // } else {
+    // }
+    setListOfProduct(ListOfGeneral);
+  };
+
+  useEffect(() => {
+    loadApi();
+  }, []);
+
   const [
     isListVisualisationSelected,
     setIsListVisualisationSelected,
@@ -35,14 +51,10 @@ const MainProducts = ({ navigation }) => {
   const [isModalUserAreaVisible, setIsModalUserAreaVisible] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
 
-  const onProductCardPressed = (name, productId) => {
-    navigation.navigate("ProductScreen");
-
-    console.log(name, productId); //Teste para ver se recebe os dados direito.
+  const onProductCardPressed = (item) => {
+    navigation.navigate("ProductScreen", { item });
   };
   const [title, setTitle] = useState(defaultTitle);
-
-  const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral);
 
   // Filtrará os produtos por uma certa categoria
   const ChangeCategory = (i) => {
@@ -87,21 +99,21 @@ const MainProducts = ({ navigation }) => {
 
   const renderItemCard = ({ item }) =>
     isListVisualisationSelected ? (
-      <TouchableOpacity
-        onPress={() => onProductCardPressed(item.AnnouncedBy, item.id)}
-      >
+      <TouchableOpacity onPress={() => onProductCardPressed(item)}>
         <View style={styles.Products_Card_Horizontally}>
           <Image
-            source={{ uri: item.imgUrl }}
+            source={{
+              uri: item.picture ? item.picture[0].url : null,
+            }}
             style={styles.Image_Horizontaly_Display}
             resizeMode="cover"
           />
           <View style={styles.Products_Card_Informations}>
             <Text numberOfLines={2} style={styles.Products_Title_Horizontally}>
-              {item.Title}
+              {item.title}
             </Text>
             <View style={styles.Price_Box_Horizontally}>
-              <Text style={styles.Price_Layout}>R$ {item.Price}</Text>
+              <Text style={styles.Price_Layout}>R$ {item.price}</Text>
 
               {/* Espaçamento entre palavras de 5px */}
               <View style={{ width: 5 }}></View>
@@ -113,16 +125,21 @@ const MainProducts = ({ navigation }) => {
                 Anunciado por:
               </Text>
               <Text style={styles.AnnouncedBy_Horizontally_Name}>
-                {item.AnnouncedBy}
+                {item.user ? item.user.name : ""}
               </Text>
             </View>
           </View>
         </View>
       </TouchableOpacity>
     ) : (
-      <TouchableOpacity style={styles.Box_Card_Grid_Products}>
+      <TouchableOpacity
+        style={styles.Box_Card_Grid_Products}
+        onPress={() => onProductCardPressed(item)}
+      >
         <Image
-          source={{ uri: item.imgUrl }}
+          source={{
+            uri: item.picture ? item.picture[0].url : null,
+          }}
           style={styles.Image_Layout_Grid}
           resizeMode="cover"
         />
@@ -131,10 +148,10 @@ const MainProducts = ({ navigation }) => {
           numberOfLines={2}
           style={styles.Product_Title_Grid}
         >
-          {item.Title}
+          {item.title}
         </Text>
         <View style={styles.Box_Price_Grid}>
-          <Text style={styles.Price_Layout_Grid}>R$ {item.Price}</Text>
+          <Text style={styles.Price_Layout_Grid}>R$ {item.price}</Text>
           {/* Espaçamento entre palavras de 5px */}
           <View style={{ width: 5 }}></View>
           {/* Mesmas propriedades */}
@@ -145,7 +162,7 @@ const MainProducts = ({ navigation }) => {
             Anunciado por:
           </Text>
           <Text style={styles.AnnouncedBy_Horizontally_Name}>
-            {item.AnnouncedBy}
+            {item.user ? item.user.name : ""}
           </Text>
         </View>
       </TouchableOpacity>

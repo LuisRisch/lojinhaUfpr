@@ -146,12 +146,6 @@ const Register = ({ navigation }) => {
 
       <ScrollView showsVerticalScrollIndicator={false}>
         <View style={styles.topContaine}>
-          <View style={styles.backIcon}>
-            <CustomCloseIcon
-              icon="arrow-circle-left"
-              onPress={() => navigation.navigate("Home")}
-            />
-          </View>
           <Text style={styles.normalTextTitle}>Cadastro</Text>
         </View>
         <TouchableOpacity>

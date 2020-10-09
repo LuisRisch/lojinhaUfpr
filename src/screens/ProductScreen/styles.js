@@ -1,15 +1,16 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import Spacing from "../../data/Spacing";
 import FontSize from "../../data/FontSizes";
 import Color from "../../data/Colors";
 
 import { StatusBar } from "react-native";
 
+const { width } = Dimensions.get("window");
+
 const Styles = StyleSheet.create({
   screen: {
     flex: 1,
-    padding: 18,
-    marginTop: StatusBar.currentHeight,
+    paddingHorizontal: 18,
     backgroundColor: Color.backgroundWhite,
   },
   sizedBox: {
@@ -45,14 +46,15 @@ const Styles = StyleSheet.create({
     fontWeight: "500",
   },
   imageStyle: {
-    height: 200,
+    height: width - 36,
+    width: width - 36,
     borderRadius: 16,
     width: "100%",
   },
   title: {
-    fontSize: FontSize.Tall,
+    fontSize: FontSize.SuperTall,
     fontWeight: "bold",
-    color: Color.mainGrey,
+    color: "#000",
   },
   priceBox: {
     flexDirection: "row",
@@ -81,7 +83,7 @@ const Styles = StyleSheet.create({
   labelStyle: {
     fontSize: FontSize.Tall,
     color: Color.mainRed,
-    fontWeight: "500",
+    fontWeight: "bold",
     textDecorationLine: "underline",
   },
   subLabel: {

@@ -4,6 +4,7 @@ const styles = StyleSheet.create({
   IconContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
+    marginTop: 18,
   },
 });
 
