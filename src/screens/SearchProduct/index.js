@@ -8,6 +8,8 @@ import Color from "../../data/Colors";
 import FontSizes from "../../data/FontSizes";
 const SearchProduct = () => {
     const [search, setSearch] = useState("");
+    const [errorInSearch , setError] = useState(false);
+    
     const InputHandler = (text) => {
         setSearch(text);
         console.log(search);
@@ -46,6 +48,8 @@ const SearchProduct = () => {
 
             <CustomInput
                 onChangeText={(text) => InputHandler(text)}
+                error={errorInSearch}
+                errorMessage='Não foi encontado!'
                 hintText="Procurar"
                 value={search}
             />
