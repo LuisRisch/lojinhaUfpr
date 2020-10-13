@@ -100,7 +100,7 @@ const FinishUfprRegister = () => {
         if (DefinePass !== ConfirmPass) {
             setErrorInRevPass(true)
         }
-        if (!errorInCpf || !errorInPass || !errorInRevPass) {
+        if (!errorInCpf && !errorInPass && !errorInRevPass) {
             setIsConfirmRegisterModalVisible(!isConfirmRegisterModalVisible)
         }
     }
