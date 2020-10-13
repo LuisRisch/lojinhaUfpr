@@ -1,6 +1,5 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
-
 import Spacing from "./src/data/Spacing";
 import Colors from "./src/data/Colors";
 
