@@ -10,6 +10,8 @@ import CreateAnnouncement from "./screens/Annoucement";
 import ConfirmAnnouncement from "./screens/ConfirmAnnoucement";
 import SearchProduct from "./screens/SearchProduct";
 import Register from "./screens/Register";
+import UfprRegister from "./screens/UfprRegister/Index";
+import FinishUfprRegister from "./screens/UfprRegister/FinishUfṕrRegister";
 
 const routes = () => (
     <NativeRouter>
@@ -23,6 +25,8 @@ const routes = () => (
         <Route path='/CreateAnnouncement' component={CreateAnnouncement} />
         <Route path='/ConfirmAnnouncement' component={ConfirmAnnouncement} />
         <Route path='/SearchProduct' component={SearchProduct} />
+        <Route path="/UfprRegister" component={UfprRegister} />
+        <Route path="/FinishUfprRegister" component={FinishUfprRegister} />
     </NativeRouter>
 );
 
