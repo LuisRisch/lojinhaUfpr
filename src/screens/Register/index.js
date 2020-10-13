@@ -25,7 +25,146 @@ const Register = () => {
     const [Cpf, setCpf] = useState("");
     const [Grr, setGrr] = useState("");
     const [DefinePass, setDefinePass] = useState("");
-    const [ConfirmPass, setConfirmPass] = useState("");
+    const [ConfirmPass, setConfirmPass] = useState(""); 
+
+    // Shows error in input if some information is wrong
+    const [errorInName , setErrorInName] = useState(false); 
+    const [errorInEmail , setErrorinEmail] = useState(false);
+    const [errorInCpf , setErrorInCpf] = useState(false);
+    const [errorInGrr , setErrorInGrr] = useState(false);
+    const [errorInPass , setErrorInPass] = useState(false);
+    const [errorInRevPass , setErrorInRevPass] = useState(false); 
+
+    // Catch the char of the field
+    const NameHandler = (text) => {
+        if(errorInName){
+            setErrorInName(!errorInName)
+        }  
+        setName(text); 
+        console.log(Name)
+    } 
+
+    const EmailHandler = (text) => {
+        if(errorInEmail){
+            setErrorinEmail(!errorInEmail)
+        } 
+        setEmail(text)
+        console.log(Email)
+    } 
+
+    const CpfHandler = (text) => {
+        if(errorInCpf){
+            setErrorInCpf(!errorInCpf)
+        }
+        setCpf(text) 
+        console.log(Cpf)
+    } 
+
+    const GrrHandler = (text) => {
+        if(errorInGrr){
+            setErrorInGrr(!errorInGrr)
+        } 
+        setGrr(text) 
+        console.log(Grr)
+    } 
+
+    const PassHandler = (text) => {
+        if(errorInPass){
+            setErrorInPass(!errorInPass)
+        }
+        setDefinePass(text) 
+        console.log(DefinePass)
+    } 
+
+    const RevPassHandler = (text) => {
+        if(errorInRevPass){
+            setErrorInRevPass(!errorInRevPass)
+        } 
+        setConfirmPass(text)
+        console.log(ConfirmPass);
+    }  
+
+    function VerifyLenght(text){    
+        return text.length >= 1 ? true : false
+    } 
+
+    function IsEmail(email){
+        return email.includes('@');
+    } 
+    
+    function isValidCPF(cpf) {
+        if (typeof cpf !== 'string') return false;
+        cpf = cpf.replace(/[\s.-]*/gim, '');
+        if (
+            !cpf ||
+            cpf.length != 11 ||
+            cpf == '00000000000' ||
+            cpf == '11111111111' ||
+            cpf == '22222222222' ||
+            cpf == '33333333333' ||
+            cpf == '44444444444' ||
+            cpf == '55555555555' ||
+            cpf == '66666666666' ||
+            cpf == '77777777777' ||
+            cpf == '88888888888' ||
+            cpf == '99999999999'
+        ) {
+            return false;
+        }
+        let soma = 0;
+        let resto;
+        for (let i = 1; i <= 9; i++)
+            soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+        resto = (soma * 10) % 11;
+        if (resto == 10 || resto == 11) resto = 0;
+        if (resto != parseInt(cpf.substring(9, 10))) return false;
+        soma = 0;
+        for (let i = 1; i <= 10; i++)
+            soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+        resto = (soma * 10) % 11;
+        if (resto == 10 || resto == 11) resto = 0;
+        if (resto != parseInt(cpf.substring(10, 11))) return false;
+        return true;
+    }
+    
+    function isValidPass(pass){
+        return pass.length >=8 ? true : false
+    }
+    
+    //Function that verifies everything before complete the registration
+    const onSubmitt = () => {
+        if(!VerifyLenght(Name)){
+            setErrorInName(true) 
+            setName('')
+        }
+    
+        if(VerifyLenght(Email)){
+            if(!IsEmail(Email)){
+                setErrorinEmail(true)
+                setEmail('')
+            }
+        } else {
+            setErrorinEmail(true)
+            setEmail('')
+        } 
+
+        if (!isValidCPF(Cpf)){
+            setErrorInCpf(true) 
+            setCpf('')
+        } 
+        
+        if(!isValidPass(DefinePass)){
+            setErrorInPass(true) 
+            setDefinePass('');
+        } 
+
+        if(DefinePass !== ConfirmPass){
+            setErrorInRevPass(true) 
+        }
+        if(!errorInName && !errorInCpf && !errorInEmail && !errorInGrr && !errorInPass && !errorInRevPass){
+            setIsConfirmRegisterModalVisible(!isConfirmRegisterModalVisible)
+        }
+    }
 
     const [isCheckBoxSelected, setIsCheckBoxSelected] = useState(false);
     const changeStateCheckBox = () => {
@@ -66,11 +205,8 @@ const Register = () => {
     // é ou não estudante da ufpr. Se o usuário for estudante da ufpr, irá acrescentar uma input a mais
     // o do GRR.
 
-    // Essa variável é um exemplo de como vai funcionar.
-    let isStudentFromUfpr = true;
-
     return (
-        <View style={styles.screen}>
+        <View style={styles.screen}> 
 
             {/* Esse modal irá mostrar um Alerta customizado confirmando o cadastro do novo usuário */}
             <Modal
@@ -163,44 +299,46 @@ const Register = () => {
                 <View>
                     <CustomTopLabelInput label="Nome" />
                     <CustomInputs
-                        hintText="Beatriz Nogueira"
-                        onChangeText={(text) => setName(text)}
+                        hintText="Beatriz Nogueira" 
+                        error={errorInName} 
+                        value={Name}
+                        errorMessage='Esse nome está errado!'
+                        onChangeText={(text) => NameHandler(text)}
                     />
 
                     <CustomTopLabelInput label="Email" />
                     <CustomInputs
                         hintText="beatriznogueira@gmail.com"
-                        onChangeText={(text) => setEmail(text)}
+                        error={errorInEmail} 
+                        value={Email}
+                        errorMessage='Esse email é inválido'
+                        onChangeText={(text) => EmailHandler(text)}
                     />
 
                     <CustomTopLabelInput label="CPF" />
                     <CustomInputs
                         hintText="111111111-11"
-                        onChangeText={(text) => setCpf(text)}
+                        error={errorInCpf}
+                        value={Cpf}
+                        errorMessage='Esse Cpf é inválido'
+                        onChangeText={(text) => CpfHandler(text)}
                     />
-
-                    {isStudentFromUfpr ? (
-                        <View>
-                            <CustomTopLabelInput label="GRR" />
-                            <CustomInputs
-                                hintText="GRR20203940"
-                                onChangeText={(text) => setGrr(text)}
-                            />
-                        </View>
-                    ) : (
-                            <View></View>
-                        )}
-
                     <CustomTopLabelInput label="Defina a senha" />
                     <CustomPasswordInput
                         hintText="Digite sua senha"
-                        onChangeText={(text) => setDefinePass(text)}
+                        error={errorInPass} 
+                        value={DefinePass}
+                        errorMessage='Senha inválido'
+                        onChangeText={(text) => PassHandler(text)}
                     />
 
                     <CustomTopLabelInput label="Repita a senha" />
                     <CustomPasswordInput
                         hintText="Repita sua senha"
-                        onChangeText={(text) => setConfirmPass(text)}
+                        error={errorInRevPass}
+                        value={ConfirmPass}
+                        errorMessage='O campo digitado não está igual ao da senha'
+                        onChangeText={(text) => RevPassHandler(text)}
                     />
 
                     <Text style={styles.lowerTexT}>
@@ -208,13 +346,13 @@ const Register = () => {
                     </Text>
 
                     {isCheckBoxSelected ? (
-                        <TouchableOpacity style={styles.buttonContainer} onPress={changeStateConfirmModal}>
+                        <TouchableOpacity style={styles.buttonContainer} onPress={onSubmitt}>
                             <Text style={styles.buttonLabel}>
-                                Entendido
+                                Criar
                             </Text>
                         </TouchableOpacity>
                     ) : (
-                            <View></View>
+                            null
                         )}
 
                     <View style={styles.CheckBoxContainer}>
