@@ -1,6 +1,8 @@
 import React from "react";
 import { StyleSheet, View } from "react-native";
 
+import { PersistGate } from "redux-persist/integration/react";
+import { Provider } from "react-redux";
 import { NavigationContainer } from "@react-navigation/native";
 
 import "react-native-gesture-handler";
@@ -10,11 +12,17 @@ import "react-native-gesture-handler";
 
 import Routes from "./src/routes";
 
+import { store, persistor } from "./src/store/index";
+
 const App = () => {
   return (
-    <NavigationContainer>
-      <Routes />
-    </NavigationContainer>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <NavigationContainer>
+          <Routes />
+        </NavigationContainer>
+      </PersistGate>
+    </Provider>
   );
 };
 // var styles = StyleSheet.create({

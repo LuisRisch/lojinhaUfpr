@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -8,7 +8,12 @@ import {
   Dimensions,
   TouchableOpacity,
   SafeAreaView,
+  Alert,
 } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useDispatch, useSelector } from "react-redux";
+
+import { userSignIn, userRemember } from "../../store/modules/user/actions";
 import CustomButtons from "../../components/CustomButtons";
 import CustomInputs from "../../components/CustomInputs";
 import CustomSwitchButton from "../../components/CustomSwitchButton";
@@ -19,9 +24,26 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { styles } from "./styles";
 import Colors from "../../data/Colors";
 
+import api from "../../services/api";
+
 const Home = ({ navigation }) => {
   const [loginModalVisible, setModalLoginVisible] = useState(true);
   const [isModalResetPassVisible, setIsModalResetPassVisible] = useState(false);
+
+  const userSigned = useSelector((state) => state.user.signed);
+  const rememberPassword = useSelector((state) => state.user.rememberPassword);
+
+  const handleRememberPassword = () => {
+    dispatch(userRemember());
+  };
+
+  useEffect(() => {
+    if (userSigned && rememberPassword) {
+      navigation.navigate("MainProducts");
+    }
+  }, []);
+
+  const dispatch = useDispatch();
 
   const changeStateResetPassModal = () => {
     setModalLoginVisible(!loginModalVisible);
@@ -38,8 +60,20 @@ const Home = ({ navigation }) => {
 
   const height = Dimensions.get("window").height;
 
-  const handleLogin = () => {
-    navigation.navigate("MainProducts");
+  const handleLogin = async () => {
+    if (Cpf && Pass) {
+      const response = await api.post("/login", { cpf: Cpf, password: Pass });
+
+      if (response.status === 200) {
+        dispatch(userSignIn(response.data));
+        navigation.navigate("MainProducts");
+        return 0;
+      }
+    }
+    Alert.alert(
+      "Informações inválidas!",
+      "As suas informações de cpf e senha estão inválidas"
+    );
   };
 
   const handleRegister = () => {
@@ -153,7 +187,10 @@ const Home = ({ navigation }) => {
             />
             <View style={styles.saveOrForgotPasswordContainer}>
               <View style={styles.switchButtonContainer}>
-                <CustomSwitchButton />
+                <CustomSwitchButton
+                  onChange={handleRememberPassword}
+                  value={rememberPassword}
+                />
                 <Text style={styles.lowerTexT}>Lembrar</Text>
               </View>
               <TouchableOpacity onPress={changeStateResetPassModal}>
@@ -168,7 +205,7 @@ const Home = ({ navigation }) => {
             <CustomButtons
               Label="Entrar sem fazer login"
               Color={{ Color: "#FA8072" }}
-              onButtonPressed={handleLogin}
+              onButtonPressed={() => navigation.navigate("MainProducts")}
             />
             <View
               style={{
