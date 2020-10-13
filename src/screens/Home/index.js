@@ -18,10 +18,16 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { styles } from "./styles";
 import { Link } from "react-router-native";
 import Colors from "../../data/Colors";
+import FontSizes from "../../data/FontSizes";
 
 const Home = () => {
     const [loginModalVisible, setModalLoginVisible] = useState(true);
-    const [isModalResetPassVisible, setIsModalResetPassVisible] = useState(false);
+    const [isModalResetPassVisible, setIsModalResetPassVisible] = useState(false); 
+
+    // Se tiver algum erro com os dados inseridos, o campo do input ficará vermelho e aparecerá uma mensagem de erro
+    const [errorInCpf , setErrorInCpf] = useState(false);
+    const [errorInPass , setErrorInPass] = useState(false);
+    const [errorInRedifinePass , setErrorInRedifinePass] = useState(true);
 
     const changeStateResetPassModal = () => {
         setModalLoginVisible(!loginModalVisible);
@@ -34,7 +40,31 @@ const Home = () => {
     };
 
     const [Cpf, setCpf] = useState("");
+    const CpfHandler = (text) => {
+        if(errorInCpf) {
+            setErrorInCpf(!errorInCpf); 
+        } 
+        setCpf(text);
+        console.log(Cpf);
+    }
+
     const [Pass, setPass] = useState("");
+    const PassHandler = (text) => {
+        if(errorInPass) {
+            setErrorInPass(!errorInPass)
+        } 
+        setPass(text);
+        console.log(Pass);
+    } 
+
+    const [redifinePass ,  setRedifinePass] = useState(''); 
+    const RedifinePassHandler = (text) => {
+        if(errorInRedifinePass){
+            setErrorInRedifinePass(!redifinePass)
+        } 
+        setRedifinePass(text);
+        console.log(redifinePass);
+    }
 
     const height = Dimensions.get("window").height;
 
@@ -56,16 +86,22 @@ const Home = () => {
             <View style={{ justifyContent: "space-between" }}>
                 <ScrollView>
                     <View style={styles.inputsContainer}>
-                        <CustomTopLabelInput label="CPF" />
+                        <CustomTopLabelInput label="CPF ou GRR" />
                         <CustomInputs
                             hintText="Digite o seu CPF"
-                            onChangeText={(text) => setCpf(text)}
+                            onChangeText={(text) => CpfHandler(text)}
+                            error = {errorInCpf}
+                            errorMessage = 'Esse Cpf não consta na nossa base de dados'
                         />
+
                         <CustomTopLabelInput label="Senha" />
                         <CustomPasswordInput
                             hintText="Digite sua senha"
-                            onChangeText={(text) => setPass(text)}
+                            onChangeText={(text) => PassHandler(text)}
+                            error = {errorInPass}
+                            errorMessage = 'Essa senha não consta na nossa base de dados'
                         />
+
                         <View style={styles.saveOrForgotPasswordContainer}>
                             <View style={styles.switchButtonContainer}>
                                 <CustomSwitchButton />
@@ -132,7 +168,12 @@ const Home = () => {
                             </TouchableOpacity>
                         </View>
                         <CustomTopLabelInput label="Redefinir senha" />
-                        <CustomInputs hintText="Digite seu email " />
+                        <CustomInputs 
+                            hintText="Digite seu email"
+                            onChangeText={(text) => RedifinePassHandler(text)}
+                            error = {errorInRedifinePass}
+                            errorMessage = 'Esse email não consta na nossa base de dados'
+                        />
                         <Text style={styles.lowerTexT}>
                             Enviaremos um email com as informações necessárias para a
                             redefinação da senha
@@ -211,7 +252,7 @@ const Home = () => {
                         <CustomButtons
                             Label="Sim, sou estudante da UFPR"
                             onButtonPressed={changeStateAlertModal} 
-                            link='/Register'
+                            link='/UfprRegister'
                         />
                         <CustomButtons
                             Label="Não sou estudante da UFPR"
