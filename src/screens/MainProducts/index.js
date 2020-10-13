@@ -24,13 +24,12 @@ const MainProducts = ({ navigation }) => {
   const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral);
 
   const loadApi = async () => {
-    // const response = await api.get("/products");
+    const response = await api.get("/products");
 
-    // if (response.status === 200 && response.data) {
-    //   setListOfProduct([...response.data]);
-    // } else {
-    // }
-    setListOfProduct(ListOfGeneral);
+    if (response.status === 200 && response.data) {
+      setListOfProduct([...response.data]);
+    }
+    // setListOfProduct(ListOfGeneral);
   };
 
   useEffect(() => {
@@ -228,55 +227,6 @@ const MainProducts = ({ navigation }) => {
       </View>
 
       {/**************** Este modal mostra a area do usuário ***************/}
-
-      <Modal visible={isModalUserAreaVisible} animationType="slide" transparent>
-        <View style={styles.User_Modal_Container}>
-          <View>
-            <View style={{ alignSelf: "flex-end" }}>
-              <TouchableOpacity
-                onPress={() =>
-                  setIsModalUserAreaVisible(!isModalUserAreaVisible)
-                }
-              >
-                <Icon
-                  name="arrow-circle-left"
-                  size={20}
-                  color={Colors.mainPink}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.User_Top_Information}>
-              <View style={styles.Circle_Box_Photo}>
-                <Icon name="camera" size={15} color="white" />
-              </View>
-              <View
-                style={{
-                  marginLeft: Spacing.MainMargin - 9, //9px
-                }}
-              >
-                <Text style={styles.User_Name}>Luis Felipe Risch</Text>
-                <Text style={styles.User_Email}>lfr20@inf.ufpr.br</Text>
-              </View>
-            </View>
-
-            {/* Função que cria as abas da área do usuário */}
-
-            {Items.map((item, index) => (
-              <View style={styles.Tabs_User_Area}>
-                <Icon name={item.icon} size={20} color={Colors.mainRed} />
-                <Text style={styles.Tabs_User_Label}>{item.label}</Text>
-              </View>
-            ))}
-          </View>
-          <Image
-            source={require("../../assets/logo.png")}
-            style={styles.Bottom_Logo}
-          />
-        </View>
-      </Modal>
-
-      {/*****************  Este modal mostra a área a barra horizontal no final da tela com as opções d
-                de visualizar os dados em forma de lista ou grade *****************/}
 
       <Modal
         visible={isModalOfOptionsSelected}

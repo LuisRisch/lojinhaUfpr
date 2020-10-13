@@ -13,6 +13,8 @@ import ConfirmAnnouncement from "./screens/ConfirmAnnoucement";
 import SearchProduct from "./screens/SearchProduct";
 import Register from "./screens/Register";
 
+import CustomDrawer from "./components/CustomDrawer";
+
 const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
@@ -41,7 +43,16 @@ const StackRoutes = () => (
 
 function Routes() {
   return (
-    <Drawer.Navigator initialRouteName="Login">
+    <Drawer.Navigator
+      initialRouteName="Login"
+      drawerContent={CustomDrawer}
+      drawerContentOptions={{
+        activeTintColor: "#ed524a",
+        labelStyle: {
+          fontWeight: "bold",
+        },
+      }}
+    >
       <Drawer.Screen
         name="UserPage"
         component={UserPage}
