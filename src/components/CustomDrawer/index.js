@@ -7,10 +7,13 @@ import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { View, TouchableOpacity, Text, Image } from "react-native";
+import { useSelector } from "react-redux";
 
 import { styles } from "./styles";
 
 const CustomDrawer = (props) => {
+  const { user } = props;
+
   return (
     <DrawerContentScrollView
       {...props}
@@ -25,8 +28,10 @@ const CustomDrawer = (props) => {
             marginLeft: Spacing.MainMargin - 9, //9px
           }}
         >
-          <Text style={styles.User_Name}>Luis Felipe Risch</Text>
-          <Text style={styles.User_Email}>lfr20@inf.ufpr.br</Text>
+          <Text style={styles.User_Name}>
+            {user ? user.name : "Não logado"}
+          </Text>
+          <Text style={styles.User_Email}>{user ? user.email : ""}</Text>
         </View>
       </View>
       <View

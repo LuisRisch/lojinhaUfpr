@@ -25,7 +25,7 @@ const Style = StyleSheet.create({
     width: "100%",
     backgroundColor: Colors.ultraLightGrey,
     height: 35,
-    borderRadius: 16,
+    borderRadius: 5,
     paddingHorizontal: 8,
     shadowColor: "black",
     shadowOffset: {
@@ -46,7 +46,6 @@ const Style = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "55%",
   },
   titleStyle: {
     fontSize: FontSize.SuperTall,

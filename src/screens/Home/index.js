@@ -66,6 +66,7 @@ const Home = ({ navigation }) => {
 
       if (response.status === 200) {
         dispatch(userSignIn(response.data));
+        api.defaults.Authentication = `Bearer ${response.data.token}`;
         navigation.navigate("MainProducts");
         return 0;
       }

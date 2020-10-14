@@ -1,6 +1,10 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+import { useSelector } from "react-redux";
+import Icon from "react-native-vector-icons/FontAwesome";
+
+import Colors from "./data/Colors";
 
 import Home from "./screens/Home";
 import MainProducts from "./screens/MainProducts";
@@ -14,12 +18,13 @@ import SearchProduct from "./screens/SearchProduct";
 import Register from "./screens/Register";
 
 import CustomDrawer from "./components/CustomDrawer";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
-const StackRoutes = () => (
+const StackRoutes = ({ navigation }) => (
   <Stack.Navigator
     initialRouteName="MainProducts"
     screenOptions={{ headerShown: false }}
@@ -28,24 +33,59 @@ const StackRoutes = () => (
     <Stack.Screen
       name="ProductScreen"
       component={ProductScreen}
-      options={{ headerShown: true, title: "" }}
+      options={{
+        headerStyle: {
+          backgroundColor: Colors.backgroundWhite,
+          elevation: 0,
+        },
+        headerShown: true,
+        title: "",
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Icon
+              name="align-left"
+              size={20}
+              color="#c4c4c4"
+              style={{ marginLeft: 18 }}
+            />
+          </TouchableOpacity>
+        ),
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SearchProduct")}
+          >
+            <Icon
+              name="search"
+              size={20}
+              color="#c4c4c4"
+              style={{ marginRight: 18 }}
+            />
+          </TouchableOpacity>
+        ),
+      }}
     />
     <Stack.Screen
       name="ChatScreen"
       component={ChatScreen}
       options={{ headerShown: true, title: "" }}
     />
-    <Stack.Screen name="CreateAnnouncement" component={CreateAnnouncement} />
+    <Stack.Screen
+      name="Register"
+      component={Register}
+      options={{ title: "Anunciar produto/serviço" }}
+    />
     <Stack.Screen name="ConfirmAnnouncement" component={ConfirmAnnouncement} />
     <Stack.Screen name="SearchProduct" component={SearchProduct} />
   </Stack.Navigator>
 );
 
 function Routes() {
+  const user = useSelector((state) => state.user.data);
+
   return (
     <Drawer.Navigator
       initialRouteName="Login"
-      drawerContent={CustomDrawer}
+      drawerContent={(props) => <CustomDrawer {...props} />}
       drawerContentOptions={{
         activeTintColor: "#ed524a",
         labelStyle: {
@@ -69,8 +109,8 @@ function Routes() {
         options={{ title: "Chat" }}
       />
       <Drawer.Screen
-        name="Register"
-        component={Register}
+        name="CreateAnnouncement"
+        component={CreateAnnouncement}
         options={{ title: "Anunciar produto/serviço" }}
       />
       <Drawer.Screen
