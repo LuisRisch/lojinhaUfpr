@@ -1,8 +1,9 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { userSignOut } from "./store/modules/user/actions";
 
 import Colors from "./data/Colors";
 
@@ -82,6 +83,8 @@ const StackRoutes = ({ navigation }) => (
 function Routes() {
   const user = useSelector((state) => state.user.data);
 
+  const dispatch = useDispatch();
+
   return (
     <Drawer.Navigator
       initialRouteName="Login"
@@ -117,6 +120,11 @@ function Routes() {
         name="Login"
         component={Home}
         options={{ title: "Sair", gestureEnabled: false }}
+        listeners={({ navigation, route }) => ({
+          focus: (e) => {
+            dispatch(userSignOut());
+          },
+        })}
       />
     </Drawer.Navigator>
   );

@@ -62,19 +62,27 @@ const Home = ({ navigation }) => {
 
   const handleLogin = async () => {
     if (Cpf && Pass) {
-      const response = await api.post("/login", { cpf: Cpf, password: Pass });
-
-      if (response.status === 200) {
-        dispatch(userSignIn(response.data));
-        api.defaults.Authentication = `Bearer ${response.data.token}`;
-        navigation.navigate("MainProducts");
-        return 0;
-      }
+      await api
+        .post("/login", { cpf: Cpf, password: Pass })
+        .then((res) => {
+          if (res.status === 200) {
+            dispatch(userSignIn(res.data));
+            navigation.navigate("MainProducts");
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          Alert.alert(
+            "Informações inválidas!",
+            "As suas informações de cpf e senha estão inválidas"
+          );
+        });
+    } else {
+      Alert.alert(
+        "Informações faltando!",
+        "Por favor, preencha suas informações de login!"
+      );
     }
-    Alert.alert(
-      "Informações inválidas!",
-      "As suas informações de cpf e senha estão inválidas"
-    );
   };
 
   const handleRegister = () => {

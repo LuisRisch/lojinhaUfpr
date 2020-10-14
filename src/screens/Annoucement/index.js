@@ -9,6 +9,8 @@ import {
   Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import * as ImagePicker from "expo-image-picker";
+import Constants from "expo-constants";
 
 import CustomInputs from "../../components/CustomInputs";
 import CustomTopLabel from "../../components/CustomTopLabelInput";
@@ -17,6 +19,7 @@ import BoxProduct from "../../components/CustomBoxesProductInformation";
 import CustomButton from "../../components/CustomButtons";
 import CustomCloseIcon from "../../components/CustomCloseIcon";
 import { CategoryList } from "../../data/Categories";
+
 import { styles } from "./styles";
 
 import api from "../../services/api";
@@ -31,11 +34,6 @@ const CreateAnnouncement = () => {
   const [productDescription, setProductDescription] = useState("");
   const [payment, setPayment] = useState("");
   const [delivery, setDelivery] = useState("");
-  // Categorias pré definidas dos produtos
-  // const CategoryList = [
-  //     'Salgados', 'Doces', 'Artesanato', 'Roupas', 'Livros', 'Serviços', 'Eletrônicos', 'Móveis',
-  //     'Esporte', 'Calçados', 'Outros'
-  // ];
 
   const [categoryList, setCategoryList] = useState([]);
 
@@ -49,6 +47,19 @@ const CreateAnnouncement = () => {
 
   useEffect(() => {
     loadCategories();
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestCameraRollPermissionsAsync();
+        if (status !== "granted") {
+          Alert.alert(
+            "Permissões necessárias",
+            "Necessitamos de algumas permissões para poder cadastrar produtos!"
+          );
+        }
+      }
+    })();
   }, []);
 
   // i = index of the category array
