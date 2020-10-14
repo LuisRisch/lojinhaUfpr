@@ -130,9 +130,9 @@ function Routes() {
         component={Home}
         options={{ title: "Sair", gestureEnabled: false }}
         listeners={({ navigation, route }) => ({
-          focus: (e) => {
-            dispatch(userSignOut());
-          },
+          // focus: (e) => {
+          //   dispatch(userSignOut());
+          // },
         })}
       />
     </Drawer.Navigator>

@@ -39,7 +39,15 @@ const Home = ({ navigation }) => {
     const [errorInPass, setErrorInPass] = useState(false);
     const [errorInRedifinePass, setErrorInRedifinePass] = useState(true);
 
+<<<<<<< HEAD
     const [cpfMessage, setCpfError] = useState("Informações inválidas");
+=======
+  const [imageList, setImageList] = useState([{ url: "", selector: true }]);
+
+  const handleRememberPassword = () => {
+    dispatch(userRemember());
+  };
+>>>>>>> c4329e2cbe7e0bb75557409dc0746bd0cf73d296
 
     const handleRememberPassword = () => {
         dispatch(userRemember());
@@ -66,7 +74,37 @@ const Home = ({ navigation }) => {
     const [Cpf, setCpf] = useState("");
     const [Pass, setPass] = useState("");
 
+<<<<<<< HEAD
     const height = Dimensions.get("window").height;
+=======
+  const handleLogin = async () => {
+    if (Cpf && Pass) {
+      // if (!isCPFValid(Cpf)) {
+      //   setErrorInCpf(true);
+      //   setCpfError("Número do CPF inválido!");
+      //   return 0;
+      // } COMENTADO DURANTE O DESENVOLVIMENTO
+      await api
+        .post("/login", { cpf: Cpf, password: Pass })
+        .then((res) => {
+          if (res.status === 200) {
+            dispatch(userSignIn(res.data));
+            navigation.navigate("MainProducts");
+            setErrorInCpf(false);
+            setErrorInPass(false);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+          setErrorInCpf(true);
+          setErrorInPass(true);
+        });
+    } else {
+      setErrorInCpf(true);
+      setErrorInPass(true);
+    }
+  };
+>>>>>>> c4329e2cbe7e0bb75557409dc0746bd0cf73d296
 
     const handleLogin = async () => {
         if (Cpf && Pass) {

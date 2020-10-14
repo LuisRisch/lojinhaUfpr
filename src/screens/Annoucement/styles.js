@@ -78,6 +78,23 @@ const styles = StyleSheet.create({
     fontWeight: "500",
     textAlign: "justify",
   },
+  pictureBox: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 40,
+    borderStyle: "dashed",
+    borderRadius: 10,
+    borderColor: Colors.mainRed,
+    borderWidth: 2,
+    marginVertical: 20,
+  },
+  pictureComponent: {
+    height: 200,
+    width: 200,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
 });
 
 export { styles };
