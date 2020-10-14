@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
 import FontSize from "../../data/FontSizes";
@@ -25,7 +25,7 @@ const Style = StyleSheet.create({
     width: "100%",
     backgroundColor: Colors.ultraLightGrey,
     height: 35,
-    borderRadius: 16,
+    borderRadius: 5,
     paddingHorizontal: 8,
     shadowColor: "black",
     shadowOffset: {
@@ -36,12 +36,16 @@ const Style = StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 1.5,
   },
-  screen: { flex: 1 },
+  screen: {
+    flex: 1,
+    backgroundColor: "#fff",
+    padding: 18,
+    marginTop: StatusBar.currentHeight,
+  },
   header: {
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
-    width: "55%",
   },
   titleStyle: {
     fontSize: FontSize.SuperTall,

@@ -8,6 +8,8 @@ const styles = StyleSheet.create({
   screen: {
     flexDirection: "column",
     flex: 1,
+    paddingHorizontal: 18,
+    backgroundColor: Colors.backgroundWhite,
   },
   inputView: {
     flexDirection: "row",

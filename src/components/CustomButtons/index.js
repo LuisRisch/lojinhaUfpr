@@ -1,17 +1,14 @@
-import React from 'react';
-import { TouchableOpacity, Text, View } from 'react-native';
-import { styles } from './Styles';
-import { Link } from 'react-router-native';
+import React from "react";
+import { TouchableOpacity, Text, View } from "react-native";
+import { styles } from "./Styles";
 
 export default function CustomButtons(props) {
-    return (
-        <View style={{ ...styles.buttonContainer}} >
-            <Link to={props.link}>
-                <Text style={styles.buttonLabel}>
-                    {props.Label}
-                </Text>
-            </Link>
-        </View>
-    );
-};
-
+  return (
+    <TouchableOpacity
+      style={{ ...styles.buttonContainer }}
+      onPress={props.onButtonPressed}
+    >
+      <Text style={styles.buttonLabel}>{props.Label}</Text>
+    </TouchableOpacity>
+  );
+}

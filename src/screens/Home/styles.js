@@ -3,12 +3,15 @@ import Colors from "../../data/Colors";
 import FontSizes from "../../data/FontSizes";
 import Spacing from "../../data/Spacing";
 
+import { StatusBar } from "react-native";
+
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: "space-between",
-    paddingTop: Spacing.MainMargin,
-    marginHorizontal: Spacing.MainMargin,
+    padding: 20,
+    marginTop: StatusBar.currentHeight,
+    backgroundColor: Colors.backgroundWhite,
   },
 
   topContaine: {
@@ -106,11 +109,11 @@ const styles = StyleSheet.create({
     color: Colors.lightGrey,
     fontSize: FontSizes.Normal,
     fontWeight: "500",
-  }, 
-  iconContainer : {
-    flexDirection: 'row', 
-    justifyContent : 'flex-end'
-  }
+  },
+  iconContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+  },
 });
 
 export { styles };

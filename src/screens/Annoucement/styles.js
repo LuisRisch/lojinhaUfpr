@@ -6,6 +6,7 @@ import Spacing from "../../data/Spacing";
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    padding: 18,
   },
   title: {
     fontWeight: "bold",

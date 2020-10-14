@@ -1,9 +1,17 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import Spacing from "../../data/Spacing";
 import FontSize from "../../data/FontSizes";
 import Colors from "../../data/Colors";
+import { StatusBar } from "react-native";
+
+const { width } = Dimensions.get("window");
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    marginTop: StatusBar.currentHeight,
+    backgroundColor: Colors.backgroundWhite,
+  },
   Products_Card_Horizontally: {
     marginTop: Spacing.MainMargin,
     backgroundColor: "white",
@@ -92,12 +100,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center",
+    padding: 20,
   },
   Top_Secundary_Informations: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center",
-    marginTop: Spacing.MainMargin,
+    marginTop: -20,
+    padding: 20,
   },
   Top_Secundary_Layout_Informations: {
     fontSize: FontSize.Lower,
@@ -119,62 +129,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignContent: "center",
-  },
-  User_Modal_Container: {
-    flex: 1,
-    width: "70%",
-    backgroundColor: "white",
-    paddingHorizontal: Spacing.MainPadding,
-    justifyContent: "space-between",
-    paddingTop: Spacing.MainPadding,
-    backgroundColor: Colors.backgroundWhite,
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  User_Top_Information: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
-  Circle_Box_Photo: {
-    height: 50,
-    width: 50,
-    borderRadius: 25,
-    backgroundColor: Colors.mainGrey,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  User_Name: {
-    fontSize: FontSize.Tall,
-    color: "black",
-    fontWeight: "bold",
-  },
-  User_Email: {
-    color: Colors.mainGrey,
-    fontWeight: "500",
-    fontSize: FontSize.Lower,
-  },
-  Tabs_User_Area: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginTop: Spacing.MainMargin - 9,
-  },
-  Tabs_User_Label: {
-    color: Colors.mainGrey,
-    fontSize: FontSize.Tall,
-    marginLeft: Spacing.MainMargin,
-  },
-  Bottom_Logo: {
-    alignSelf: "center",
-    width: 70,
-    height: 70,
   },
   category_text: {
     color: Colors.mainRed,

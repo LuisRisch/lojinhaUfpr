@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, StatusBar } from "react-native";
 import Colors from "../../data/Colors";
 import FontSizes from "../../data/FontSizes";
 import Spacing from "../../data/Spacing";
@@ -9,6 +9,9 @@ const styles = StyleSheet.create({
   screen: {
     flex: 1,
     justifyContent: "space-between",
+    backgroundColor: Colors.backgroundWhite,
+    padding: 20,
+    marginTop: StatusBar.currentHeight,
   },
 
   topContaine: {
@@ -23,7 +26,6 @@ const styles = StyleSheet.create({
     fontSize: FontSizes.SuperTall,
     fontWeight: "bold",
     alignContent: "center",
-    left: widht / 3.3,
   },
 
   backIcon: {

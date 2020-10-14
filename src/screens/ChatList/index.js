@@ -4,7 +4,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 import styles from "./styles";
 
-const ChatScreen = () => {
+const ChatScreen = ({ navigation }) => {
   const [text, setText] = useState("");
   const [chatList, setChatList] = useState([
     {
@@ -70,7 +70,7 @@ const ChatScreen = () => {
   return (
     <View style={styles.screen}>
       <View style={styles.header}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Icon name="align-left" size={20} color="#c4c4c4" />
         </TouchableOpacity>
         <Text style={styles.title}>Chat</Text>
