@@ -15,15 +15,21 @@
     "@material-ui/icons": "^4.9.1",
     "expo": "~38.0.8",
     "expo-status-bar": "^1.0.2",
+    "lottie-ios": "^3.1.8",
+    "lottie-react-native": "~2.6.1",
     "react": "~16.11.0",
     "react-dom": "~16.11.0",
+    "react-lottie": "^1.2.3",
     "react-native": "https://github.com/expo/react-native/archive/sdk-38.0.2.tar.gz",
     "react-native-linear-gradient": "^2.5.6",
+    "react-native-material-textfield": "^0.16.1",
+    "react-native-paper": "^4.2.0",
     "react-native-popup-menu": "^0.15.9",
     "react-native-svg": "^12.1.0",
     "react-native-textinput-effects": "^0.6.1",
-    "react-native-vector-icons": "^7.0.0",
-    "react-native-web": "~0.11.7"
+    "react-native-vector-icons": "^7.1.0",
+    "react-native-web": "~0.11.7",
+    "react-router-native": "^5.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.8.6",

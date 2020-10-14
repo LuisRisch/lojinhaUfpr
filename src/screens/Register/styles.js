@@ -93,6 +93,20 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginVertical: 18,
   },
+  buttonContainer: {
+    backgroundColor: Colors.mainRed,
+    marginTop: Spacing.MainMargin,
+    height: 35,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 16,
+  },
+
+  buttonLabel: {
+    color: "white",
+    fontSize: FontSizes.Normal,
+    fontWeight: "500",
+  },
 });
 
 export { styles };

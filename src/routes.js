@@ -1,5 +1,5 @@
 import React from "react";
-
+import { NativeRouter, Route, Link } from "react-router-native";
 import Home from "./screens/Home";
 import MainProducts from "./screens/MainProducts";
 import UserPage from "./screens/UserPage";
@@ -10,7 +10,25 @@ import CreateAnnouncement from "./screens/Annoucement";
 import ConfirmAnnouncement from "./screens/ConfirmAnnoucement";
 import SearchProduct from "./screens/SearchProduct";
 import Register from "./screens/Register";
+import UfprRegister from "./screens/UfprRegister/Index";
+import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister";
+import LoadComponent from "./components/Load/LoadComponent";
 
-const routes = () => <Home />;
+const routes = () => (
+    <NativeRouter>
+        <Route path="/" exact={true} component={Home} />
+        <Route path="/MainProducts" component={MainProducts} />
+        <Route path='/Register' component={Register} />
+        <Route path='/ProductScreen' component={ProductScreen} />
+        <Route path='/UserPage' component={UserPage} />
+        <Route path='/ChatScreen' component={ChatScreen} />
+        <Route path='/ChatList' component={ChatList} />
+        <Route path='/CreateAnnouncement'   component={CreateAnnouncement} />
+        <Route path='/ConfirmAnnouncement' component={ConfirmAnnouncement} />
+        <Route path='/SearchProduct' component={SearchProduct} />
+        <Route path="/UfprRegister" component={UfprRegister} />
+        <Route path="/FinishUfprRegister" component={FinishUfprRegister} />
+    </NativeRouter>
+);
 
 export default routes;

@@ -106,7 +106,11 @@ const styles = StyleSheet.create({
     color: Colors.lightGrey,
     fontSize: FontSizes.Normal,
     fontWeight: "500",
-  },
+  }, 
+  iconContainer : {
+    flexDirection: 'row', 
+    justifyContent : 'flex-end'
+  }
 });
 
 export { styles };
