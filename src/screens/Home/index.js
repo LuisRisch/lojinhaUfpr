@@ -43,6 +43,8 @@ const Home = ({ navigation }) => {
 
   const [cpfMessage, setCpfError] = useState("Informações inválidas");
 
+  const [imageList, setImageList] = useState([{ url: "", selector: true }]);
+
   const handleRememberPassword = () => {
     dispatch(userRemember());
   };
@@ -91,10 +93,6 @@ const Home = ({ navigation }) => {
           console.log(err);
           setErrorInCpf(true);
           setErrorInPass(true);
-          Alert.alert(
-            "Informações inválidas!",
-            "As suas informações de cpf e senha estão inválidas"
-          );
         });
     } else {
       setErrorInCpf(true);

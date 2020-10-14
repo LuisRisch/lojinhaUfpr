@@ -12,6 +12,8 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import * as ImagePicker from "expo-image-picker";
 import Constants from "expo-constants";
 
+import * as Yup from "yup";
+
 import CustomInputs from "../../components/CustomInputs";
 import CustomTopLabel from "../../components/CustomTopLabelInput";
 import CustomSubLabel from "../../components/CustomSubLabel";
@@ -23,8 +25,12 @@ import { CategoryList } from "../../data/Categories";
 import { styles } from "./styles";
 
 import api from "../../services/api";
+import Colors from "../../data/Colors";
+import { useSelector } from "react-redux";
 
 const CreateAnnouncement = () => {
+  const user = useSelector((state) => state.user);
+
   const [isShowCategoryOpen, setIsShowCategory] = useState(false);
   const [productTitle, setProductTitle] = useState("");
   const [productcategory, setCategory] = useState({
@@ -34,14 +40,18 @@ const CreateAnnouncement = () => {
   const [productDescription, setProductDescription] = useState("");
   const [payment, setPayment] = useState("");
   const [delivery, setDelivery] = useState("");
+  const [price, setPrice] = useState("");
 
   const [categoryList, setCategoryList] = useState([]);
+  const [imageList, setImageList] = useState([]);
 
   const loadCategories = async () => {
-    const response = await api.get("/categories");
+    if (categoryList != []) {
+      const response = await api.get("/categories");
 
-    if (response.status === 200 && response.data) {
-      setCategoryList([...response.data]);
+      if (response.status === 200 && response.data) {
+        setCategoryList([...response.data]);
+      }
     }
   };
 
@@ -70,17 +80,98 @@ const CreateAnnouncement = () => {
 
   const product = [];
 
-  const onButtonPressed = () => {
-    product.push({
-      title: productTitle,
-      category: productcategory,
-      description: productDescription,
-      payment: payment,
-      delivery: delivery,
+  const handleSubmit = async () => {
+    const schema = Yup.object().shape({
+      price: Yup.string().required(),
+      title: Yup.string().required(),
+      deliveryDescription: Yup.string().required().max(250),
+      paymentDescription: Yup.string().required().max(60),
+      category: Yup.number().positive().required(),
     });
+
+    let data = {
+      price,
+      title: productTitle,
+      description: productDescription,
+      paymentDescription: productDescription,
+      deliveryDescription: delivery,
+      category: parseInt(productcategory.id),
+      user: user.data.id,
+    };
+
+    if (!(await schema.isValid(data))) {
+      alert("info inválida");
+      return 1;
+    }
+    const form = new FormData();
+
+    let realPrice = price.split("$");
+
+    if (realPrice[1]) {
+      data.price = realPrice[1];
+    } else {
+      data.price = realPrice[0];
+    }
+
+    if (imageList.length > 0) {
+      imageList.forEach((item) => {
+        form.append("files", {
+          uri: item,
+          name: "image.jpg",
+          type: "image/jpeg",
+        });
+      });
+    } else {
+      alert("min de imagens é 1");
+      return 1;
+    }
+
+    const response = await api.post("/files", form, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+
+    let picture = [];
+    if (response.status === 200) {
+      picture = response.data;
+    }
+
+    await api
+      .post(
+        "/product",
+        { ...data, picture },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .catch((err) => console.log(err.response.data.error));
   };
 
   const height = Dimensions.get("window").height;
+
+  const handleImagePick = async () => {
+    console.log(user.data.id);
+    if (imageList.length < 5) {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 4],
+        quality: 0.7,
+      });
+
+      if (!result.cancelled) {
+        let array = imageList;
+        array.push(result.uri);
+        setImageList(array);
+        console.log(array);
+      }
+    } else {
+      alert("máximo de imagens é 5");
+    }
+  };
 
   const content = (
     <View style={styles.screen}>
@@ -96,6 +187,15 @@ const CreateAnnouncement = () => {
           <CustomInputs
             hintText="Ex: Camiseta customizada feita sobre demanda"
             onChangeText={(text) => setProductTitle(text)}
+          />
+        </BoxProduct>
+
+        <BoxProduct>
+          <CustomTopLabel label="Preço" />
+          <CustomSubLabel content="Qual o valor a cobrar?" />
+          <CustomInputs
+            hintText="Ex: 9,99"
+            onChangeText={(text) => setPrice(text)}
           />
         </BoxProduct>
 
@@ -149,13 +249,33 @@ const CreateAnnouncement = () => {
           />
         </BoxProduct>
 
+        <TouchableOpacity style={styles.pictureBox} onPress={handleImagePick}>
+          {imageList.length === 0 ? (
+            <>
+              <Icon name="camera" size={40} color={Colors.mainRed} />
+              <Text style={{ color: Colors.darkGrey }}>
+                Adicione suas fotos aqui
+              </Text>
+            </>
+          ) : (
+            imageList.map((item) => (
+              <Image
+                style={styles.pictureComponent}
+                source={{ uri: item }}
+                key={item}
+              />
+            ))
+          )}
+        </TouchableOpacity>
+
         <View style={{ justifyContent: "space-between", flex: 1 }}>
-          <CustomButton Label="Anunciar" onButtonPressed={onButtonPressed} />
+          <CustomButton Label="Anunciar" onButtonPressed={handleSubmit} />
           <Image
             source={require("../../assets/logo.png")}
             style={{ alignSelf: "center", width: 70, height: 70, bottom: 0 }}
           />
         </View>
+
         {/* Esse modal mostra as categorias possíveis para se anunciar um produto */}
 
         <Modal
