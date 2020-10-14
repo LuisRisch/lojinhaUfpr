@@ -17,6 +17,9 @@ import CreateAnnouncement from "./screens/Annoucement";
 import ConfirmAnnouncement from "./screens/ConfirmAnnoucement";
 import SearchProduct from "./screens/SearchProduct";
 import Register from "./screens/Register";
+import UfprRegister from "./screens/UfprRegister/Index";
+import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister";
+import LoadComponent from "./components/Load/LoadComponent";
 
 import CustomDrawer from "./components/CustomDrawer";
 import { TouchableOpacity } from "react-native-gesture-handler";
@@ -78,6 +81,7 @@ const StackRoutes = ({ navigation }) => (
     <Stack.Screen name="ConfirmAnnouncement" component={ConfirmAnnouncement} />
     <Stack.Screen name="SearchProduct" component={SearchProduct} />
   </Stack.Navigator>
+
 );
 
 function Routes() {

@@ -7,6 +7,15 @@ import CustomButton from "../../components/CustomButtons";
 import Color from "../../data/Colors";
 import FontSizes from "../../data/FontSizes";
 
+const SearchProduct = () => {
+    const [search, setSearch] = useState("");
+    const [errorInSearch , setError] = useState(false);
+    
+    const InputHandler = (text) => {
+        setSearch(text);
+        console.log(search);
+    };
+
 const SearchProduct = ({ navigation }) => {
   const [search, setSearch] = useState("");
   const InputHandler = (text) => {
@@ -47,12 +56,13 @@ const SearchProduct = ({ navigation }) => {
 
       {/************** Sized box **************/}
       <View style={{ height: Spacing.MainMargin }}></View>
-
-      <CustomInput
-        onChangeText={(text) => InputHandler(text)}
-        hintText="Procurar"
-        value={search}
-      />
+            <CustomInput
+                onChangeText={(text) => InputHandler(text)}
+                error={errorInSearch}
+                errorMessage='Não foi encontado!'
+                hintText="Procurar"
+                value={search}
+            />
 
       {/************** Sized box **************/}
       <View style={{ height: Spacing.MainMargin }}></View>
