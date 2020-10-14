@@ -92,7 +92,6 @@ const styles = StyleSheet.create({
     padding: Spacing.MainPadding,
     width: "90%",
     opacity: 1,
-    borderRadius: 28,
   },
   TitleModalStyle: {
     alignSelf: "center",

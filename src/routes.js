@@ -16,7 +16,7 @@ import ChatList from "./screens/ChatList";
 import CreateAnnouncement from "./screens/Annoucement";
 import ConfirmAnnouncement from "./screens/ConfirmAnnoucement";
 import SearchProduct from "./screens/SearchProduct";
-import Register from "./screens/Register";
+// import Register from "./screens/Register";
 import UfprRegister from "./screens/UfprRegister/Index";
 import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister";
 import LoadComponent from "./components/Load/LoadComponent";
@@ -73,15 +73,14 @@ const StackRoutes = ({ navigation }) => (
       component={ChatScreen}
       options={{ headerShown: true, title: "" }}
     />
-    <Stack.Screen
+    {/* <Stack.Screen
       name="Register"
       component={Register}
       options={{ title: "Anunciar produto/serviço" }}
-    />
+    /> */}
     <Stack.Screen name="ConfirmAnnouncement" component={ConfirmAnnouncement} />
     <Stack.Screen name="SearchProduct" component={SearchProduct} />
   </Stack.Navigator>
-
 );
 
 function Routes() {
