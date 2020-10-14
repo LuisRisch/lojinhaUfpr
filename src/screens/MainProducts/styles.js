@@ -3,6 +3,7 @@ import Spacing from "../../data/Spacing";
 import FontSize from "../../data/FontSizes";
 import Colors from "../../data/Colors";
 import { StatusBar } from "react-native";
+import FontSizes from "../../data/FontSizes";
 
 const { width } = Dimensions.get("window");
 
@@ -166,6 +167,17 @@ const styles = StyleSheet.create({
     fontSize: FontSize.Normal,
     fontWeight: "500",
     textAlign: "justify",
+  },
+  loadMoreProductsContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    flex: 1,
+  },
+  loadProductsText: {
+    color: Colors.mainGrey,
+    fontSize: FontSize.Tall,
+    textAlign: "center",
+    fontWeight: "500",
   },
 });
 
