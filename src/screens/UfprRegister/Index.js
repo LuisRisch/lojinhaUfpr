@@ -11,22 +11,34 @@ const UfprRegister = ({navigation}) => {
 
     const [Cpf, setCpf] = useState("");
     const CpfHandler = (text) => {
-        if (errorInGrr) {
-            setErrorInGrr(false);
+        if (errorInCpf.state) {
+            setErrorInCpf({
+                state : false, 
+                message : ''
+            });
         }
         setCpf(text);
     };
 
     const [Pass, setPass] = useState("");
     const PassHandler = (text) => {
-        if (errorInPass) {
-            setErrorInPass(false);
+        if (errorInPass.state) {
+            setErrorInPass({
+                state : false, 
+                message : ''
+            });
         }
         setPass(text);
     };
 
-    const [errorInCpf, setErrorInCpf] = useState(false);
-    const [errorInPass, setErrorInPass] = useState(false);  
+    const [errorInCpf, setErrorInCpf] = useState({
+        state : false, 
+        message : ''
+    });
+    const [errorInPass, setErrorInPass] = useState({
+        state : false, 
+        message : ''
+    });  
 
     const handleBack = () => {
         navigation.navigate('Login')
@@ -70,16 +82,22 @@ const UfprRegister = ({navigation}) => {
     const handleSubmit = () => {
         //Se estiver tudo bem com o login com o SIGA, o usuário será direcionado para a pagina de completar o cadatsro, 
         if(!isValidCPF(Cpf)){
-            setErrorInCpf(true)
+            setErrorInCpf({
+                state : true, 
+                message : 'CPF é inválido'
+            })
             setCpf('');
         } 
         if(Pass.length <=1 ){
-            setErrorInPass(true)
+            setErrorInPass({
+                state : true, 
+                message : 'Senha é inválido'
+            })
             setPass('')
         } 
-        if(!errorInCpf && !errorInPass){
-            navigation.navigate('FinishUfprRegister')
-        }
+        // if(!errorInCpf.state && !errorInPass.state){
+        //     navigation.navigate('FinishUfprRegister')
+        // }
     }
 
     return (
@@ -105,16 +123,16 @@ const UfprRegister = ({navigation}) => {
                         <CustomInputs
                             hintText="Digite seu CPF"
                             onChangeText={(text) => CpfHandler(text)}
-                            error={errorInCpf}
-                            errorMessage="Esse Cpf não consta na nossa base de dados"
+                            error={errorInCpf.state}
+                            errorMessage={errorInCpf.message}
                         />
 
                         <CustomTopLabelInput label="Senha" />
                         <CustomPasswordInput
                             hintText="Digite sua senha"
                             onChangeText={(text) => PassHandler(text)}
-                            error={errorInPass}
-                            errorMessage="Essa senha não consta na nossa base de dados"
+                            error={errorInPass.state}
+                            errorMessage={errorInPass.message}
                         />
                         <CustomButtons
                             Label="Entrar"
