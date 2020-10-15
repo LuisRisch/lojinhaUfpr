@@ -16,7 +16,7 @@ import ChatList from "./screens/ChatList";
 import CreateAnnouncement from "./screens/Annoucement";
 import ConfirmAnnouncement from "./screens/ConfirmAnnoucement";
 import SearchProduct from "./screens/SearchProduct";
-import Register from './screens/Register';
+import Register from "./screens/Register";
 // import Register from "./screens/Register";
 import UfprRegister from "./screens/UfprRegister/Index";
 import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister";
@@ -146,11 +146,6 @@ function Routes() {
       <Drawer.Screen
         name="ChatList"
         component={ChatList}
-        options={{ title: "Chat" }}
-      />
-      <Drawer.Screen
-        name="Register"
-        component={Register}
         options={{ title: "Chat" }}
       />
       <Drawer.Screen

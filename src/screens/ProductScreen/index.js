@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { View, Text, Image, Dimensions, ScrollView } from "react-native";
-import CustomCloseIcon from "../../components/CustomCloseIcon";
-import { ListOfCrafts } from "../../../temp/Products/Crafts";
+import { useSelector } from "react-redux";
 import Spacing from "../../data/Spacing";
 import CustomButton from "../../components/CustomButtons";
 import { Styles } from "./styles";
+import api from "../../services/api";
 
 const ConfirmAnnouncement = ({ navigation, route }) => {
-  const { item: product, user } = route.params;
+  const { item: product } = route.params;
+  const { data: user, token } = useSelector((state) => state.user);
   const height = Dimensions.get("window").height;
 
   const ClosePage = () => {
@@ -30,8 +31,24 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
     console.log("Editar anuncio");
   };
 
-  const handleChat = () => {
-    navigation.navigate("ChatScreen", { product, user });
+  const handleChat = async () => {
+    const data = {
+      user: user.id,
+      product: product._id,
+      seller: product.user._id,
+    };
+
+    const response = await api
+      .post("/chat", data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((err) => alert(err.response.data.error));
+
+    if (response) {
+      navigation.navigate("ChatScreen", response.data._id);
+    }
   };
 
   // var product = { ...ListOfCrafts[0] };
