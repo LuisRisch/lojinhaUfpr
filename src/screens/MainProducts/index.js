@@ -118,28 +118,15 @@ const MainProducts = ({ navigation }) => {
               resizeMode="cover"
             />
             <View style={styles.Products_Card_Informations}>
+              <View style={styles.Price_Box_Horizontally}>
+                <Text style={styles.Price_Layout}>R$ {item.price}</Text>
+              </View>
               <Text
                 numberOfLines={2}
                 style={styles.Products_Title_Horizontally}
               >
                 {item.title}
               </Text>
-              <View style={styles.Price_Box_Horizontally}>
-                <Text style={styles.Price_Layout}>R$ {item.price}</Text>
-
-                {/* Espaçamento entre palavras de 5px */}
-                <View style={{ width: 5 }}></View>
-
-                <Text style={styles.Per_Unity_Horizontally}>a unidade</Text>
-              </View>
-              <View>
-                <Text style={styles.AnnouncedBy_Horizontally_Label}>
-                  Anunciado por:
-                </Text>
-                <Text style={styles.AnnouncedBy_Horizontally_Name}>
-                  {item.user ? item.user.name : ""}
-                </Text>
-              </View>
             </View>
           </View>
         </TouchableOpacity>
@@ -161,6 +148,9 @@ const MainProducts = ({ navigation }) => {
           style={styles.Image_Layout_Grid}
           resizeMode="cover"
         />
+        <View style={styles.Box_Price_Grid}>
+          <Text style={styles.Price_Layout_Grid}>R$ {item.price}</Text>
+        </View>
         <Text
           lineBreakMode={true}
           numberOfLines={2}
@@ -168,21 +158,6 @@ const MainProducts = ({ navigation }) => {
         >
           {item.title}
         </Text>
-        <View style={styles.Box_Price_Grid}>
-          <Text style={styles.Price_Layout_Grid}>R$ {item.price}</Text>
-          {/* Espaçamento entre palavras de 5px */}
-          <View style={{ width: 5 }}></View>
-          {/* Mesmas propriedades */}
-          <Text style={styles.Per_Unity_Horizontally}>a unidade</Text>
-        </View>
-        <View>
-          <Text style={styles.AnnouncedBy_Horizontally_Label}>
-            Anunciado por:
-          </Text>
-          <Text style={styles.AnnouncedBy_Horizontally_Name}>
-            {item.user ? item.user.name : ""}
-          </Text>
-        </View>
       </TouchableOpacity>
     );
 
