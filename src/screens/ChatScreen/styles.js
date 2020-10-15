@@ -9,7 +9,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     paddingHorizontal: 18,
-    backgroundColor: Colors.backgroundWhite,
+    backgroundColor: "#f0f0f0",
   },
   inputView: {
     flexDirection: "row",

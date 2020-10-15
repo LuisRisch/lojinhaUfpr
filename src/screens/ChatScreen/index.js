@@ -1,12 +1,21 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity, FlatList, Text } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Colors from "../../data/Colors";
 import CustomTextInput from "../../components/CustomInputs";
 
+import { useSelector } from "react-redux";
+
+import api from "../../services/api";
+
 import styles from "./styles";
 
-const ChatScreen = () => {
+const ChatScreen = ({ route }) => {
+  const { chatID } = route.params;
+  const { data: user, token } = useSelector((state) => state.user);
+
+  const [userType, setUserType] = useState("buyer");
+
   const [text, setText] = useState("");
   const [MessageList, setMessageList] = useState([
     {
@@ -31,23 +40,60 @@ const ChatScreen = () => {
     },
   ]);
 
-  const currentUser = "buyer";
+  const loadChat = async () => {
+    const response = await api
+      .get(`/chat/${chatID}/${user.id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((err) => alert(err.response.data.error));
+
+    if (response) {
+      if (response.data.buyer._id != user.id) {
+        setUserType("seller");
+      }
+      setMessageList(response.data.messages);
+    }
+  };
+
+  useEffect(() => {
+    console.log(chatID);
+    loadChat();
+  }, []);
 
   const onChangeText = (EnteredText) => {
     setText(EnteredText);
   };
 
-  const submitMessage = () => {
+  const submitMessage = async () => {
     if (text.length >= 1) {
       const messages = [...MessageList];
-      messages.push({
-        content:
-          "Bem vindo ao chat da lojinha! Tome cuidado com quais informações ASFasfaksbf aBSFJKbasbfasj fabsfjABsbB fBAJSBFASB",
-        sent_by: "seller",
+      const messageObj = {
+        content: text,
+        sent_by: userType,
         id: messages.length + 1,
-      });
+      };
+      messages.push(messageObj);
       setMessageList(messages);
       setText("");
+
+      await api
+        .put(
+          "/chat",
+          {
+            message: text,
+            sent_by: userType,
+            user: user.id,
+            chat: chatID,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .catch((err) => alert(err.response.data.error));
     }
     // console.log(MessageList);
     // console.log(MessageList.length)
@@ -58,7 +104,7 @@ const ChatScreen = () => {
     let textStyle = {};
     let subTextViewStyle = {};
 
-    if (currentUser === item.sent_by) {
+    if (userType === item.sent_by) {
       messageStyle = styles.userMessage;
       textStyle = styles.userTextStyle;
       subTextViewStyle = styles.userSubTextView;

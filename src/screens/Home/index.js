@@ -40,11 +40,11 @@ const Home = ({ navigation }) => {
     const [errorInRedifinePass, setErrorInRedifinePass] = useState(true);
 
     const [cpfMessage, setCpfError] = useState("Informações inválidas");
-    const [imageList, setImageList] = useState([{ url: "", selector: true }]);
 
     const handleRememberPassword = () => {
         dispatch(userRemember());
     };
+
 
     useEffect(() => {
         if (userSigned && rememberPassword) {
@@ -89,6 +89,10 @@ const Home = ({ navigation }) => {
                     console.log(err);
                     setErrorInCpf(true);
                     setErrorInPass(true);
+                    Alert.alert(
+                        "Informações inválidas!",
+                        "As suas informações de cpf e senha estão inválidas"
+                    );
                 });
         } else {
             setErrorInCpf(true);
@@ -99,12 +103,8 @@ const Home = ({ navigation }) => {
     const handleRegister = () => {
         changeStateAlertModal();
         navigation.navigate("Register");
-    }; 
+    };
 
-    const handleUfprRegister = () => {
-        changeStateAlertModal(); 
-        navigation.navigate('UfprRegister')
-    }
 
     // Na tela de login, nas telas menores de celulares menores o Keyboard estava
     // ocupando espaço dos inputs, tanto na parte de login quanto de resetar a senha.
@@ -173,10 +173,9 @@ const Home = ({ navigation }) => {
                             poderá fazer anúncios no aplicativo, mas terá o direito de fazer
                             compras
                         </Text>
-
                         <CustomButtons
                             Label="Sim, sou estudante da UFPR"
-                            onButtonPressed={handleUfprRegister}
+                            onButtonPressed={changeStateAlertModal}
                         />
                         <CustomButtons
                             Label="Não sou estudante da UFPR"

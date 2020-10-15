@@ -6,18 +6,16 @@ import { StatusBar } from "react-native";
 import FontSizes from "../../data/FontSizes";
 
 const { width } = Dimensions.get("window");
+const imageSize = Math.floor(width / 2) - 40;
 
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    marginTop: StatusBar.currentHeight,
     backgroundColor: Colors.backgroundWhite,
   },
   Products_Card_Horizontally: {
     marginTop: Spacing.MainMargin,
     backgroundColor: "white",
-    borderRadius: 16,
-    elevation: 3.0,
     flexDirection: "row",
     padding: 12,
   },
@@ -68,24 +66,22 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
     marginTop: Spacing.MainMargin,
     backgroundColor: "white",
-    borderRadius: 16,
-    elevation: 3.0,
     padding: 12,
     width: "48%",
     justifyContent: "space-between",
   },
   Image_Layout_Grid: {
-    height: 120,
-    width: "100%",
+    height: imageSize,
+    width: imageSize,
     alignSelf: "center",
     borderRadius: 10,
   },
   Product_Title_Grid: {
     fontSize: FontSize.Normal,
     color: "#3b3b3b",
-    fontWeight: "bold",
     flexShrink: 1,
     alignItems: "flex-start",
+    maxWidth: "90%",
   },
   Box_Price_Grid: {
     flexDirection: "row",
