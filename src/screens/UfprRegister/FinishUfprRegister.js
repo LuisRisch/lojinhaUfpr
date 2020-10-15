@@ -7,107 +7,55 @@ import CustomPasswordInput from "../../components/CustomPasswordInput";
 import CustomButtons from "../../components/CustomButtons";
 import { styles } from './Styles';
 
-const FinishUfprRegister = () => {
-    const [Cpf, setCpf] = useState("");
-    const [DefinePass, setDefinePass] = useState("");
-    const [ConfirmPass, setConfirmPass] = useState("");
-
-    const [errorInCpf, setErrorInCpf] = useState(false);
-    const [errorInPass, setErrorInPass] = useState(false);
-    const [errorInRevPass, setErrorInRevPass] = useState(false);
+const FinishUfprRegister = ({navigation}) => {
+    const [errorInEmail , setErrorInEmail] = useState({
+        state : false, 
+        message : '',
+    }) 
+    const [email , setEmail] = useState(''); 
+    const EmailHandler = (text) => { 
+        if (errorInEmail.state){ 
+            const obj = {...errorInEmail}
+            obj.state = false; 
+            obj.message = ''; 
+            setErrorInEmail(obj)
+        }
+        setEmail(text)
+    }  
 
     const [
         isConfirmRegisterModalVisible,
         setIsConfirmRegisterModalVisible,
     ] = useState(false);
 
-    // Catch the char of the field
-
-    const CpfHandler = (text) => {
-        if (errorInCpf) {
-            setErrorInCpf(!errorInCpf)
-        }
-        setCpf(text)
-        console.log(Cpf)
-    }
-
-    const PassHandler = (text) => {
-        if (errorInPass) {
-            setErrorInPass(!errorInPass)
-        }
-        setDefinePass(text)
-        console.log(DefinePass)
-    }
-
-    const RevPassHandler = (text) => {
-        if (errorInRevPass) {
-            setErrorInRevPass(!errorInRevPass)
-        }
-        setConfirmPass(text)
-        console.log(ConfirmPass);
-    }
-
-    function isValidCPF(cpf) {
-        if (typeof cpf !== 'string') return false;
-        cpf = cpf.replace(/[\s.-]*/gim, '');
-        if (
-            !cpf ||
-            cpf.length != 11 ||
-            cpf == '00000000000' ||
-            cpf == '11111111111' ||
-            cpf == '22222222222' ||
-            cpf == '33333333333' ||
-            cpf == '44444444444' ||
-            cpf == '55555555555' ||
-            cpf == '66666666666' ||
-            cpf == '77777777777' ||
-            cpf == '88888888888' ||
-            cpf == '99999999999'
-        ) {
-            return false;
-        }
-        let soma = 0;
-        let resto;
-        for (let i = 1; i <= 9; i++)
-            soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
-        resto = (soma * 10) % 11;
-        if (resto == 10 || resto == 11) resto = 0;
-        if (resto != parseInt(cpf.substring(9, 10))) return false;
-        soma = 0;
-        for (let i = 1; i <= 10; i++)
-            soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
-        resto = (soma * 10) % 11;
-        if (resto == 10 || resto == 11) resto = 0;
-        if (resto != parseInt(cpf.substring(10, 11))) return false;
-        return true;
-    }
-
-    function isValidPass(pass) {
-        return pass.length >= 8 ? true : false
-    }
+    const changeStateConfirmModal = () => {
+        setIsConfirmRegisterModalVisible(!isConfirmRegisterModalVisible);
+    };
 
     const onSubmitt = () => {
-        if (!isValidCPF(Cpf)) {
-            setErrorInCpf(true)
-            setCpf('')
-        }
+        if(email.length <=1){ 
+            const obj = {...email}
+            obj.state = true 
+            obj.message = 'O email é pequeno'
+            setErrorInEmail(obj)
+        } else if(!email.includes('@')){
 
-        if (!isValidPass(DefinePass)) {
-            setErrorInPass(true)
-            setDefinePass('');
-        }
+            setErrorInEmail({
+                state : true, 
+                message : 'O email não contem @'
+            })
+        } 
 
-        if (DefinePass !== ConfirmPass) {
-            setErrorInRevPass(true)
+        if(!errorInEmail.state){
+            changeStateConfirmModal()
         }
-        if (!errorInCpf && !errorInPass && !errorInRevPass) {
-            setIsConfirmRegisterModalVisible(!isConfirmRegisterModalVisible)
-        }
-    }
+    } 
+
+    
+
 
     return (
         <View style={styles.Screen}>
-
             {/* Esse modal irá mostrar um Alerta customizado confirmando o cadastro do novo usuário */}
             <Modal
                 visible={isConfirmRegisterModalVisible}
@@ -123,7 +71,7 @@ const FinishUfprRegister = () => {
                         </Text>
                         <CustomButtons
                             Label="Ok!"
-                            link='/MainProducts'
+                            onButtonPressed={() => navigation.navigate('MainProducts')}
                         />
                     </View>
                 </View>
@@ -150,30 +98,13 @@ const FinishUfprRegister = () => {
                                 <Icon name="camera" size={25} color="white" />
                             </View>
                         </TouchableOpacity>
-                        <CustomTopLabelInput label="CPF" />
+                        <CustomTopLabelInput label="Email" />
                         <CustomInputs
-                            hintText="111111111-11"
-                            error={errorInCpf}
-                            value={Cpf}
-                            errorMessage='Esse Cpf é inválido'
-                            onChangeText={(text) => CpfHandler(text)}
-                        />
-                        <CustomTopLabelInput label="Defina a senha" />
-                        <CustomPasswordInput
-                            hintText="Digite sua senha"
-                            error={errorInPass}
-                            value={DefinePass}
-                            errorMessage='Senha inválido'
-                            onChangeText={(text) => PassHandler(text)}
-                        />
-
-                        <CustomTopLabelInput label="Repita a senha" />
-                        <CustomPasswordInput
-                            hintText="Repita sua senha"
-                            error={errorInRevPass}
-                            value={ConfirmPass}
-                            errorMessage='O campo digitado não está igual ao da senha'
-                            onChangeText={(text) => RevPassHandler(text)}
+                            hintText='beatriznogueira@ufpr.br'
+                            error={errorInEmail.state}
+                            value={email}
+                            errorMessage={errorInEmail.message}
+                            onChangeText={(text) => EmailHandler(text)}
                         />
                         <TouchableOpacity style={styles.buttonContainer} onPress={onSubmitt}>
                             <Text style={styles.buttonLabel}>
