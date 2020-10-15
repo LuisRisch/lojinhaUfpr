@@ -39,15 +39,8 @@ const Home = ({ navigation }) => {
     const [errorInPass, setErrorInPass] = useState(false);
     const [errorInRedifinePass, setErrorInRedifinePass] = useState(true);
 
-<<<<<<< HEAD
     const [cpfMessage, setCpfError] = useState("Informações inválidas");
-=======
-  const [imageList, setImageList] = useState([{ url: "", selector: true }]);
-
-  const handleRememberPassword = () => {
-    dispatch(userRemember());
-  };
->>>>>>> c4329e2cbe7e0bb75557409dc0746bd0cf73d296
+    const [imageList, setImageList] = useState([{ url: "", selector: true }]);
 
     const handleRememberPassword = () => {
         dispatch(userRemember());
@@ -74,38 +67,7 @@ const Home = ({ navigation }) => {
     const [Cpf, setCpf] = useState("");
     const [Pass, setPass] = useState("");
 
-<<<<<<< HEAD
     const height = Dimensions.get("window").height;
-=======
-  const handleLogin = async () => {
-    if (Cpf && Pass) {
-      // if (!isCPFValid(Cpf)) {
-      //   setErrorInCpf(true);
-      //   setCpfError("Número do CPF inválido!");
-      //   return 0;
-      // } COMENTADO DURANTE O DESENVOLVIMENTO
-      await api
-        .post("/login", { cpf: Cpf, password: Pass })
-        .then((res) => {
-          if (res.status === 200) {
-            dispatch(userSignIn(res.data));
-            navigation.navigate("MainProducts");
-            setErrorInCpf(false);
-            setErrorInPass(false);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-          setErrorInCpf(true);
-          setErrorInPass(true);
-        });
-    } else {
-      setErrorInCpf(true);
-      setErrorInPass(true);
-    }
-  };
->>>>>>> c4329e2cbe7e0bb75557409dc0746bd0cf73d296
-
     const handleLogin = async () => {
         if (Cpf && Pass) {
             // if (!isCPFValid(Cpf)) {
@@ -127,10 +89,6 @@ const Home = ({ navigation }) => {
                     console.log(err);
                     setErrorInCpf(true);
                     setErrorInPass(true);
-                    Alert.alert(
-                        "Informações inválidas!",
-                        "As suas informações de cpf e senha estão inválidas"
-                    );
                 });
         } else {
             setErrorInCpf(true);
@@ -141,7 +99,12 @@ const Home = ({ navigation }) => {
     const handleRegister = () => {
         changeStateAlertModal();
         navigation.navigate("Register");
-    };
+    }; 
+
+    const handleUfprRegister = () => {
+        changeStateAlertModal(); 
+        navigation.navigate('UfprRegister')
+    }
 
     // Na tela de login, nas telas menores de celulares menores o Keyboard estava
     // ocupando espaço dos inputs, tanto na parte de login quanto de resetar a senha.
@@ -213,7 +176,7 @@ const Home = ({ navigation }) => {
 
                         <CustomButtons
                             Label="Sim, sou estudante da UFPR"
-                            onButtonPressed={changeStateAlertModal}
+                            onButtonPressed={handleUfprRegister}
                         />
                         <CustomButtons
                             Label="Não sou estudante da UFPR"
