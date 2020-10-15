@@ -33,7 +33,40 @@ const StackRoutes = ({ navigation }) => (
     initialRouteName="MainProducts"
     screenOptions={{ headerShown: false }}
   >
-    <Stack.Screen name="MainProducts" component={MainProducts} />
+    <Stack.Screen
+      name="MainProducts"
+      component={MainProducts}
+      options={{
+        headerStyle: {
+          backgroundColor: Colors.backgroundWhite,
+          elevation: 0,
+        },
+        headerShown: true,
+        title: "",
+        headerLeft: () => (
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Icon
+              name="align-left"
+              size={20}
+              color="#c4c4c4"
+              style={{ marginLeft: 18 }}
+            />
+          </TouchableOpacity>
+        ),
+        headerRight: () => (
+          <TouchableOpacity
+            onPress={() => navigation.navigate("SearchProduct")}
+          >
+            <Icon
+              name="search"
+              size={20}
+              color="#c4c4c4"
+              style={{ marginRight: 18 }}
+            />
+          </TouchableOpacity>
+        ),
+      }}
+    />
     <Stack.Screen
       name="ProductScreen"
       component={ProductScreen}

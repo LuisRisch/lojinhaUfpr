@@ -113,11 +113,6 @@ const MainProducts = ({ navigation }) => {
             </Text>
             <View style={styles.Price_Box_Horizontally}>
               <Text style={styles.Price_Layout}>R$ {item.price}</Text>
-
-              {/* Espaçamento entre palavras de 5px */}
-              <View style={{ width: 5 }}></View>
-
-              <Text style={styles.Per_Unity_Horizontally}>a unidade</Text>
             </View>
             <View>
               <Text style={styles.AnnouncedBy_Horizontally_Label}>
@@ -137,11 +132,15 @@ const MainProducts = ({ navigation }) => {
       >
         <Image
           source={{
-            uri: item.picture ? item.picture[0].url : null,
+            uri:
+              "https://www.midiamax.com.br/wp-content/uploads/2020/07/salgados-assados.jpeg",
           }}
           style={styles.Image_Layout_Grid}
           resizeMode="cover"
         />
+        <View style={styles.Box_Price_Grid}>
+          <Text style={styles.Price_Layout_Grid}>R$ {item.price}</Text>
+        </View>
         <Text
           lineBreakMode={true}
           numberOfLines={2}
@@ -149,40 +148,11 @@ const MainProducts = ({ navigation }) => {
         >
           {item.title}
         </Text>
-        <View style={styles.Box_Price_Grid}>
-          <Text style={styles.Price_Layout_Grid}>R$ {item.price}</Text>
-          {/* Espaçamento entre palavras de 5px */}
-          <View style={{ width: 5 }}></View>
-          {/* Mesmas propriedades */}
-          <Text style={styles.Per_Unity_Horizontally}>a unidade</Text>
-        </View>
-        <View>
-          <Text style={styles.AnnouncedBy_Horizontally_Label}>
-            Anunciado por:
-          </Text>
-          <Text style={styles.AnnouncedBy_Horizontally_Name}>
-            {item.user ? item.user.name : ""}
-          </Text>
-        </View>
       </TouchableOpacity>
     );
 
   return (
     <View style={styles.screen}>
-      <View style={styles.Top_Container_Icons}>
-        {/* Não foi adicionado a funcionalidade de quando for pressionado, mas quando
-                    for implementado aparecerá um Drawer com informações do usuário */}
-        <TouchableOpacity
-          onPress={() => setIsModalUserAreaVisible(!isModalUserAreaVisible)}
-        >
-          <Icon name="bars" size={20} />
-        </TouchableOpacity>
-        {/* Não foi implementado a funcionalidade de quando for pressionado, mas quando 
-                    for implementado aparecerá uma área de pesquisa de produtos */}
-        <TouchableOpacity onPress={() => navigation.navigate("SearchProduct")}>
-          <Icon name="search" size={20} />
-        </TouchableOpacity>
-      </View>
       <View>
         <View style={styles.Top_Secundary_Informations}>
           <Text style={styles.Top_Secundary_Layout_Informations}>{title}</Text>

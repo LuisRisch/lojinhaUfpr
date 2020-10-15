@@ -15,10 +15,7 @@ const CustomDrawer = (props) => {
   const { user } = props;
 
   return (
-    <DrawerContentScrollView
-      {...props}
-      style={{ backgroundColor: Colors.backgroundWhite }}
-    >
+    <DrawerContentScrollView {...props}>
       <View style={styles.User_Top_Information}>
         <View style={styles.Circle_Box_Photo}>
           <Icon name="camera" size={15} color="white" />
