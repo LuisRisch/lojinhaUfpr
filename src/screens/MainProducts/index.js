@@ -18,10 +18,14 @@ import { styles } from "./styles";
 import { CategoryList } from "../../data/Categories";
 
 import api from "../../services/api";
+import FontSizes from "../../data/FontSizes";
 
 const MainProducts = ({ navigation }) => {
+  const arrAddOneInLenght = [""];
   const defaultTitle = "Início";
-  const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral);
+  const [ListOfProducts, setListOfProduct] = useState(
+    ListOfGeneral.concat(arrAddOneInLenght)
+  ); // just to add one more in lenght
 
   const loadApi = async () => {
     const response = await api.get("/products");
@@ -96,34 +100,54 @@ const MainProducts = ({ navigation }) => {
     setShowFilter(!showFilter);
   };
 
-  const renderItemCard = ({ item }) =>
+  const renderItemCard = ({ item, index }) =>
     isListVisualisationSelected ? (
-      <TouchableOpacity onPress={() => onProductCardPressed(item)}>
-        <View style={styles.Products_Card_Horizontally}>
-          <Image
-            source={{
-              uri: item.picture ? item.picture[0].url : null,
-            }}
-            style={styles.Image_Horizontaly_Display}
-            resizeMode="cover"
-          />
-          <View style={styles.Products_Card_Informations}>
-            <Text numberOfLines={2} style={styles.Products_Title_Horizontally}>
-              {item.title}
-            </Text>
-            <View style={styles.Price_Box_Horizontally}>
-              <Text style={styles.Price_Layout}>R$ {item.price}</Text>
-            </View>
-            <View>
-              <Text style={styles.AnnouncedBy_Horizontally_Label}>
-                Anunciado por:
+      index === ListOfProducts.length - 1 ? (
+        <TouchableOpacity style={styles.loadMoreProductsContainer}>
+          <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
+          <Icon name="plus-circle" size={22} color={Colors.mainRed} />
+        </TouchableOpacity>
+      ) : (
+        <TouchableOpacity onPress={() => onProductCardPressed(item)}>
+          <View style={styles.Products_Card_Horizontally}>
+            <Image
+              source={{
+                uri: item.picture === null ? null : item.picture[0].url,
+              }}
+              style={styles.Image_Horizontaly_Display}
+              resizeMode="cover"
+            />
+            <View style={styles.Products_Card_Informations}>
+              <Text
+                numberOfLines={2}
+                style={styles.Products_Title_Horizontally}
+              >
+                {item.title}
               </Text>
-              <Text style={styles.AnnouncedBy_Horizontally_Name}>
-                {item.user ? item.user.name : ""}
-              </Text>
+              <View style={styles.Price_Box_Horizontally}>
+                <Text style={styles.Price_Layout}>R$ {item.price}</Text>
+
+                {/* Espaçamento entre palavras de 5px */}
+                <View style={{ width: 5 }}></View>
+
+                <Text style={styles.Per_Unity_Horizontally}>a unidade</Text>
+              </View>
+              <View>
+                <Text style={styles.AnnouncedBy_Horizontally_Label}>
+                  Anunciado por:
+                </Text>
+                <Text style={styles.AnnouncedBy_Horizontally_Name}>
+                  {item.user ? item.user.name : ""}
+                </Text>
+              </View>
             </View>
           </View>
-        </View>
+        </TouchableOpacity>
+      )
+    ) : index === ListOfProducts.length - 1 ? (
+      <TouchableOpacity style={styles.loadMoreProductsContainer}>
+        <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
+        <Icon name="plus-circle" size={22} color={Colors.mainRed} />
       </TouchableOpacity>
     ) : (
       <TouchableOpacity
@@ -132,15 +156,11 @@ const MainProducts = ({ navigation }) => {
       >
         <Image
           source={{
-            uri:
-              "https://www.midiamax.com.br/wp-content/uploads/2020/07/salgados-assados.jpeg",
+            uri: item.picture === null ? null : item.picture[0].url,
           }}
           style={styles.Image_Layout_Grid}
           resizeMode="cover"
         />
-        <View style={styles.Box_Price_Grid}>
-          <Text style={styles.Price_Layout_Grid}>R$ {item.price}</Text>
-        </View>
         <Text
           lineBreakMode={true}
           numberOfLines={2}
@@ -148,6 +168,21 @@ const MainProducts = ({ navigation }) => {
         >
           {item.title}
         </Text>
+        <View style={styles.Box_Price_Grid}>
+          <Text style={styles.Price_Layout_Grid}>R$ {item.price}</Text>
+          {/* Espaçamento entre palavras de 5px */}
+          <View style={{ width: 5 }}></View>
+          {/* Mesmas propriedades */}
+          <Text style={styles.Per_Unity_Horizontally}>a unidade</Text>
+        </View>
+        <View>
+          <Text style={styles.AnnouncedBy_Horizontally_Label}>
+            Anunciado por:
+          </Text>
+          <Text style={styles.AnnouncedBy_Horizontally_Name}>
+            {item.user ? item.user.name : ""}
+          </Text>
+        </View>
       </TouchableOpacity>
     );
 
@@ -175,7 +210,7 @@ const MainProducts = ({ navigation }) => {
           {isListVisualisationSelected ? (
             <FlatList
               data={ListOfProducts}
-              renderItem={renderItemCard}
+              renderItem={({ item, index }) => renderItemCard(item, index)}
               key={"_"}
               keyExtractor={(item) => "_" + item.id}
               scrollEnabled={true}

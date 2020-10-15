@@ -12,9 +12,7 @@ import {
 } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useDispatch, useSelector } from "react-redux";
-
 import isCPFValid from "../../services/cpfValidator";
-
 import { userSignIn, userRemember } from "../../store/modules/user/actions";
 import CustomButtons from "../../components/CustomButtons";
 import CustomInputs from "../../components/CustomInputs";
@@ -42,8 +40,6 @@ const Home = ({ navigation }) => {
   const [errorInRedifinePass, setErrorInRedifinePass] = useState(true);
 
   const [cpfMessage, setCpfError] = useState("Informações inválidas");
-
-  const [imageList, setImageList] = useState([{ url: "", selector: true }]);
 
   const handleRememberPassword = () => {
     dispatch(userRemember());
@@ -93,6 +89,10 @@ const Home = ({ navigation }) => {
           console.log(err);
           setErrorInCpf(true);
           setErrorInPass(true);
+          Alert.alert(
+            "Informações inválidas!",
+            "As suas informações de cpf e senha estão inválidas"
+          );
         });
     } else {
       setErrorInCpf(true);
@@ -102,7 +102,6 @@ const Home = ({ navigation }) => {
 
   const handleRegister = () => {
     changeStateAlertModal();
-
     navigation.navigate("Register");
   };
 

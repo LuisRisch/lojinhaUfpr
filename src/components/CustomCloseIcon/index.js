@@ -6,7 +6,7 @@ import Colors from "../../data/Colors";
 
 export default function CustomCloseIcon(props) {
   return (
-    <TouchableOpacity style={styles.IconContainer} onPress={props.onPress}>
+    <TouchableOpacity onPress={props.onPress}>
       <Icon color={Colors.mainRed} size={18} name={props.icon} />
     </TouchableOpacity>
   );

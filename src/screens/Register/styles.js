@@ -17,8 +17,8 @@ const styles = StyleSheet.create({
   topContaine: {
     flexDirection: "row",
     alignItems: "center",
-    position: "relative",
-    width: "100%",
+    justifyContent : 'space-between',
+    width: "58%",
   },
 
   normalTextTitle: {
@@ -28,10 +28,6 @@ const styles = StyleSheet.create({
     alignContent: "center",
   },
 
-  backIcon: {
-    top: 0,
-    left: 0,
-  },
 
   lowerTexT: {
     color: Colors.mainGrey,
