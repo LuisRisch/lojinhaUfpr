@@ -16,7 +16,7 @@ import ChatList from "./screens/ChatList";
 import CreateAnnouncement from "./screens/Annoucement";
 import ConfirmAnnouncement from "./screens/ConfirmAnnoucement";
 import SearchProduct from "./screens/SearchProduct";
-import Register from './screens/Register';
+import Register from "./screens/Register";
 // import Register from "./screens/Register";
 import UfprRegister from "./screens/UfprRegister/Index";
 import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister";
@@ -78,9 +78,26 @@ const StackRoutes = ({ navigation }) => (
       component={Register}
       options={{ title: "Anunciar produto/serviço" }}
     /> */}
-    <Stack.Screen name="ConfirmAnnouncement" component={ConfirmAnnouncement} />
-    <Stack.Screen name="SearchProduct" component={SearchProduct} />
-    <Stack.Screen name="Register" component={Register} />
+    <Stack.Screen 
+        name="ConfirmAnnouncement" 
+        component={ConfirmAnnouncement} 
+    />
+    <Stack.Screen 
+        name="SearchProduct" 
+        component={SearchProduct} 
+    />
+    <Stack.Screen 
+        name="Register" 
+        component={Register} 
+    /> 
+    <Stack.Screen 
+        name="UfprRegister" 
+        component={UfprRegister} 
+    /> 
+    <Stack.Screen 
+        name="FinishUfprRegister" 
+        component={FinishUfprRegister} 
+    />
   </Stack.Navigator>
 );
 
@@ -113,11 +130,6 @@ function Routes() {
       <Drawer.Screen
         name="ChatList"
         component={ChatList}
-        options={{ title: "Chat" }}
-      />
-      <Drawer.Screen
-        name="Register"
-        component={Register}
         options={{ title: "Chat" }}
       />
       <Drawer.Screen
