@@ -7,31 +7,87 @@ import CustomButtons from "../../components/CustomButtons";
 import CustomCloseIcon from "../../components/CustomCloseIcon";
 import { styles } from './Styles';
 
-const UfprRegister = () => {
+const UfprRegister = ({navigation}) => {
 
-    const [Grr, setGrr] = useState("");
-    const GrrHandler = (text) => {
+    const [Cpf, setCpf] = useState("");
+    const CpfHandler = (text) => {
         if (errorInGrr) {
-            setErrorInGrr(true);
+            setErrorInGrr(false);
         }
-        setGrr(text);
+        setCpf(text);
     };
 
     const [Pass, setPass] = useState("");
     const PassHandler = (text) => {
         if (errorInPass) {
-            setErrorInPass(true);
+            setErrorInPass(false);
         }
         setPass(text);
     };
 
-    const [errorInGrr, setErrorInGrr] = useState(false);
-    const [errorInPass, setErrorInPass] = useState(false);
+    const [errorInCpf, setErrorInCpf] = useState(false);
+    const [errorInPass, setErrorInPass] = useState(false);  
+
+    const handleBack = () => {
+        navigation.navigate('Login')
+    }  
+
+    function isValidCPF(cpf) {
+        if (typeof cpf !== 'string') return false;
+        cpf = cpf.replace(/[\s.-]*/gim, '');
+        if (
+            !cpf ||
+            cpf.length != 11 ||
+            cpf == '00000000000' ||
+            cpf == '11111111111' ||
+            cpf == '22222222222' ||
+            cpf == '33333333333' ||
+            cpf == '44444444444' ||
+            cpf == '55555555555' ||
+            cpf == '66666666666' ||
+            cpf == '77777777777' ||
+            cpf == '88888888888' ||
+            cpf == '99999999999'
+        ) {
+            return false;
+        }
+        let soma = 0;
+        let resto;
+        for (let i = 1; i <= 9; i++)
+            soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+        resto = (soma * 10) % 11;
+        if (resto == 10 || resto == 11) resto = 0;
+        if (resto != parseInt(cpf.substring(9, 10))) return false;
+        soma = 0;
+        for (let i = 1; i <= 10; i++)
+            soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+        resto = (soma * 10) % 11;
+        if (resto == 10 || resto == 11) resto = 0;
+        if (resto != parseInt(cpf.substring(10, 11))) return false;
+        return true;
+    }
+
+    const handleSubmit = () => {
+        //Se estiver tudo bem com o login com o SIGA, o usuário será direcionado para a pagina de completar o cadatsro, 
+        if(!isValidCPF(Cpf)){
+            setErrorInCpf(true)
+            setCpf('');
+        } 
+        if(Pass.length <=1 ){
+            setErrorInPass(true)
+            setPass('')
+        } 
+        if(!errorInCpf && !errorInPass){
+            navigation.navigate('FinishUfprRegister')
+        }
+    }
 
     return (
         <View style={styles.Screen}>
             <ScrollView>
-                <CustomCloseIcon icon="arrow-circle-left" link='/' />
+                <View style={{alignSelf : 'flex-end'}}>
+                    <CustomCloseIcon icon="arrow-circle-left" onPress={handleBack}/>
+                </View>
                 <Text style={styles.Title}>Instruções</Text>
                 <View style={{ height: 18 }}></View>
                 <Text style={styles.SubTitle}>Olá discente!</Text>
@@ -45,12 +101,12 @@ const UfprRegister = () => {
                 <View style={{ height: 36 }}></View>
                 <View style={styles.RestOfScreen}>
                     <View style={styles.inputsContainer}>
-                        <CustomTopLabelInput label="GRR" />
+                        <CustomTopLabelInput label="CPF" />
                         <CustomInputs
-                            hintText="Digite o seu GRR"
-                            onChangeText={(text) => GrrHandler(text)}
-                            error={errorInGrr}
-                            errorMessage="Esse Grr não consta na nossa base de dados"
+                            hintText="Digite seu CPF"
+                            onChangeText={(text) => CpfHandler(text)}
+                            error={errorInCpf}
+                            errorMessage="Esse Cpf não consta na nossa base de dados"
                         />
 
                         <CustomTopLabelInput label="Senha" />
@@ -63,7 +119,7 @@ const UfprRegister = () => {
                         <CustomButtons
                             Label="Entrar"
                             Color={{ Color: "#ed524a" }}
-                            link="/FinishUfprRegister"
+                            onButtonPressed={handleSubmit}
                         />
                     </View>
                 </View>
