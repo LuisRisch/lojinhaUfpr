@@ -209,7 +209,7 @@ const Register = ({ navigation }) => {
                         </Text>
                         <CustomButtons
                             Label="Ok!"
-                            onButtonPressed={changeStateConfirmModal}
+                            onButtonPressed={() => navigation.navigate('MainProducts')}
                         />
                     </View>
                 </View>
