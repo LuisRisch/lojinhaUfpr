@@ -5,13 +5,14 @@ import FontSizes from "../../data/FontSizes";
 
 const styles = StyleSheet.create({
   textInputContainer: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
+    flexDirection : 'row',
+    justifyContent: 'space-between',
+    alignItems : 'center',
+    width: "100%",
     backgroundColor: Colors.ultraLightGrey,
     height: 35,
-    borderRadius: 16,
-    paddingHorizontal: 8,
+    borderRadius: 5,
+    paddingStart: 8,
     marginVertical: 5,
     shadowColor: "black",
     shadowOffset: {
@@ -21,14 +22,14 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
     elevation: 1.5,
-  }, 
-  errorContainer:{
+  },
+  errorContainer: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
     backgroundColor: Colors.ultraLightGrey,
-    borderColor : Colors.mainRed, 
-    borderWidth : 1,
+    borderColor: Colors.mainRed,
+    borderWidth: 1,
     height: 35,
     borderRadius: 16,
     paddingHorizontal: 8,
@@ -43,9 +44,9 @@ const styles = StyleSheet.create({
     elevation: 1.5,
   },
   errorMessage: {
-    color : Colors.mainRed, 
-    fontSize : FontSizes.TooLower,
-}
+    color: Colors.mainRed,
+    fontSize: FontSizes.TooLower,
+  }
 });
 
 export { styles };
