@@ -158,7 +158,7 @@ function Routes() {
   return (
     <Drawer.Navigator
       initialRouteName="Login"
-      drawerContent={(props) => <CustomDrawer {...props} />}
+      drawerContent={(props) => <CustomDrawer {...props} user={user} />}
       drawerContentOptions={{
         activeTintColor: "#ed524a",
         labelStyle: {
@@ -190,16 +190,6 @@ function Routes() {
         name="Register"
         component={Register}
         options={{ title: "Register" }}
-      />
-      <Drawer.Screen
-        name="UfprRegister"
-        component={UfprRegister}
-        options={{ title: "UfprRegister" }}
-      />
-      <Drawer.Screen
-        name="FinishUfprRegister"
-        component={FinishUfprRegister}
-        options={{ title: "FinishUfprRegister" }}
       />
       <Drawer.Screen
         name="CreateAnnouncement"

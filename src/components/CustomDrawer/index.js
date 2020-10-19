@@ -17,9 +17,16 @@ const CustomDrawer = (props) => {
   return (
     <DrawerContentScrollView {...props}>
       <View style={styles.User_Top_Information}>
-        <View style={styles.Circle_Box_Photo}>
-          <Icon name="camera" size={15} color="white" />
-        </View>
+        {user.picture ? (
+          <Image
+            source={{ uri: user.picture.url }}
+            style={styles.Circle_Box_Photo}
+          />
+        ) : (
+          <View style={styles.Circle_Box_Photo}>
+            <Icon name="camera" size={15} color="white" />
+          </View>
+        )}
         <View
           style={{
             marginLeft: Spacing.MainMargin - 9, //9px
