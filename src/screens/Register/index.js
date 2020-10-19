@@ -22,53 +22,82 @@ const Register = ({ navigation }) => {
     const [Name, setName] = useState("");
     const [Email, setEmail] = useState("");
     const [Cpf, setCpf] = useState("");
-
     const [DefinePass, setDefinePass] = useState("");
     const [ConfirmPass, setConfirmPass] = useState("");
 
     // Shows error in input if some information is wrong
-    const [errorInName, setErrorInName] = useState(false);
-    const [errorInEmail, setErrorinEmail] = useState(false);
-    const [errorInCpf, setErrorInCpf] = useState(false);
-    const [errorInPass, setErrorInPass] = useState(false);
-    const [errorInRevPass, setErrorInRevPass] = useState(false);
+    const [errorInName, setErrorInName] = useState({
+        error: false,
+        message: '',
+    });
+    const [errorInEmail, setErrorinEmail] = useState({
+        error: false,
+        message: '',
+    });
+    const [errorInCpf, setErrorInCpf] = useState({
+        error: false,
+        message: '',
+    });
+    const [errorInPass, setErrorInPass] = useState({
+        error: false,
+        message: '',
+    });
+    const [errorInRevPass, setErrorInRevPass] = useState({
+        error: false,
+        message: '',
+    });
 
     // Catch the char of the field
     const NameHandler = (text) => {
-        if (errorInName) {
-            setErrorInName(!errorInName)
+        if (errorInName.error) {
+            setErrorInName({
+                error: false,
+                message: '',
+            })
         }
         setName(text);
         console.log(Name)
     }
 
     const EmailHandler = (text) => {
-        if (errorInEmail) {
-            setErrorinEmail(!errorInEmail)
+        if (errorInEmail.error) {
+            setErrorinEmail({
+                error: false,
+                message: '',
+            })
         }
         setEmail(text)
         console.log(Email)
     }
 
     const CpfHandler = (text) => {
-        if (errorInCpf) {
-            setErrorInCpf(!errorInCpf)
+        if (errorInCpf.error) {
+            setErrorInCpf({
+                error: false,
+                message: '',
+            })
         }
         setCpf(text)
         console.log(Cpf)
     }
 
     const PassHandler = (text) => {
-        if (errorInPass) {
-            setErrorInPass(!errorInPass)
+        if (errorInPass.error) {
+            setErrorInPass({
+                error: false,
+                message: '',
+            })
         }
         setDefinePass(text)
         console.log(DefinePass)
     }
 
     const RevPassHandler = (text) => {
-        if (errorInRevPass) {
-            setErrorInRevPass(!errorInRevPass)
+        if (errorInRevPass.error) {
+            setErrorInRevPass({
+                error: false,
+                message: '',
+            })
         }
         setConfirmPass(text)
         console.log(ConfirmPass);
@@ -122,34 +151,52 @@ const Register = ({ navigation }) => {
     }
 
     //Function that verifies everything before complete the registration
-    const onSubmitt = () => {
+    const onSubmitt = () => { 
         if (!VerifyLenght(Name)) {
-            setErrorInName(true)
+            setErrorInName({
+                error : true, 
+                message : 'Preencha o campo'
+            })
             setName('')
         }
 
         if (VerifyLenght(Email)) {
             if (!IsEmail(Email)) {
-                setErrorinEmail(true)
+                setErrorinEmail({
+                    error : true, 
+                    message : 'O email digitado não contêm @'
+                })
                 setEmail('')
             }
         } else {
-            setErrorinEmail(true)
+            setErrorinEmail({
+                error : true, 
+                message : 'Preencha o campo'
+            })
             setEmail('')
         }
 
         if (!isValidCPF(Cpf)) {
-            setErrorInCpf(true)
+            setErrorInCpf({
+                error : true, 
+                message : 'O cpf não é válido'
+            })
             setCpf('')
         }
 
         if (!isValidPass(DefinePass)) {
-            setErrorInPass(true)
+            setErrorInPass({
+                error : true, 
+                message : 'A senha tem que ter 8 ou mais caracteres'
+            })
             setDefinePass('');
         }
 
         if (DefinePass !== ConfirmPass) {
-            setErrorInRevPass(true)
+            setErrorInRevPass({
+                error : true, 
+                message : 'As senhas digitados não são iguais'
+            })
         }
         if (errorInName || errorInCpf || errorInEmail || errorInPass || errorInRevPass) {
             return
@@ -193,7 +240,6 @@ const Register = ({ navigation }) => {
 
     return (
         <View style={styles.screen}>
-
             {/* Esse modal irá mostrar um Alerta customizado confirmando o cadastro do novo usuário */}
             <Modal
                 visible={isConfirmRegisterModalVisible}
@@ -283,44 +329,44 @@ const Register = ({ navigation }) => {
                     <CustomTopLabelInput label="Nome" />
                     <CustomInputs
                         hintText="Beatriz Nogueira"
-                        error={errorInName}
+                        error={errorInName.error}
                         value={Name}
-                        errorMessage='Esse nome está errado!'
+                        errorMessage={errorInName.message}
                         onChangeText={(text) => NameHandler(text)}
                     />
 
                     <CustomTopLabelInput label="Email" />
                     <CustomInputs
                         hintText="beatriznogueira@gmail.com"
-                        error={errorInEmail}
+                        error={errorInEmail.error}
                         value={Email}
-                        errorMessage='Esse email é inválido'
+                        errorMessage={errorInEmail.message}
                         onChangeText={(text) => EmailHandler(text)}
                     />
 
                     <CustomTopLabelInput label="CPF" />
                     <CustomInputs
                         hintText="111111111-11"
-                        error={errorInCpf}
+                        error={errorInCpf.error}
                         value={Cpf}
-                        errorMessage='Esse Cpf é inválido'
+                        errorMessage={errorInCpf.message}
                         onChangeText={(text) => CpfHandler(text)}
                     />
                     <CustomTopLabelInput label="Defina a senha" />
                     <CustomPasswordInput
                         hintText="Digite sua senha"
-                        error={errorInPass}
+                        error={errorInPass.error}
                         value={DefinePass}
-                        errorMessage='Senha inválido'
+                        errorMessage={errorInPass.message}
                         onChangeText={(text) => PassHandler(text)}
                     />
 
                     <CustomTopLabelInput label="Repita a senha" />
                     <CustomPasswordInput
                         hintText="Repita sua senha"
-                        error={errorInRevPass}
+                        error={errorInRevPass.error}
                         value={ConfirmPass}
-                        errorMessage='O campo digitado não está igual ao da senha'
+                        errorMessage={errorInRevPass.message}
                         onChangeText={(text) => RevPassHandler(text)}
                     />
 
@@ -356,12 +402,12 @@ const Register = ({ navigation }) => {
                     style={{
                         flexDirection: "column-reverse",
                         flex: 1,
-                        justifyContent: "space-between",
+                        justifyContent: 'flex-start',
                     }}
                 >
                     <Image
                         source={require("../../assets/logo.png")}
-                        style={{ alignSelf: "center", width: 70, height: 70 }}
+                        style={{ alignSelf: "center", width: 55, height: 55 }}
                     />
                 </View>
             </ScrollView>
