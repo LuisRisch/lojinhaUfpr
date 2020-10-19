@@ -212,10 +212,9 @@ const Home = ({ navigation }) => {
         <View style={styles.redContainer}></View>
         <Text style={styles.normalText}>Plataforma de ação de venda</Text>
       </View>
-      <CustomButtons
-        Label="Fazer Login"
-        Color={{ Color: "#ed524a" }}
-        onButtonPressed={handleLogin}
+      <Image
+        source={require("../../assets/logo_com_nome.png")}
+        style={styles.image}
       />
       <View style={{ justifyContent: "space-between" }}>
         <View>
