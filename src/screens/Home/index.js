@@ -87,7 +87,7 @@ const Home = ({ navigation }) => {
         .then((res) => {
           if (res.status === 200) {
             dispatch(userSignIn(res.data));
-            navigation.navigate("MainProducts");
+            navigation.navigate("Products");
             setErrorInCpf(false);
             setErrorInPass(false);
           }
@@ -253,7 +253,7 @@ const Home = ({ navigation }) => {
             <CustomButtons
               Label="Entrar sem fazer login"
               Color={{ Color: "#FA8072" }}
-              onButtonPressed={() => navigation.navigate("MainProducts")}
+              onButtonPressed={() => navigation.navigate("Products")}
             />
             <View
               style={{
