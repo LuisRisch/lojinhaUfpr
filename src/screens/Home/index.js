@@ -35,11 +35,23 @@ const Home = ({ navigation }) => {
     const userSigned = useSelector((state) => state.user.signed);
     const rememberPassword = useSelector((state) => state.user.rememberPassword);
 
-    const [errorInCpf, setErrorInCpf] = useState(false);
-    const [errorInPass, setErrorInPass] = useState(false);
-    const [errorInRedifinePass, setErrorInRedifinePass] = useState(true);
+    const [Cpf, setCpf] = useState("");
+    const [Pass, setPass] = useState("");
+    const [Email , setEmail] = useState(''); 
 
-    const [cpfMessage, setCpfError] = useState("Informações inválidas");
+    const [errorInCpf, setErrorInCpf] = useState({
+        error : false, 
+        message : ''
+    });
+    const [errorInPass, setErrorInPass] = useState({
+        error : false, 
+        message : '',
+    });
+    const [errorInRedifinePass, setErrorInRedifinePass] = useState({
+        error : false, 
+        message : ''
+    });
+
 
     const handleRememberPassword = () => {
         dispatch(userRemember());
@@ -64,9 +76,6 @@ const Home = ({ navigation }) => {
         setIsAlertModalVisible(!isALertModalVisible);
     };
 
-    const [Cpf, setCpf] = useState("");
-    const [Pass, setPass] = useState("");
-
     const height = Dimensions.get("window").height;
     const handleLogin = async () => {
         if (Cpf && Pass) {
@@ -87,26 +96,68 @@ const Home = ({ navigation }) => {
                 })
                 .catch((err) => {
                     console.log(err);
-                    setErrorInCpf(true);
-                    setErrorInPass(true);
+                    setErrorInCpf({
+                        error : true, 
+                        message : 'Informações inválidas!'
+                    });
+                    setErrorInPass({
+                        error : true, 
+                        message : 'Informações inválidas!'
+                    });
                     Alert.alert(
                         "Informações inválidas!",
                         "As suas informações de cpf e senha estão inválidas"
                     );
                 });
         } else {
-            setErrorInCpf(true);
-            setErrorInPass(true);
+            setErrorInCpf({
+                error : true, 
+                message : 'Este campo não foi preenchido'
+            });
+            setErrorInPass({
+                error : true, 
+                message : 'Este campo não foi preenchido'
+            });
         }
-    };
+    }; 
+
+    const RedifinePassHandler = (text) => {
+        if(errorInRedifinePass.error){
+            setErrorInRedifinePass({
+                error : false, 
+                message : ''
+            }) 
+            setEmail(text)
+        }
+    } 
+
+    const CpfHandler = (text) => {
+        if(errorInCpf.error){
+            setErrorInCpf({
+                error : false, 
+                message : ''
+            })
+        } 
+        setCpf(text)
+    } 
+
+    const PassHandler = (text) => {
+        if(errorInPass.error){
+            setErrorInPass({
+                error : false, 
+                message : ''
+            })
+        } 
+        setPass(text)
+    }
 
     const handleRegister = () => {
         changeStateAlertModal();
         navigation.navigate("Register");
-    }; 
+    };
 
     const handleUfprRegister = () => {
-        changeStateAlertModal(); 
+        changeStateAlertModal();
         navigation.navigate('UfprRegister')
     }
 
@@ -116,7 +167,7 @@ const Home = ({ navigation }) => {
     // Portanto, armazenei os códigos em duas variáveis diferentes, e retornei um operador lógico
     // que dependendo do tamanho da tela, os conteúdos serão dispostos de uma certa forma
 
-    let resetPassContent = (
+    const resetPassContent = (
         <View style={styles.BackModalScreen}>
             <View style={styles.inputsContainer}>
                 <View style={{ justifyContent: "space-between" }}>
@@ -130,8 +181,8 @@ const Home = ({ navigation }) => {
                         <CustomInputs
                             hintText="Digite seu email"
                             onChangeText={(text) => RedifinePassHandler(text)}
-                            error={errorInRedifinePass}
-                            errorMessage="Esse email não consta na nossa base de dados"
+                            error={errorInRedifinePass.error}
+                            errorMessage={errorInRedifinePass.message}
                         />
                         <Text style={styles.lowerTexT}>
                             Enviaremos um email com as informações necessárias para a
@@ -143,52 +194,12 @@ const Home = ({ navigation }) => {
             </View>
         </View>
     );
-    return (
-        <SafeAreaView style={styles.screen}>
-            <Modal
-                animationType="fade"
-                visible={isModalResetPassVisible}
-                transparent={true}
-            >
-                {height < 670 ? (
-                    <ScrollView>{resetPassContent}</ScrollView>
-                ) : (
-                        <View style={{ flex: 1 }}>{resetPassContent}</View>
-                    )}
-            </Modal>
 
-            {/* O modal irá mostrar a um Alert personalizado de quando o usuário clicar para se cadastras */}
-
-            <Modal
-                visible={isALertModalVisible}
-                transparent={true}
-                animationType={"slide"}
-            >
-                <View style={styles.BackModalScreen}>
-                    <View style={styles.BackModalAlert}>
-                        <View style={styles.iconContainer}>
-                            <TouchableOpacity onPress={changeStateAlertModal}>
-                                <Icon name="close" color={Colors.mainRed} size={18} />
-                            </TouchableOpacity>
-                        </View>
-                        <Text style={styles.TitleModalStyle}> Importante! </Text>
-                        <View style={styles.SizedBox}></View>
-                        <Text style={styles.SubTitleModalStyle}>
-                            Você é estudante da UFPR? Caso o usuário que não for aluno, não
-                            poderá fazer anúncios no aplicativo, mas terá o direito de fazer
-                            compras
-                        </Text>
-                        <CustomButtons
-                            Label="Sim, sou estudante da UFPR"
-                            onButtonPressed={handleUfprRegister}
-                        />
-                        <CustomButtons
-                            Label="Não sou estudante da UFPR"
-                            onButtonPressed={handleRegister}
-                        />
-                    </View>
-                </View>
-            </Modal>
+    const homeContent =
+        <View style={{
+            flex: 1,
+            justifyContent: "space-between",
+        }}>
             <View style={styles.topContaine}>
                 <View style={styles.redContainer}></View>
                 <Text style={styles.normalText}>Plataforma de ação de venda</Text>
@@ -198,21 +209,21 @@ const Home = ({ navigation }) => {
                 style={styles.image}
             />
             <View style={{ justifyContent: "space-between" }}>
-                <ScrollView>
+                <View>
                     <View style={styles.inputsContainer}>
                         <CustomTopLabelInput label="CPF" />
                         <CustomInputs
                             hintText="Digite o seu CPF"
-                            error={errorInCpf}
-                            errorMessage={cpfMessage}
-                            onChangeText={(text) => setCpf(text)}
+                            error={errorInCpf.error}
+                            errorMessage={errorInCpf.message}
+                            onChangeText={(text) => CpfHandler(text)}
                         />
                         <CustomTopLabelInput label="Senha" />
                         <CustomPasswordInput
                             hintText="Digite sua senha"
-                            error={errorInPass}
-                            errorMessage="Informações inválidas"
-                            onChangeText={(text) => setPass(text)}
+                            error={errorInPass.error}
+                            errorMessage={errorInPass.message}
+                            onChangeText={(text) => PassHandler(text)}
                         />
                         <View style={styles.saveOrForgotPasswordContainer}>
                             <View style={styles.switchButtonContainer}>
@@ -252,8 +263,56 @@ const Home = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                </ScrollView>
+                </View>
             </View>
+        </View>
+
+    return (
+        <SafeAreaView style={styles.screen}>
+            <Modal
+                animationType="fade"
+                visible={isModalResetPassVisible}
+                transparent={true}
+            >
+                <View style={{flex : 1}}>{resetPassContent}</View>
+            </Modal>
+
+            {/* O modal irá mostrar a um Alert personalizado de quando o usuário clicar para se cadastras */}
+
+            <Modal
+                visible={isALertModalVisible}
+                transparent={true}
+                animationType={"slide"}
+            >
+                <View style={styles.BackModalScreen}>
+                    <View style={styles.BackModalAlert}>
+                        <View style={styles.iconContainer}>
+                            <TouchableOpacity onPress={changeStateAlertModal}>
+                                <Icon name="close" color={Colors.mainRed} size={18} />
+                            </TouchableOpacity>
+                        </View>
+                        <Text style={styles.TitleModalStyle}> Importante! </Text>
+                        <View style={styles.SizedBox}></View>
+                        <Text style={styles.SubTitleModalStyle}>
+                            Você é estudante da UFPR? Caso o usuário que não for aluno, não
+                            poderá fazer anúncios no aplicativo, mas terá o direito de fazer
+                            compras
+                        </Text>
+                        <CustomButtons
+                            Label="Sim, sou estudante da UFPR"
+                            onButtonPressed={handleUfprRegister}
+                        />
+                        <CustomButtons
+                            Label="Não sou estudante da UFPR"
+                            onButtonPressed={handleRegister}
+                        />
+                    </View>
+                </View>
+            </Modal>
+            {
+                height <= 670 ? <ScrollView>{homeContent}</ScrollView> : <>{homeContent}</>
+            }
+
         </SafeAreaView>
     );
 };
