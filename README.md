@@ -38,7 +38,15 @@ $ yarn
 $ npm install
 ```
 
-### **Passo 2 - Rode a aplicação**
+### **Passo 2 - Ajustes do backend**
+
+Por ainda estar em faze de desenvolvimento, o url da ligação com o backend pode estar diferente do que é necessário para funcionar. Caso esteja, por favor altere o host para o correto (localhost, endereço de ip, etc.).
+
+Esse ajuste precisa ser realizado nos arquivos **api.js** e **socket.js**, localizados na pasta **./src/services/**.
+
+Não esqueça de iniciar o backend, antes de iniciar a aplicação mobile.
+
+### **Passo 3 - Rode a aplicação**
 
 Dentro do diretório do projeto, rode:
 
