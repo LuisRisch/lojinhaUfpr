@@ -2,14 +2,16 @@ import { produce } from "immer";
 
 const INITIAL_STATE = {
   messages: [],
+  id: "",
 };
 
 export default function user(state = INITIAL_STATE, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case "@chat/SAVE_CURRENT": {
-        const { data } = action.payload;
+        const { data, id } = action.payload;
 
+        draft.id = id;
         draft.messages = data;
         break;
       }

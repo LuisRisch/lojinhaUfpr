@@ -1,7 +1,7 @@
-export function chatSave(data) {
+export function chatSave(data, id) {
   return {
     type: "@chat/SAVE_CURRENT",
-    payload: { data },
+    payload: { data, id },
   };
 }
 

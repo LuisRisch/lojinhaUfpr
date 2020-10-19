@@ -1,9 +1,9 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { View, TouchableOpacity, FlatList, Text } from "react-native";
+import { View, TouchableOpacity, FlatList, Text, Platform } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useSelector, useDispatch } from "react-redux";
 
-import io from "../../services/socket";
+import { io } from "../../services/socket";
 import Colors from "../../data/Colors";
 import CustomTextInput from "../../components/CustomInputs";
 
@@ -44,31 +44,14 @@ const ChatScreen = ({ route, navigation }) => {
       if (response.data.buyer._id != user.id) {
         setUserType("seller");
       }
-      dispatch(chatSave(response.data.messages));
+      dispatch(chatSave(response.data.messages, response.data._id));
     }
   };
 
   useEffect(() => {
     loadChat();
 
-    io.on("connect", () => {
-      setConnected(true);
-      io.emit("join_room", chatID);
-
-      io.on("receivedMessage", (data) => {
-        console.log("recebido");
-        if (data.sent_by === userType) {
-          return 0;
-        }
-        const currentDate = new Date().getTime();
-        const obj = {
-          id: currentDate.toString(),
-          content: data.message,
-          sent_by: data.sent_by,
-        };
-        dispatch(newMessage(obj));
-      });
-    });
+    io.emit("join_room", chatID);
 
     return () => {
       io.emit("disconnect");
