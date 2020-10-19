@@ -160,7 +160,7 @@ function Routes() {
                 component={ChatList}
                 options={{ title: "Chat" }}
             />
-            {/* <Drawer.Screen
+            <Drawer.Screen
                 name="Register"
                 component={Register}
                 options={{ title: "Register" }}
@@ -174,7 +174,7 @@ function Routes() {
                 name="FinishUfprRegister"
                 component={FinishUfprRegister}
                 options={{ title: "FinishUfprRegister" }}
-            /> */}
+            />
             <Drawer.Screen
                 name="CreateAnnouncement"
                 component={CreateAnnouncement}
