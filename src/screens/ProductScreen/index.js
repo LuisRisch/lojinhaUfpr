@@ -15,22 +15,6 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
     navigation.goBack();
   };
 
-  const [popUpMenu, setpopUpMenu] = useState(false);
-  const popUpMenuHandler = () => {
-    setpopUpMenu(true);
-    setTimeout(() => {
-      setpopUpMenu(false);
-    }, 10000);
-  };
-
-  const DeleteAnnouncementHandler = () => {
-    console.log("Deletar anuncio");
-  };
-
-  const EditHandler = () => {
-    console.log("Editar anuncio");
-  };
-
   const handleChat = async () => {
     const data = {
       user: user.id,
