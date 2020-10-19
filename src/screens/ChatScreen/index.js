@@ -1,44 +1,35 @@
-import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, FlatList, Text } from "react-native";
+import React, { useState, useEffect, useMemo } from "react";
+import { View, TouchableOpacity, FlatList, Text, Platform } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { useSelector, useDispatch } from "react-redux";
+
+import { io } from "../../services/socket";
 import Colors from "../../data/Colors";
 import CustomTextInput from "../../components/CustomInputs";
 
-import { useSelector } from "react-redux";
+import {
+  chatLeave,
+  chatSave,
+  newMessage,
+} from "../../store/modules/chat/actions";
 
 import api from "../../services/api";
 
 import styles from "./styles";
 
-const ChatScreen = ({ route }) => {
+const ChatScreen = ({ route, navigation }) => {
   const { chatID } = route.params;
   const { data: user, token } = useSelector((state) => state.user);
+  const messageList = useSelector((state) => state.chat.messages);
+
+  const [focused, setFocused] = useState(false);
+  const [connected, setConnected] = useState(false);
+
+  const dispatch = useDispatch();
 
   const [userType, setUserType] = useState("buyer");
 
   const [text, setText] = useState("");
-  const [MessageList, setMessageList] = useState([
-    {
-      id: 0,
-      content:
-        "Bem vindo ao chat da lojinha! Tome cuidado com quais informações com quais informações compartilhar!",
-      sent_by: "chat",
-    },
-    {
-      id: 1,
-      content: "Bom dia!",
-      sent_by: "buyer",
-      day: "18/09/2020",
-      hour: "13:00",
-    },
-    {
-      id: 2,
-      content: "Boa tarde!",
-      sent_by: "seller",
-      day: "18/09/2020",
-      hour: "13:00",
-    },
-  ]);
 
   const loadChat = async () => {
     const response = await api
@@ -53,13 +44,19 @@ const ChatScreen = ({ route }) => {
       if (response.data.buyer._id != user.id) {
         setUserType("seller");
       }
-      setMessageList(response.data.messages);
+      dispatch(chatSave(response.data.messages, response.data._id));
     }
   };
 
   useEffect(() => {
-    console.log(chatID);
     loadChat();
+
+    io.emit("join_room", chatID);
+
+    return () => {
+      io.emit("disconnect");
+      setConnected(false);
+    };
   }, []);
 
   const onChangeText = (EnteredText) => {
@@ -68,15 +65,16 @@ const ChatScreen = ({ route }) => {
 
   const submitMessage = async () => {
     if (text.length >= 1) {
-      const messages = [...MessageList];
       const messageObj = {
         content: text,
         sent_by: userType,
-        id: messages.length + 1,
+        id: (messageList.length + 1).toString(),
       };
-      messages.push(messageObj);
-      setMessageList(messages);
+
+      dispatch(newMessage(messageObj));
       setText("");
+
+      io.emit("message", { room: chatID, message: text, sent_by: userType });
 
       await api
         .put(
@@ -139,11 +137,12 @@ const ChatScreen = ({ route }) => {
   return (
     <View style={styles.screen}>
       <FlatList
-        data={MessageList}
+        data={messageList}
         renderItem={RenderMessage}
         keyExtractor={(item) => item.id}
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
+        inverted
       />
       <View style={styles.inputView}>
         <CustomTextInput
