@@ -38,7 +38,7 @@ $ yarn
 $ npm install
 ```
 
-**OBS: A aplicação ainda está em desenvolvimento. Para testar a brach mais avançada, acesse a final**
+**OBS: A aplicação ainda está em desenvolvimento. Para testar a brach mais avançada, acesse a [final](https://github.com/LuisRisch/lojinhaUfpr/tree/final)**
 
 
 ### **Passo 2 - Ajustes do backend**
