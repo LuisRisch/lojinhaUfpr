@@ -74,9 +74,6 @@ const Home = ({ navigation }) => {
     setIsAlertModalVisible(!isALertModalVisible);
   };
 
-  const [Cpf, setCpf] = useState("");
-  const [Pass, setPass] = useState("");
-
   const height = Dimensions.get("window").height;
   const handleLogin = async () => {
     if (Cpf && Pass) {

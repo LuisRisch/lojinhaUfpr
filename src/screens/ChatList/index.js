@@ -11,8 +11,10 @@ import styles from "./styles";
 const ChatScreen = ({ navigation }) => {
   const { data: user, token } = useSelector((state) => state.user);
   const [chatList, setChatList] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const loadChats = async () => {
+    setRefreshing(true);
     const response = await api
       .get(`/chats/${user.id}`, {
         headers: {
@@ -24,10 +26,10 @@ const ChatScreen = ({ navigation }) => {
     if (response) {
       setChatList(response.data);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
-    chatLeave();
     loadChats();
   }, []);
 
@@ -91,6 +93,8 @@ const ChatScreen = ({ navigation }) => {
         keyExtractor={(item) => item._id}
         scrollEnabled={true}
         showsVerticalScrollIndicator={false}
+        refreshing={loading}
+        onRefresh={loadChats}
       />
     </View>
   );
