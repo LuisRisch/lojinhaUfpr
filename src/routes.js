@@ -187,11 +187,6 @@ function Routes() {
         }}
       />
       <Drawer.Screen
-        name="Register"
-        component={Register}
-        options={{ title: "Register" }}
-      />
-      <Drawer.Screen
         name="CreateAnnouncement"
         component={CreateAnnouncement}
         options={{ title: "Anunciar produto/serviço" }}

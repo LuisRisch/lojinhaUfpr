@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { View, Text, Image, Dimensions, ScrollView } from "react-native";
+import { View, Text, Image, Dimensions, ScrollView, Alert } from "react-native";
 import { useSelector } from "react-redux";
 import Spacing from "../../data/Spacing";
 import CustomButton from "../../components/CustomButtons";
@@ -49,6 +49,8 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
       .catch((err) => {
         if (err.response.data.error === "Chat já criado!") {
           navigation.navigate("ChatList");
+        } else {
+          Alert.alert("Ops... ocorreu um erro!", err.response.data.error);
         }
       });
 

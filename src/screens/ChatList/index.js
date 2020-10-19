@@ -14,7 +14,7 @@ const ChatScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
 
   const loadChats = async () => {
-    setRefreshing(true);
+    setLoading(true);
     const response = await api
       .get(`/chats/${user.id}`, {
         headers: {
