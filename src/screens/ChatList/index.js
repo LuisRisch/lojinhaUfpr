@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity, FlatList, Text, Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { chatLeave } from "../../store/modules/chat/actions";
 
 import api from "../../services/api";
 
@@ -26,18 +27,25 @@ const ChatScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
+    chatLeave();
     loadChats();
   }, []);
 
-  const handleChat = (id) => {
-    navigation.navigate("ChatScreen", { chatID: id });
+  const handleChat = (id, title, url) => {
+    navigation.navigate("ChatScreen", {
+      chatID: id,
+      product: title,
+      url:
+        "https://xtudoreceitas.com/wp-content/uploads/Massa-Basica-para-Salgados-Fritos-500x400.jpg",
+    });
   };
 
   const renderChatList = ({ item }) => {
-    console.log(item);
     return (
       <View style={styles.chatHolder}>
-        <TouchableOpacity onPress={() => handleChat(item._id)}>
+        <TouchableOpacity
+          onPress={() => handleChat(item._id, item.product.title)}
+        >
           <Image
             style={styles.avatar}
             source={{ uri: item.product ? item.product.picture.url : null }}
@@ -46,7 +54,7 @@ const ChatScreen = ({ navigation }) => {
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.centerTextHolder}
-          onPress={() => handleChat(item._id)}
+          onPress={() => handleChat(item._id, item.product.title)}
         >
           <Text style={styles.chatTitle} numberOfLines={1}>
             {item.product.title}

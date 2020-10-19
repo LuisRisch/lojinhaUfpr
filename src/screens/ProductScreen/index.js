@@ -38,16 +38,25 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
       seller: product.user._id,
     };
 
+    let errorStatus = 0;
+
     const response = await api
       .post("/chat", data, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-      .catch((err) => alert(err.response.data.error));
+      .catch((err) => {
+        if (err.response.data.error === "Chat já criado!") {
+          navigation.navigate("ChatList");
+        }
+      });
 
-    if (response) {
-      navigation.navigate("ChatScreen", response.data._id);
+    if (response.status === 200) {
+      navigation.navigate("ChatScreen", {
+        chatID: response.data._id,
+        title: response.data.product.title,
+      });
     }
   };
 
