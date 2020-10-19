@@ -186,21 +186,21 @@ function Routes() {
           },
         }}
       />
-      {/* <Drawer.Screen
-                name="Register"
-                component={Register}
-                options={{ title: "Register" }}
-            />
-            <Drawer.Screen
-                name="UfprRegister"
-                component={UfprRegister}
-                options={{ title: "UfprRegister" }}
-            />
-            <Drawer.Screen
-                name="FinishUfprRegister"
-                component={FinishUfprRegister}
-                options={{ title: "FinishUfprRegister" }}
-            /> */}
+      <Drawer.Screen
+        name="Register"
+        component={Register}
+        options={{ title: "Register" }}
+      />
+      <Drawer.Screen
+        name="UfprRegister"
+        component={UfprRegister}
+        options={{ title: "UfprRegister" }}
+      />
+      <Drawer.Screen
+        name="FinishUfprRegister"
+        component={FinishUfprRegister}
+        options={{ title: "FinishUfprRegister" }}
+      />
       <Drawer.Screen
         name="CreateAnnouncement"
         component={CreateAnnouncement}
@@ -210,11 +210,6 @@ function Routes() {
         name="Login"
         component={Home}
         options={{ title: "Sair", gestureEnabled: false }}
-        listeners={({ navigation, route }) => ({
-          // focus: (e) => {
-          //   dispatch(userSignOut());
-          // },
-        })}
       />
     </Drawer.Navigator>
   );

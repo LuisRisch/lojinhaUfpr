@@ -1,48 +1,49 @@
 import React, { useState } from "react";
-import { View, Text, ScrollView } from "react-native";
+import { View, Text, Image, Dimensions } from "react-native";
 import CustomInputs from "../../components/CustomInputs";
 import CustomTopLabelInput from "../../components/CustomTopLabelInput";
 import CustomPasswordInput from "../../components/CustomPasswordInput";
 import CustomButtons from "../../components/CustomButtons";
 import CustomCloseIcon from "../../components/CustomCloseIcon";
 import { styles } from './Styles';
+import { ScrollView } from "react-native-gesture-handler";
 
-const UfprRegister = ({navigation}) => {
+const UfprRegister = ({ navigation }) => {
 
     const [Cpf, setCpf] = useState("");
+    const [Pass, setPass] = useState("");
+    const [errorInCpf, setErrorInCpf] = useState({
+        state: false,
+        message: ''
+    });
+    const [errorInPass, setErrorInPass] = useState({
+        state: false,
+        message: ''
+    });
+
     const CpfHandler = (text) => {
         if (errorInCpf.state) {
             setErrorInCpf({
-                state : false, 
-                message : ''
+                state: false,
+                message: ''
             });
         }
         setCpf(text);
     };
 
-    const [Pass, setPass] = useState("");
     const PassHandler = (text) => {
         if (errorInPass.state) {
             setErrorInPass({
-                state : false, 
-                message : ''
+                state: false,
+                message: ''
             });
         }
         setPass(text);
     };
 
-    const [errorInCpf, setErrorInCpf] = useState({
-        state : false, 
-        message : ''
-    });
-    const [errorInPass, setErrorInPass] = useState({
-        state : false, 
-        message : ''
-    });  
-
     const handleBack = () => {
         navigation.navigate('Login')
-    }  
+    }
 
     function isValidCPF(cpf) {
         if (typeof cpf !== 'string') return false;
@@ -81,31 +82,32 @@ const UfprRegister = ({navigation}) => {
 
     const handleSubmit = () => {
         //Se estiver tudo bem com o login com o SIGA, o usuário será direcionado para a pagina de completar o cadatsro, 
-        if(!isValidCPF(Cpf)){
+        if (!isValidCPF(Cpf)) {
             setErrorInCpf({
-                state : true, 
-                message : 'CPF é inválido'
+                state: true,
+                message: 'CPF é inválido'
             })
             setCpf('');
-        } 
-        if(Pass.length <=1 ){
+        }
+        if (Pass.length <= 1) {
             setErrorInPass({
-                state : true, 
-                message : 'Senha é inválido'
+                state: true,
+                message: 'Senha é inválido'
             })
             setPass('')
-        } 
-        // if(!errorInCpf.state && !errorInPass.state){
-        //     navigation.navigate('FinishUfprRegister')
-        // }
+        }
+        if (isValidCPF(Cpf) && Pass.length >= 1) {
+            navigation.navigate('FinishUfprRegister')
+        }
     }
 
-    return (
-        <View style={styles.Screen}>
-            <ScrollView>
-                <View style={{alignSelf : 'flex-end'}}>
-                    <CustomCloseIcon icon="arrow-circle-left" onPress={handleBack}/>
-                </View>
+    const height = Dimensions.get("window").height;
+    const content = <View style={styles.Screen}>
+        <View>
+            <View style={{ alignSelf: 'flex-end' }}>
+                <CustomCloseIcon icon="arrow-circle-left" onPress={handleBack} />
+            </View>
+            <View>
                 <Text style={styles.Title}>Instruções</Text>
                 <View style={{ height: 18 }}></View>
                 <Text style={styles.SubTitle}>Olá discente!</Text>
@@ -115,35 +117,58 @@ const UfprRegister = ({navigation}) => {
                     UFPR precisa fazer. Portanto, por agora precisamos que você utiliza as
                     complete os campos a baixo. Após isso, você será direcionado para uma
                     páǵina para completar o cadastro
-                </Text>
-                <View style={{ height: 36 }}></View>
-                <View style={styles.RestOfScreen}>
-                    <View style={styles.inputsContainer}>
-                        <CustomTopLabelInput label="CPF" />
-                        <CustomInputs
-                            hintText="Digite seu CPF"
-                            onChangeText={(text) => CpfHandler(text)}
-                            error={errorInCpf.state}
-                            errorMessage={errorInCpf.message}
-                        />
+            </Text>
+            </View>
+            <View style={{ height: 36 }}></View>
+            <View style={{ width: '100%' }}>
+                <CustomTopLabelInput label="CPF" />
+                <CustomInputs
+                    hintText="Digite seu CPF"
+                    onChangeText={(text) => CpfHandler(text)}
+                    error={errorInCpf.state}
+                    errorMessage={errorInCpf.message}
+                />
 
-                        <CustomTopLabelInput label="Senha" />
-                        <CustomPasswordInput
-                            hintText="Digite sua senha"
-                            onChangeText={(text) => PassHandler(text)}
-                            error={errorInPass.state}
-                            errorMessage={errorInPass.message}
-                        />
-                        <CustomButtons
-                            Label="Entrar"
-                            Color={{ Color: "#ed524a" }}
-                            onButtonPressed={handleSubmit}
-                        />
-                    </View>
-                </View>
-            </ScrollView>
+                <CustomTopLabelInput label="Senha" />
+                <CustomPasswordInput
+                    hintText="Digite sua senha"
+                    onChangeText={(text) => PassHandler(text)}
+                    error={errorInPass.state}
+                    errorMessage={errorInPass.message}
+                />
+                <CustomButtons
+                    Label="Entrar"
+                    Color={{ Color: "#ed524a" }}
+                    onButtonPressed={handleSubmit}
+                />
+            </View>
         </View>
-    );
+        <View style={{height : 36}}></View>
+        <View
+            style={{
+                flexDirection: "column-reverse",
+                flex: 1,
+                justifyContent: "space-between",
+            }}
+        >
+            <Image
+                source={require("../../assets/logo.png")}
+                style={{ alignSelf: "center", width: 55, height: 55 }}
+            />
+        </View>
+    </View>
+
+    if (height <= 670){
+        return(
+            <ScrollView>
+                {content}
+            </ScrollView>
+        )
+    } else{
+        return(
+            content
+        )
+    }
 };
 
 export default UfprRegister;
