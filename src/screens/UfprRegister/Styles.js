@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
     Screen: {
         flex: 1,
         paddingHorizontal : Spacing.MainPadding, 
-        paddingVertical : Spacing.TopSpacingScreen,
+        paddingTop : Spacing.TopSpacingScreen,
         backgroundColor : Colors.backgroundWhite
     },
     Title: { fontSize: 25, color: Colors.mainRed, fontWeight: "500" },
