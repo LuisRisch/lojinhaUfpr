@@ -23,22 +23,25 @@ const styles = StyleSheet.create({
 
   normalTextTitle: {
     color: Colors.mainGrey,
-    fontSize: FontSizes.SuperTall,
-    fontWeight: "bold",
+    fontSize: FontSizes.SuperTall, 
+    fontFamily : 'ralway-regular-bold',
+    // fontWeight: "bold",
     alignContent: "center",
   },
 
 
   lowerTexT: {
     color: Colors.mainGrey,
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSizes.TooLower,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
 
   lowerTextUnderline: {
     color: Colors.mainGrey,
     fontSize: FontSizes.TooLower,
-    fontWeight: "500",
+    fontFamily : 'ralway-regular-semi',
+    // fontWeight: "500",
     textDecorationLine: "underline",
     flexShrink: 1,
   },
@@ -65,14 +68,16 @@ const styles = StyleSheet.create({
   TitleModalStyle: {
     alignSelf: "center",
     color: Colors.mainGrey,
+    fontFamily : 'ralway-regular-bold',
     fontSize: FontSizes.Tall,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   SubTitleModalStyle: {
     alignSelf: "center",
     color: Colors.lightGrey,
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSizes.Normal,
-    fontWeight: "500",
+    // fontWeight: "500",
     textAlign: "justify",
   },
   ChoosePhoto: {
@@ -102,8 +107,9 @@ const styles = StyleSheet.create({
 
   buttonLabel: {
     color: "white",
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSizes.Normal,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
 });
 

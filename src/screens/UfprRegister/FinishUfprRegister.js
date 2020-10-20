@@ -105,7 +105,7 @@ const FinishUfprRegister = ({ navigation }) => {
                     <TouchableOpacity style={styles.buttonContainer} onPress={onSubmitt}>
                         <Text style={styles.buttonLabel}>
                             Criar
-                    </Text>
+                        </Text>
                     </TouchableOpacity>
                 </View>
             </View>

@@ -48,9 +48,10 @@ const Style = StyleSheet.create({
     justifyContent: "space-between",
   },
   titleStyle: {
-    fontSize: FontSize.SuperTall,
+    fontSize: FontSize.SuperTall, 
+    fontFamily : 'ralway-regular-semi', 
     color: Color.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   nameAndChangePhotoBox: {
     flexDirection: "column",
@@ -58,16 +59,23 @@ const Style = StyleSheet.create({
     alignItems: "center",
   },
   personNameStyle: {
-    fontSize: FontSize.Tall,
+    fontSize: FontSize.Tall, 
+    fontFamily : 'ralway-regular-bold', 
     color: Color.mainGrey,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   changePhotoStyle: {
     color: Color.mainRed,
+    fontFamily : 'ralway-regular-semi', 
     fontSize: FontSize.Lower,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
-  logoStyle: { alignSelf: "center", width: 70, height: 70, bottom: 0 },
+  logoStyle: { alignSelf: "center", width: 55, height: 55, bottom: 0 }, 
+  TentInfo : {
+    fontSize : FontSize.Normal, 
+    fontFamily : 'ralway-regular-semi', 
+    color : Colors.mainGrey
+  }
 });
 
 export { Style };

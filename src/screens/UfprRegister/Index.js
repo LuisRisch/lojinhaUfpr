@@ -6,10 +6,22 @@ import CustomPasswordInput from "../../components/CustomPasswordInput";
 import CustomButtons from "../../components/CustomButtons";
 import CustomCloseIcon from "../../components/CustomCloseIcon";
 import { styles } from './Styles';
-import { ScrollView } from "react-native-gesture-handler";
+import { ScrollView } from "react-native-gesture-handler"; 
+
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
+
+const getFonts = () =>
+    Font.loadAsync({
+        "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+        "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+        "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+        "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
+        "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
+    });
 
 const UfprRegister = ({ navigation }) => {
-
+    const [fontsLoaded, setFontsLoaded] = useState(false);
     const [Cpf, setCpf] = useState("");
     const [Pass, setPass] = useState("");
     const [errorInCpf, setErrorInCpf] = useState({
@@ -157,17 +169,24 @@ const UfprRegister = ({ navigation }) => {
             />
         </View>
     </View>
-
-    if (height <= 670){
-        return(
-            <ScrollView>
-                {content}
-            </ScrollView>
-        )
+    
+    if(fontsLoaded){
+        if (height <= 670){
+            return(
+                <ScrollView>
+                    {content}
+                </ScrollView>
+            )
+        } else{
+            return(
+                content
+            )
+        }
     } else{
-        return(
-            content
-        )
+        return <AppLoading
+            startAsync={getFonts} 
+            onFinish={() => setFontsLoaded(true)}
+        />
     }
 };
 

@@ -8,8 +8,22 @@ import api from "../../services/api";
 
 import styles from "./styles";
 
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
+
+const getFonts = () =>
+  Font.loadAsync({
+    "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+    "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+    "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
+    "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
+  });
+
+
 const ChatScreen = ({ navigation }) => {
-  const { data: user, token } = useSelector((state) => state.user);
+  const { data: user, token } = useSelector((state) => state.user); 
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   const [chatList, setChatList] = useState([]);
   const [loading, setLoading] = useState(false);
 
@@ -90,25 +104,32 @@ const ChatScreen = ({ navigation }) => {
     );
   };
 
-  return (
-    <View style={styles.screen}>
-      <View style={styles.header}>
-        <TouchableOpacity onPress={() => navigation.openDrawer()}>
-          <Icon name="align-left" size={20} color="#c4c4c4" />
-        </TouchableOpacity>
-        <Text style={styles.title}>Chat</Text>
+  if(fontsLoaded){
+    return (
+      <View style={styles.screen}>
+        <View style={styles.header}>
+          <TouchableOpacity onPress={() => navigation.openDrawer()}>
+            <Icon name="align-left" size={20} color="#c4c4c4" />
+          </TouchableOpacity>
+          <Text style={styles.title}>Chat</Text>
+        </View>
+        <FlatList
+          data={chatList}
+          renderItem={renderChatList}
+          keyExtractor={(item) => item._id}
+          scrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          refreshing={loading}
+          onRefresh={loadChats}
+        />
       </View>
-      <FlatList
-        data={chatList}
-        renderItem={renderChatList}
-        keyExtractor={(item) => item._id}
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-        refreshing={loading}
-        onRefresh={loadChats}
-      />
-    </View>
-  );
+    );
+  } else {
+    return <AppLoading 
+      startAsync={getFonts}
+      onFinish={() => setFontsLoaded(true)}
+    />
+  }
 };
 
 export default ChatScreen;

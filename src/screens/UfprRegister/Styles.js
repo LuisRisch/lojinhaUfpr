@@ -9,11 +9,17 @@ const styles = StyleSheet.create({
         paddingTop : Spacing.TopSpacingScreen,
         backgroundColor : Colors.backgroundWhite
     },
-    Title: { fontSize: 25, color: Colors.mainRed, fontWeight: "500" },
+    Title: { 
+        fontSize: 25, 
+        color: Colors.mainRed, 
+        fontFamily : 'ralway-regular-semi',  
+        // fontWeight: "500"
+    },
     SubTitle: {
-        fontSize: FontSizes.Tall,
+        fontSize: FontSizes.Tall, 
+        fontFamily : 'ralway-regular-semi',  
         color: Colors.mainGrey,
-        fontWeight: "500",
+        // fontWeight: "500",
     },
     buttonContainer: {
         backgroundColor: Colors.mainRed,
@@ -26,12 +32,14 @@ const styles = StyleSheet.create({
     buttonLabel: {
         color: "white",
         fontSize: FontSizes.Normal,
-        fontWeight: "500",
+        fontFamily : 'ralway-regular-semi',  
+        // fontWeight: "500",
     },
     Instructions: {
         color: Colors.lightGrey,
         fontSize: FontSizes.Lower,
-        fontWeight: "500",
+        fontFamily : 'ralway-regular-semi',  
+        // fontWeight: "500",
     },
     RestOfScreen: {
         flex: 1,
@@ -74,13 +82,15 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         color: Colors.mainGrey,
         fontSize: FontSizes.Tall,
-        fontWeight: "bold",
+        fontFamily : 'ralway-regular-bold',  
+        // fontWeight: "bold",
     },
     SubTitleModalStyle: {
         alignSelf: "center",
         color: Colors.lightGrey,
         fontSize: FontSizes.Normal,
-        fontWeight: "500",
+        fontFamily : 'ralway-regular-semi',  
+        // fontWeight: "500",
         textAlign: "justify",
       },
     ChoosePhoto: {

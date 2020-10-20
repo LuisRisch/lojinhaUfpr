@@ -17,6 +17,7 @@ const styles = StyleSheet.create({
     marginTop: Spacing.MainMargin,
     backgroundColor: "white",
     flexDirection: "row",
+    borderRadius : 10,
     padding: 12,
     shadowColor: "black",
     shadowOffset: {
@@ -77,7 +78,8 @@ const styles = StyleSheet.create({
   Box_Card_Grid_Products: {
     marginHorizontal: 4,
     marginTop: Spacing.MainMargin,
-    backgroundColor: "white",
+    backgroundColor: "white", 
+    borderRadius : 10,
     padding: 12,
     width: "48%",
     justifyContent: "space-between",
@@ -88,7 +90,7 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 1.5,
+    elevation: 1.5
   },
   Image_Layout_Grid: {
     height: imageSize,

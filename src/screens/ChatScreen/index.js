@@ -15,9 +15,22 @@ import {
 
 import api from "../../services/api";
 
-import styles from "./styles";
+import styles from "./styles"; 
 
-const ChatScreen = ({ route, navigation }) => {
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
+
+const getFonts = () =>
+  Font.loadAsync({
+    "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+    "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+    "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
+    "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
+  });
+
+const ChatScreen = ({ route, navigation }) => { 
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   const { chatID } = route.params;
   const { data: user, token } = useSelector((state) => state.user);
   const messageList = useSelector((state) => state.chat.messages);
@@ -134,28 +147,35 @@ const ChatScreen = ({ route, navigation }) => {
       </View>
     );
   };
-  return (
-    <View style={styles.screen}>
-      <FlatList
-        data={messageList}
-        renderItem={RenderMessage}
-        keyExtractor={(item) => item.id}
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-        inverted
-      />
-      <View style={styles.inputView}>
-        <CustomTextInput
-          hintText="Digite alguma mensagem..."
-          onChangeText={(text) => onChangeText(text)}
-          value={text}
+  if(fontsLoaded){
+    return (
+      <View style={styles.screen}>
+        <FlatList
+          data={messageList}
+          renderItem={RenderMessage}
+          keyExtractor={(item) => item.id}
+          scrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          inverted
         />
-        <TouchableOpacity onPress={submitMessage} style={styles.submitButton}>
-          <Icon name="paper-plane" color="#fff" size={18} />
-        </TouchableOpacity>
+        <View style={styles.inputView}>
+          <CustomTextInput
+            hintText="Digite alguma mensagem..."
+            onChangeText={(text) => onChangeText(text)}
+            value={text}
+          />
+          <TouchableOpacity onPress={submitMessage} style={styles.submitButton}>
+            <Icon name="paper-plane" color="#fff" size={18} />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return <AppLoading
+      startAsync={getFonts} 
+      onFinish={() => setFontsLoaded(true)}
+    />
+  }
 };
 
 export default ChatScreen;

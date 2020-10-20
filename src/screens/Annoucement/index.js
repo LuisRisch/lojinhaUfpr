@@ -28,9 +28,22 @@ import api from "../../services/api";
 import Colors from "../../data/Colors";
 import { useSelector } from "react-redux";
 
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
+
+const getFonts = () =>
+  Font.loadAsync({
+    "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+    "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+    "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
+    "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
+  });
+
 const CreateAnnouncement = () => {
   const user = useSelector((state) => state.user);
 
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   const [isShowCategoryOpen, setIsShowCategory] = useState(false);
   const [productTitle, setProductTitle] = useState("");
   const [productcategory, setCategory] = useState({
@@ -258,21 +271,21 @@ const CreateAnnouncement = () => {
               </Text>
             </>
           ) : (
-            imageList.map((item) => (
-              <Image
-                style={styles.pictureComponent}
-                source={{ uri: item }}
-                key={item}
-              />
-            ))
-          )}
+              imageList.map((item) => (
+                <Image
+                  style={styles.pictureComponent}
+                  source={{ uri: item }}
+                  key={item}
+                />
+              ))
+            )}
         </TouchableOpacity>
 
         <View style={{ justifyContent: "space-between", flex: 1 }}>
           <CustomButton Label="Anunciar" onButtonPressed={handleSubmit} />
           <Image
             source={require("../../assets/logo.png")}
-            style={{ alignSelf: "center", width: 70, height: 70, bottom: 0 }}
+            style={{ alignSelf: "center", width: 55, height: 55, bottom: 0 }}
           />
         </View>
 
@@ -285,9 +298,12 @@ const CreateAnnouncement = () => {
         >
           <View style={styles.BackModalScreen}>
             <View style={styles.BackModalAlert}>
-              <CustomCloseIcon
-                onIconPressed={() => setIsShowCategory(!isShowCategoryOpen)}
-              />
+              <View style={{alignSelf : 'flex-end'}}>
+                <CustomCloseIcon
+                  icon='close'
+                  onPress={() => setIsShowCategory(!isShowCategoryOpen)}
+                />
+              </View>
               <Text style={styles.TitleModalStyle}>Categorias</Text>
               <View style={styles.sizedBox}></View>
               {categoryList.map((item) => (
@@ -307,10 +323,17 @@ const CreateAnnouncement = () => {
     </View>
   );
 
-  if (height < 670) {
-    return <ScrollView>{content}</ScrollView>;
+  if (fontsLoaded) {
+    if (height < 670) {
+      return <ScrollView>{content}</ScrollView>;
+    } else {
+      return content;
+    }
   } else {
-    return content;
+    return <AppLoading
+      startAsync={getFonts}
+      onFinish={() => setFontsLoaded(true)}
+    />
   }
 };
 
