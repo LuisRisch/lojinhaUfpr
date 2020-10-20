@@ -18,6 +18,14 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     flexDirection: "row",
     padding: 12,
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 1.5,
   },
   Image_Horizontaly_Display: {
     height: 100,
@@ -31,9 +39,10 @@ const styles = StyleSheet.create({
     alignContent: "flex-start",
   },
   Products_Title_Horizontally: {
-    fontSize: FontSize.Normal,
+    fontSize: FontSize.Normal, 
+    fontFamily : 'ralway-regular-bold',
     color: "#3b3b3b",
-    fontWeight: "bold",
+    // fontWeight: "bold",
     flexShrink: 1,
     maxWidth: "80%",
   },
@@ -45,7 +54,8 @@ const styles = StyleSheet.create({
   Price_Layout: {
     color: Colors.mainRed,
     fontSize: FontSize.Normal,
-    fontWeight: "bold",
+    fontFamily : 'Mplus-bold',
+    // fontWeight: "bold",
   },
   Per_Unity_Horizontally: {
     color: Colors.mainGrey,
@@ -54,13 +64,15 @@ const styles = StyleSheet.create({
   },
   AnnouncedBy_Horizontally_Label: {
     fontSize: FontSize.TooLower,
+    fontFamily : 'ralway-regular-semi',
     color: Colors.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   AnnouncedBy_Horizontally_Name: {
     fontSize: FontSize.TooLower,
+    fontFamily : 'ralway-regular-bold',
     color: "#3b3b3b",
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   Box_Card_Grid_Products: {
     marginHorizontal: 4,
@@ -69,6 +81,14 @@ const styles = StyleSheet.create({
     padding: 12,
     width: "48%",
     justifyContent: "space-between",
+    shadowColor: "black",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 1.5,
   },
   Image_Layout_Grid: {
     height: imageSize,
@@ -78,6 +98,7 @@ const styles = StyleSheet.create({
   },
   Product_Title_Grid: {
     fontSize: FontSize.Normal,
+    fontFamily : 'ralway-regular-bold',
     color: "#3b3b3b",
     flexShrink: 1,
     alignItems: "flex-start",
@@ -91,7 +112,8 @@ const styles = StyleSheet.create({
   Price_Layout_Grid: {
     color: Colors.mainRed,
     fontSize: FontSize.Normal,
-    fontWeight: "bold",
+    fontFamily : 'Mplus-bold',
+    // fontWeight: "bold",
   },
   Top_Container_Icons: {
     flexDirection: "row",
@@ -108,13 +130,15 @@ const styles = StyleSheet.create({
   },
   Top_Secundary_Layout_Informations: {
     fontSize: FontSize.Lower,
+    fontFamily : 'ralway-regular-semi',
     color: Colors.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   Filter_Layout: {
     fontSize: FontSize.Normal,
+    fontFamily : 'ralway-regular-bold',
     color: Colors.mainRed,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   Bottom_Container_Options_Of_Navigation: {
     height: 50,
@@ -129,8 +153,9 @@ const styles = StyleSheet.create({
   },
   category_text: {
     color: Colors.mainRed,
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSize.Tall,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   sizedBox: {
     height: 18,
@@ -154,14 +179,16 @@ const styles = StyleSheet.create({
   TitleModalStyle: {
     alignSelf: "center",
     color: Colors.mainGrey,
+    fontFamily : 'ralway-regular-bold',
     fontSize: FontSize.Tall,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   SubTitleModalStyle: {
     alignSelf: "center",
     color: Colors.lightGrey,
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSize.Normal,
-    fontWeight: "500",
+    // fontWeight: "500",
     textAlign: "justify",
   },
   loadMoreProductsContainer: {
@@ -171,9 +198,10 @@ const styles = StyleSheet.create({
   },
   loadProductsText: {
     color: Colors.mainGrey,
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSize.Tall,
     textAlign: "center",
-    fontWeight: "500",
+    // fontWeight: "500",
   },
 });
 

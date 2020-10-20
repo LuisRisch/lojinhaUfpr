@@ -23,8 +23,9 @@ const Styles = StyleSheet.create({
   },
   textCategoryStyle: {
     fontSize: FontSize.Normal,
+    fontFamily : 'ralway-regular-semi',
     color: Color.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   popUpContainer: {
     justifyContent: "center",
@@ -32,7 +33,8 @@ const Styles = StyleSheet.create({
   },
   deleteAnnoucement: {
     color: Color.mainRed,
-    fontWeight: "500",
+    fontFamily : 'ralway-regular-semi',
+    // fontWeight: "500",
     fontSize: FontSize.Lower,
   },
   divider: {
@@ -43,6 +45,7 @@ const Styles = StyleSheet.create({
   },
   editAnnoucement: {
     fontSize: FontSize.Lower,
+    fontFamily : 'ralway-regular-semi',
     fontWeight: "500",
   },
   imageStyle: {
@@ -53,7 +56,8 @@ const Styles = StyleSheet.create({
   },
   title: {
     fontSize: FontSize.SuperTall,
-    fontWeight: "bold",
+    // fontWeight: "bold",
+    fontFamily : 'ralway-regular-bold',
     color: "#000",
   },
   priceBox: {
@@ -63,17 +67,20 @@ const Styles = StyleSheet.create({
   },
   priceStyle: {
     color: Color.mainRed,
-    fontWeight: "bold",
+    fontFamily : 'Mplus-bold',
+    // fontWeight: "bold",
     fontSize: FontSize.Tall,
   },
   perUnity: {
     color: Color.mainGrey,
-    fontWeight: "500",
+    fontFamily : 'ralway-regular-semi',
+    // fontWeight: "500", 
     fontSize: FontSize.Tall,
   },
   AnnouncedBy: {
-    color: Color.mainGrey,
-    fontWeight: "500",
+    color: Color.mainGrey, 
+    fontFamily : 'ralway-regular-semi',
+    // fontWeight: "500",
     fontSize: FontSize.Lower,
   },
   boxInformation: {
@@ -82,14 +89,16 @@ const Styles = StyleSheet.create({
   },
   labelStyle: {
     fontSize: FontSize.Tall,
-    color: Color.mainRed,
-    fontWeight: "bold",
+    color: Color.mainRed, 
+    fontFamily : 'ralway-regular-bold',
+    // fontWeight: "bold",
     textDecorationLine: "underline",
   },
   subLabel: {
     color: Color.mainGrey,
-    fontSize: FontSize.Lower,
-    fontWeight: "500",
+    fontSize: FontSize.Lower, 
+    fontFamily : 'ralway-regular-semi',
+    // fontWeight: "500",
   },
   logoBox: {
     flexDirection: "column-reverse",
@@ -97,8 +106,8 @@ const Styles = StyleSheet.create({
   },
   logoStyle: {
     alignSelf: "center",
-    width: 70,
-    height: 70,
+    width: 55,
+    height: 55,
     bottom: 0,
   },
 });

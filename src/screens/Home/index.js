@@ -23,12 +23,20 @@ import CustomCloseIcon from "../../components/CustomCloseIcon";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { styles } from "./styles";
 import Colors from "../../data/Colors";
-import FontSizes from "../../data/FontSizes";
-
+import FontSizes from "../../data/FontSizes"; 
+import * as Font from 'expo-font'; 
+import { AppLoading } from 'expo';
 // Navegacao
 import api from "../../services/api";
 
-const Home = ({ navigation }) => {
+const getFonts = () => Font.loadAsync({
+    'ralway-regular' : require('../../assets/fonts/Raleway-Regular.ttf'), 
+    'ralway-regular-semi' : require('../../assets/fonts/Raleway-SemiBold.ttf'),
+    'ralway-regular-bold' : require('../../assets/fonts/Raleway-Bold.ttf'),
+})
+
+const Home = ({ navigation }) => { 
+    const [fontsLoaded , setFontsLoaded] = useState(false);
     const [loginModalVisible, setModalLoginVisible] = useState(true);
     const [isModalResetPassVisible, setIsModalResetPassVisible] = useState(false);
 
@@ -267,54 +275,64 @@ const Home = ({ navigation }) => {
             </View>
         </View>
 
-    return (
-        <SafeAreaView style={styles.screen}>
-            <Modal
-                animationType="fade"
-                visible={isModalResetPassVisible}
-                transparent={true}
-            >
-                <View style={{flex : 1}}>{resetPassContent}</View>
-            </Modal>
-
-            {/* O modal irá mostrar a um Alert personalizado de quando o usuário clicar para se cadastras */}
-
-            <Modal
-                visible={isALertModalVisible}
-                transparent={true}
-                animationType={"slide"}
-            >
-                <View style={styles.BackModalScreen}>
-                    <View style={styles.BackModalAlert}>
-                        <View style={styles.iconContainer}>
-                            <TouchableOpacity onPress={changeStateAlertModal}>
-                                <Icon name="close" color={Colors.mainRed} size={18} />
-                            </TouchableOpacity>
+    if(fontsLoaded){
+        return (
+            <SafeAreaView style={styles.screen}>
+                <Modal
+                    animationType="fade"
+                    visible={isModalResetPassVisible}
+                    transparent={true}
+                >
+                    <View style={{flex : 1}}>{resetPassContent}</View>
+                </Modal>
+    
+                {/* O modal irá mostrar a um Alert personalizado de quando o usuário clicar para se cadastras */}
+    
+                <Modal
+                    visible={isALertModalVisible}
+                    transparent={true}
+                    animationType={"slide"}
+                >
+                    <View style={styles.BackModalScreen}>
+                        <View style={styles.BackModalAlert}>
+                            <View style={styles.iconContainer}>
+                                <TouchableOpacity onPress={changeStateAlertModal}>
+                                    <Icon name="close" color={Colors.mainRed} size={18} />
+                                </TouchableOpacity>
+                            </View>
+                            <Text style={styles.TitleModalStyle}> Importante! </Text>
+                            <View style={styles.SizedBox}></View>
+                            <Text style={styles.SubTitleModalStyle}>
+                                Você é estudante da UFPR? Caso o usuário que não for aluno, não
+                                poderá fazer anúncios no aplicativo, mas terá o direito de fazer
+                                compras
+                            </Text>
+                            <CustomButtons
+                                Label="Sim, sou estudante da UFPR"
+                                onButtonPressed={handleUfprRegister}
+                            />
+                            <CustomButtons
+                                Label="Não sou estudante da UFPR"
+                                onButtonPressed={handleRegister}
+                            />
                         </View>
-                        <Text style={styles.TitleModalStyle}> Importante! </Text>
-                        <View style={styles.SizedBox}></View>
-                        <Text style={styles.SubTitleModalStyle}>
-                            Você é estudante da UFPR? Caso o usuário que não for aluno, não
-                            poderá fazer anúncios no aplicativo, mas terá o direito de fazer
-                            compras
-                        </Text>
-                        <CustomButtons
-                            Label="Sim, sou estudante da UFPR"
-                            onButtonPressed={handleUfprRegister}
-                        />
-                        <CustomButtons
-                            Label="Não sou estudante da UFPR"
-                            onButtonPressed={handleRegister}
-                        />
                     </View>
-                </View>
-            </Modal>
-            {
-                height <= 670 ? <ScrollView>{homeContent}</ScrollView> : <>{homeContent}</>
-            }
-
-        </SafeAreaView>
-    );
+                </Modal>
+                {
+                    height <= 670 ? <ScrollView>{homeContent}</ScrollView> : <>{homeContent}</>
+                }
+    
+            </SafeAreaView>
+        );
+    } else{
+        return(
+            <AppLoading
+                startAsync={getFonts} 
+                onFinish={() => setFontsLoaded(true)}
+            />
+        )
+    }
+    
 };
 
 export default Home;

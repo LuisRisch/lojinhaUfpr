@@ -2,7 +2,6 @@ import { StyleSheet } from "react-native";
 import Colors from "../../data/Colors";
 import FontSizes from "../../data/FontSizes";
 import Spacing from "../../data/Spacing";
-
 import { StatusBar } from "react-native";
 
 const styles = StyleSheet.create({
@@ -36,7 +35,8 @@ const styles = StyleSheet.create({
   normalText: {
     color: Colors.mainGrey,
     fontSize: FontSizes.Normal,
-    fontWeight: "500",
+    fontFamily : 'ralway-regular-semi',
+    // fontWeight: "500",
   },
 
   saveOrForgotPasswordContainer: {
@@ -47,14 +47,15 @@ const styles = StyleSheet.create({
 
   lowerTexT: {
     color: Colors.mainGrey,
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSizes.TooLower,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
 
   redText: {
     color: Colors.mainRed,
+    fontFamily : 'ralway-regular-bold',
     fontSize: FontSizes.Lower,
-    fontWeight: "bold",
   },
 
   image: {
@@ -94,20 +95,21 @@ const styles = StyleSheet.create({
     opacity: 1,
   },
   TitleModalStyle: {
-    alignSelf: "center",
+    alignSelf: "center", 
+    fontFamily : 'ralway-regular-bold',
     color: Colors.mainGrey,
     fontSize: FontSizes.Tall,
-    fontWeight: "bold",
   },
   SizedBox: {
     height: 18,
   },
-  SubTitleModalStyle: {
+  SubTitleModalStyle: { 
+    fontFamily : 'ralway-regular-semi',
     alignSelf: "center",
     textAlign: "center",
     color: Colors.lightGrey,
     fontSize: FontSizes.Normal,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   iconContainer: {
     flexDirection: "row",
