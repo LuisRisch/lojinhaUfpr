@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useSelector, useDispatch } from "react-redux";
@@ -18,7 +18,7 @@ import CreateAnnouncement from "./screens/Annoucement";
 import ConfirmAnnouncement from "./screens/ConfirmAnnoucement";
 import SearchProduct from "./screens/SearchProduct";
 import Register from "./screens/Register";
-// import Register from "./screens/Register";
+import ProductSummary from "./components/ProductSummaryModal/ProductSummar";
 import UfprRegister from "./screens/UfprRegister/Index";
 import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister";
 
@@ -142,15 +142,19 @@ const StackRoutes = ({ navigation, route }) => {
             </TouchableOpacity>
           ),
           headerRight: () => (
-            <Image
-              source={{ uri: route.params.url }}
-              style={{
-                height: 40,
-                width: 40,
-                marginRight: 18,
-                borderRadius: 25,
-              }}
-            />
+            <TouchableOpacity
+              onPress={() => navigation.navigate("ProductSummary")}
+            >
+              <Image
+                source={{ uri: route.params.url }}
+                style={{
+                  height: 40,
+                  width: 40,
+                  marginRight: 18,
+                  borderRadius: 25,
+                }}
+              />
+            </TouchableOpacity>
           ),
         })}
       />
@@ -159,6 +163,7 @@ const StackRoutes = ({ navigation, route }) => {
         component={ConfirmAnnouncement}
       />
       <Stack.Screen name="SearchProduct" component={SearchProduct} />
+      <Stack.Screen name="ProductSummary" component={ProductSummary} />
     </Stack.Navigator>
   );
 };
