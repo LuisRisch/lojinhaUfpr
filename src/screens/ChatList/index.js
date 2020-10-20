@@ -37,8 +37,7 @@ const ChatScreen = ({ navigation }) => {
     navigation.navigate("ChatScreen", {
       chatID: id,
       product: title,
-      url:
-        "https://xtudoreceitas.com/wp-content/uploads/Massa-Basica-para-Salgados-Fritos-500x400.jpg",
+      url,
     });
   };
 
@@ -46,17 +45,29 @@ const ChatScreen = ({ navigation }) => {
     return (
       <View style={styles.chatHolder}>
         <TouchableOpacity
-          onPress={() => handleChat(item._id, item.product.title)}
+          onPress={() =>
+            handleChat(
+              item._id,
+              item.product.title,
+              item.product.picture[0].url
+            )
+          }
         >
           <Image
             style={styles.avatar}
-            source={{ uri: item.product ? item.product.picture.url : null }}
+            source={{ uri: item.product ? item.product.picture[0].url : null }}
           />
           <View style={styles.dot} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.centerTextHolder}
-          onPress={() => handleChat(item._id, item.product.title)}
+          onPress={() =>
+            handleChat(
+              item._id,
+              item.product.title,
+              item.product.picture[0].url
+            )
+          }
         >
           <Text style={styles.chatTitle} numberOfLines={1}>
             {item.product.title}
