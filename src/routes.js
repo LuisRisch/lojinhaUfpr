@@ -29,6 +29,22 @@ const Stack = createStackNavigator();
 
 const Drawer = createDrawerNavigator();
 
+const LoginRoutes = ({ navigation, route }) => {
+  const dispatch = useDispatch();
+
+  return (
+    <Stack.Navigator
+      initialRouteName="Login"
+      screenOptions={{ headerShown: false }}
+    >
+      <Drawer.Screen name="Login" component={Home} />
+      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="UfprRegister" component={UfprRegister} />
+      <Stack.Screen name="FinishUfprRegister" component={FinishUfprRegister} />
+    </Stack.Navigator>
+  );
+};
+
 const StackRoutes = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
@@ -143,9 +159,6 @@ const StackRoutes = ({ navigation, route }) => {
         component={ConfirmAnnouncement}
       />
       <Stack.Screen name="SearchProduct" component={SearchProduct} />
-      <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="UfprRegister" component={UfprRegister} />
-      <Stack.Screen name="FinishUfprRegister" component={FinishUfprRegister} />
     </Stack.Navigator>
   );
 };
@@ -193,7 +206,7 @@ function Routes() {
       />
       <Drawer.Screen
         name="Login"
-        component={Home}
+        component={LoginRoutes}
         options={{ title: "Sair", gestureEnabled: false }}
       />
     </Drawer.Navigator>
