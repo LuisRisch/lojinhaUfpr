@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 import FontSize from "../../data/FontSizes";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
@@ -8,10 +8,15 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 18,
   },
+  header: {
+    marginTop: StatusBar.currentHeight,
+    marginLeft: -18,
+    paddingBottom: 10,
+  },
   title: {
     // fontWeight: "bold",
     fontSize: FontSize.SuperTall,
-    fontFamily : 'ralway-regular-bold',
+    fontFamily: "ralway-regular-bold",
     color: Colors.mainGrey,
   },
   category_box: {
@@ -45,7 +50,7 @@ const styles = StyleSheet.create({
   category_text: {
     color: Colors.mainRed,
     fontSize: FontSize.Tall,
-    fontFamily : 'ralway-regular-semi',
+    fontFamily: "ralway-regular-semi",
     // fontWeight: "500",
   },
   sizedBox: {
@@ -70,7 +75,7 @@ const styles = StyleSheet.create({
   TitleModalStyle: {
     alignSelf: "center",
     color: Colors.mainGrey,
-    fontFamily : 'ralway-regular-bold',
+    fontFamily: "ralway-regular-bold",
     fontSize: FontSize.Tall,
     // fontWeight: "bold",
   },
@@ -79,7 +84,7 @@ const styles = StyleSheet.create({
     color: Colors.lightGrey,
     fontSize: FontSize.Normal,
     // fontWeight: "500",
-    fontFamily : 'ralway-regular-semi',
+    fontFamily: "ralway-regular-semi",
     textAlign: "justify",
   },
   pictureBox: {

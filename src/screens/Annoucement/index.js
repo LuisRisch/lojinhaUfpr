@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as ImagePicker from "expo-image-picker";
-import Constants from "expo-constants";
 
 import * as Yup from "yup";
 
@@ -40,7 +39,7 @@ const getFonts = () =>
     "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
   });
 
-const CreateAnnouncement = () => {
+const CreateAnnouncement = ({ navigation }) => {
   const user = useSelector((state) => state.user);
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -188,6 +187,16 @@ const CreateAnnouncement = () => {
 
   const content = (
     <View style={styles.screen}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <Icon
+            name="align-left"
+            size={20}
+            color="#c4c4c4"
+            style={{ marginLeft: 18 }}
+          />
+        </TouchableOpacity>
+      </View>
       <ScrollView showsVerticalScrollIndicator={false}>
         <CustomCloseIcon />
         <Text style={styles.title}>Anunciar produto/serviço</Text>
@@ -271,21 +280,27 @@ const CreateAnnouncement = () => {
               </Text>
             </>
           ) : (
-              imageList.map((item) => (
-                <Image
-                  style={styles.pictureComponent}
-                  source={{ uri: item }}
-                  key={item}
-                />
-              ))
-            )}
+            imageList.map((item) => (
+              <Image
+                style={styles.pictureComponent}
+                source={{ uri: item }}
+                key={item}
+              />
+            ))
+          )}
         </TouchableOpacity>
 
         <View style={{ justifyContent: "space-between", flex: 1 }}>
           <CustomButton Label="Anunciar" onButtonPressed={handleSubmit} />
           <Image
             source={require("../../assets/logo.png")}
-            style={{ alignSelf: "center", width: 55, height: 55, bottom: 0 }}
+            style={{
+              alignSelf: "center",
+              width: 55,
+              height: 55,
+              bottom: 0,
+              marginTop: 20,
+            }}
           />
         </View>
 
@@ -298,9 +313,9 @@ const CreateAnnouncement = () => {
         >
           <View style={styles.BackModalScreen}>
             <View style={styles.BackModalAlert}>
-              <View style={{alignSelf : 'flex-end'}}>
+              <View style={{ alignSelf: "flex-end" }}>
                 <CustomCloseIcon
-                  icon='close'
+                  icon="close"
                   onPress={() => setIsShowCategory(!isShowCategoryOpen)}
                 />
               </View>
@@ -330,10 +345,9 @@ const CreateAnnouncement = () => {
       return content;
     }
   } else {
-    return <AppLoading
-      startAsync={getFonts}
-      onFinish={() => setFontsLoaded(true)}
-    />
+    return (
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
   }
 };
 
