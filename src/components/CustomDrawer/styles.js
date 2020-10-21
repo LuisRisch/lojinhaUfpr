@@ -37,12 +37,14 @@ const styles = StyleSheet.create({
   },
   User_Name: {
     fontSize: FontSize.Tall,
+    fontFamily : 'ralway-regular-bold',
     color: "black",
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   User_Email: {
     color: Colors.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500", 
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSize.Lower,
   },
   Tabs_User_Area: {
@@ -54,12 +56,13 @@ const styles = StyleSheet.create({
   Tabs_User_Label: {
     color: Colors.mainGrey,
     fontSize: FontSize.Tall,
+    fontFamily : 'ralway-regular',
     marginLeft: Spacing.MainMargin,
   },
   Bottom_Logo: {
     alignSelf: "center",
-    width: 70,
-    height: 70,
+    width: 55,
+    height: 55,
     marginTop: 20,
   },
 });

@@ -8,7 +8,7 @@ const styles = StyleSheet.create({
     flexDirection : 'row',
     justifyContent: 'space-between',
     alignItems : 'center',
-    width: "100%",
+    // width: "100%",
     backgroundColor: Colors.ultraLightGrey,
     height: 35,
     borderRadius: 5,
@@ -45,7 +45,12 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     color: Colors.mainRed,
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSizes.TooLower,
+  }, 
+  textInputStyle:{
+    fontFamily : 'ralway-regular',
+    fontSize: FontSizes.Lower,
   }
 });
 

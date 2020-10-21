@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
   buttonLabel: {
     color: "white",
     fontSize: FontSizes.Normal,
-    fontWeight: "500",
+    fontFamily : 'ralway-regular-semi'
+    // fontWeight: "500",
   },
 });
 

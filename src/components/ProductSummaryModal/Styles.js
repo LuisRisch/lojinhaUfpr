@@ -16,8 +16,9 @@ const styles = StyleSheet.create({
     },
     title: {
         textAlign: 'center',
-        fontSize: FontSize.SuperTall,
-        fontWeight: '500',
+        fontSize: FontSize.SuperTall, 
+        fontFamily : 'ralway-regular-semi',
+        // fontWeight: '500',
         color: Colors.mainGrey
     },
     sizedBox: {
@@ -44,14 +45,16 @@ const styles = StyleSheet.create({
         elevation: 2,
     }, 
     TitleInfo:{
-        color : Colors.mainRed, 
-        fontWeight : '500', 
+        color : Colors.mainRed,  
+        fontFamily : 'ralway-regular-semi',
+        // fontWeight : '500', 
         fontSize : FontSize.Tall, 
         textDecorationLine : 'underline'
     }, 
     subTitle:{
         fontSize : FontSize.Lower, 
-        fontWeight : '500' 
+        // fontWeight : '500' 
+        fontFamily : 'ralway-regular-semi',
     }
 }) 
 

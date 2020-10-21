@@ -69,7 +69,7 @@ const styles = StyleSheet.create({
     borderRadius: 16,
     backgroundColor: "white",
     paddingHorizontal: Spacing.MainPadding,
-    paddingVertical: Spacing.MainPadding + 6, // 24
+    paddingVertical: Spacing.MainPadding + 6, // 24 
     shadowColor: "black",
     shadowOffset: {
       width: 0,

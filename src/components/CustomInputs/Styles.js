@@ -41,8 +41,13 @@ const styles = StyleSheet.create({
   },
   errorMessage: {
     color: Colors.mainRed,
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSizes.TooLower,
-  },
+  }, 
+  textInputStyle:{
+    fontFamily : 'ralway-regular',
+    fontSize : FontSizes.Lower
+  }
 });
 
 export { styles };
