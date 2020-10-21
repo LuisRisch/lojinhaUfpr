@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
     marginTop: Spacing.MainMargin,
     backgroundColor: "white",
     flexDirection: "row",
-    borderRadius : 10,
+    borderRadius: 10,
     padding: 12,
     shadowColor: "black",
     shadowOffset: {
@@ -40,8 +40,8 @@ const styles = StyleSheet.create({
     alignContent: "flex-start",
   },
   Products_Title_Horizontally: {
-    fontSize: FontSize.Normal, 
-    fontFamily : 'ralway-regular-bold',
+    fontSize: FontSize.Normal,
+    fontFamily: "ralway-regular-bold",
     color: "#3b3b3b",
     // fontWeight: "bold",
     flexShrink: 1,
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   Price_Layout: {
     color: Colors.mainRed,
     fontSize: FontSize.Normal,
-    fontFamily : 'Mplus-bold',
+    fontFamily: "Mplus-bold",
     // fontWeight: "bold",
   },
   Per_Unity_Horizontally: {
@@ -65,21 +65,21 @@ const styles = StyleSheet.create({
   },
   AnnouncedBy_Horizontally_Label: {
     fontSize: FontSize.TooLower,
-    fontFamily : 'ralway-regular-semi',
+    fontFamily: "ralway-regular-semi",
     color: Colors.mainGrey,
     // fontWeight: "500",
   },
   AnnouncedBy_Horizontally_Name: {
     fontSize: FontSize.TooLower,
-    fontFamily : 'ralway-regular-bold',
+    fontFamily: "ralway-regular-bold",
     color: "#3b3b3b",
     // fontWeight: "bold",
   },
   Box_Card_Grid_Products: {
     marginHorizontal: 4,
     marginTop: Spacing.MainMargin,
-    backgroundColor: "white", 
-    borderRadius : 10,
+    backgroundColor: "white",
+    borderRadius: 10,
     padding: 12,
     width: "48%",
     justifyContent: "space-between",
@@ -90,17 +90,17 @@ const styles = StyleSheet.create({
     },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
-    elevation: 1.5
+    elevation: 1.5,
   },
   Image_Layout_Grid: {
-    height: imageSize,
-    width: imageSize,
+    height: imageSize - 12,
+    width: imageSize - 12,
     alignSelf: "center",
     borderRadius: 10,
   },
   Product_Title_Grid: {
     fontSize: FontSize.Normal,
-    fontFamily : 'ralway-regular-bold',
+    fontFamily: "ralway-regular-bold",
     color: "#3b3b3b",
     flexShrink: 1,
     alignItems: "flex-start",
@@ -114,7 +114,7 @@ const styles = StyleSheet.create({
   Price_Layout_Grid: {
     color: Colors.mainRed,
     fontSize: FontSize.Normal,
-    fontFamily : 'Mplus-bold',
+    fontFamily: "Mplus-bold",
     // fontWeight: "bold",
   },
   Top_Container_Icons: {
@@ -132,13 +132,13 @@ const styles = StyleSheet.create({
   },
   Top_Secundary_Layout_Informations: {
     fontSize: FontSize.Lower,
-    fontFamily : 'ralway-regular-semi',
+    fontFamily: "ralway-regular-semi",
     color: Colors.mainGrey,
     // fontWeight: "500",
   },
   Filter_Layout: {
     fontSize: FontSize.Normal,
-    fontFamily : 'ralway-regular-bold',
+    fontFamily: "ralway-regular-bold",
     color: Colors.mainRed,
     // fontWeight: "bold",
   },
@@ -155,7 +155,7 @@ const styles = StyleSheet.create({
   },
   category_text: {
     color: Colors.mainRed,
-    fontFamily : 'ralway-regular-semi',
+    fontFamily: "ralway-regular-semi",
     fontSize: FontSize.Tall,
     // fontWeight: "500",
   },
@@ -181,14 +181,14 @@ const styles = StyleSheet.create({
   TitleModalStyle: {
     alignSelf: "center",
     color: Colors.mainGrey,
-    fontFamily : 'ralway-regular-bold',
+    fontFamily: "ralway-regular-bold",
     fontSize: FontSize.Tall,
     // fontWeight: "bold",
   },
   SubTitleModalStyle: {
     alignSelf: "center",
     color: Colors.lightGrey,
-    fontFamily : 'ralway-regular-semi',
+    fontFamily: "ralway-regular-semi",
     fontSize: FontSize.Normal,
     // fontWeight: "500",
     textAlign: "justify",
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   },
   loadProductsText: {
     color: Colors.mainGrey,
-    fontFamily : 'ralway-regular-semi',
+    fontFamily: "ralway-regular-semi",
     fontSize: FontSize.Tall,
     textAlign: "center",
     // fontWeight: "500",
