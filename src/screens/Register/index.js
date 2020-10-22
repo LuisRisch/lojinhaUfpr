@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import {
     View,
     Text,
@@ -17,6 +17,7 @@ import CustomPasswordInput from "../../components/CustomPasswordInput";
 import CustomCloseIcon from "../../components/CustomCloseIcon";
 import { styles } from "./styles";
 import Colors from '../../data/Colors';
+import * as ImagePicker from "expo-image-picker";
 
 import * as Font from 'expo-font';
 import { AppLoading } from 'expo';
@@ -36,6 +37,8 @@ const Register = ({ navigation }) => {
     const [Cpf, setCpf] = useState("");
     const [DefinePass, setDefinePass] = useState("");
     const [ConfirmPass, setConfirmPass] = useState("");
+
+    const [image, setImage] = useState(null);
 
     // Shows error in input if some information is wrong
     const [errorInName, setErrorInName] = useState({
@@ -250,6 +253,36 @@ const Register = ({ navigation }) => {
         navigation.navigate('Login')
     }
 
+    const handleImagePick = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 0.7,
+        });
+        if (!result.cancelled) {
+            setImage(result.uri);
+        }
+
+    }; 
+
+    useEffect(() => {
+        (async () => {
+            if (Platform.OS !== "web") {
+                const {
+                    status,
+                } = await ImagePicker.requestCameraRollPermissionsAsync();
+                if (status !== "granted") {
+                    Alert.alert(
+                        "Permissões necessárias",
+                        "Necessitamos de algumas permissões para poder cadastrar produtos!"
+                    );
+                }
+            }
+        })();
+    }, []);
+
+
     if (fontsLoaded) {
         return (
             <View style={styles.screen}>
@@ -333,11 +366,24 @@ const Register = ({ navigation }) => {
                         <CustomCloseIcon icon="arrow-circle-left" onPress={BackIconHandler} />
                         <Text style={styles.normalTextTitle}>Cadastro</Text>
                     </View>
-                    <TouchableOpacity>
-                        <View style={styles.ChoosePhoto}>
-                            <Icon name="camera" size={25} color="white" />
-                        </View>
-                    </TouchableOpacity>
+
+                    {
+                        image === null ?
+                            <TouchableOpacity onPress={handleImagePick}>
+                                <View style={styles.ChoosePhoto}>
+                                    <Icon name="camera" size={25} color="white" />
+                                </View>
+                            </TouchableOpacity>
+
+                            :
+
+                            <Image
+                                style={styles.PerfilPhoto}
+                                source={{ uri: image }}
+                            />
+
+                    }
+
                     <View>
                         <CustomTopLabelInput label="Nome" />
                         <CustomInputs
@@ -416,6 +462,7 @@ const Register = ({ navigation }) => {
                             flexDirection: "column-reverse",
                             flex: 1,
                             justifyContent: 'flex-start',
+                            overflow: 'hidden'
                         }}
                     >
                         <Image
@@ -427,8 +474,8 @@ const Register = ({ navigation }) => {
             </View>
         );
     } else {
-        return <AppLoading 
-            startAsync={getFonts} 
+        return <AppLoading
+            startAsync={getFonts}
             onFinish={() => setFontsLoaded(true)}
         />
     }

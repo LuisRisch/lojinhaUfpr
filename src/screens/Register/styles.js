@@ -89,7 +89,15 @@ const styles = StyleSheet.create({
     borderRadius: 75,
     alignSelf: "center",
     marginVertical: Spacing.MainMargin,
-  },
+  }, 
+  PerfilPhoto : {
+    // aspectRatio : 16 / 9, 
+    width : 150, 
+    height: 150,
+    borderRadius: 75,
+    alignSelf: "center",
+    marginVertical: Spacing.MainMargin,
+  }, 
   CheckBoxContainer: {
     flexDirection: "row",
     justifyContent: "flex-start",
