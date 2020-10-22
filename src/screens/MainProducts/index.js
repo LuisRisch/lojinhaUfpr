@@ -33,19 +33,21 @@ const getFonts = () => Font.loadAsync({
 
 
 const MainProducts = ({ navigation }) => {
-	const [fontsLoaded, setFontsLoaded] = useState(false);
 	const arrAddOneInLenght = [""];
 	const defaultTitle = "Início";
+	const [fontsLoaded, setFontsLoaded] = useState(false); 
+	const [loadingData , setLoadingData] = useState(false)
 	const [ListOfProducts, setListOfProduct] = useState(
 		ListOfGeneral.concat(arrAddOneInLenght)
 	); // just to add one more in lenght
 
-	const loadApi = async () => {
+	const loadApi = async () => { 
+		setLoadingData(true)
 		const response = await api.get("/products");
-
 		if (response.status === 200 && response.data) {
-			setListOfProduct([...response.data]);
-		}
+			setListOfProduct([...response.data]); 
+		} 
+		setLoadingData(false)
 		// setListOfProduct(ListOfGeneral);
 	};
 
@@ -232,7 +234,9 @@ const MainProducts = ({ navigation }) => {
 								keyExtractor={(item) => "_" + item.id}
 								scrollEnabled={true}
 								scrollIndicatorInsets={false}
-								showsVerticalScrollIndicator={false}
+								showsVerticalScrollIndicator={false} 
+								onRefresh={loadApi} 
+								refreshing={loadingData}
 							/>
 						) : (
 								<FlatList
@@ -243,6 +247,8 @@ const MainProducts = ({ navigation }) => {
 									numColumns={2}
 									scrollEnabled={true}
 									showsVerticalScrollIndicator={false}
+									onRefresh={loadApi} 
+									refreshing={loadingData}
 								/>
 							)}
 					</View>
