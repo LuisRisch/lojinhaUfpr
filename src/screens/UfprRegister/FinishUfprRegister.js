@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState , useEffect } from 'react';
 import { View, Text, TouchableOpacity, ScrollView, Modal, Image, Dimensions } from 'react-native';
 import CustomInputs from "../../components/CustomInputs";
 import Icon from "react-native-vector-icons/FontAwesome";
 import CustomTopLabelInput from "../../components/CustomTopLabelInput";
 import CustomPasswordInput from "../../components/CustomPasswordInput";
 import CustomButtons from "../../components/CustomButtons";
-import { styles } from './Styles';
+import { styles } from './Styles'; 
+
+import * as ImagePicker from "expo-image-picker";
 
 const FinishUfprRegister = ({ navigation }) => {
+    const [image, setImage] = useState(null);
     const [errorInEmail, setErrorInEmail] = useState({
         state: false,
         message: '',
@@ -51,6 +54,35 @@ const FinishUfprRegister = ({ navigation }) => {
         }
     }
 
+    const handleImagePick = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 4],
+            quality: 0.7,
+        });
+        if (!result.cancelled) {
+            setImage(result.uri);
+        }
+
+    };
+
+    useEffect(() => {
+        (async () => {
+            if (Platform.OS !== "web") {
+                const {
+                    status,
+                } = await ImagePicker.requestCameraRollPermissionsAsync();
+                if (status !== "granted") {
+                    Alert.alert(
+                        "Permissões necessárias",
+                        "Necessitamos de algumas permissões para poder cadastrar produtos!"
+                    );
+                }
+            }
+        })();
+    }, []);
+
     const height = Dimensions.get("window").height;
     const content = <View style={styles.Screen}>
         {/* Esse modal irá mostrar um Alerta customizado confirmando o cadastro do novo usuário */}
@@ -68,7 +100,7 @@ const FinishUfprRegister = ({ navigation }) => {
                     </Text>
                     <CustomButtons
                         Label="Ok!"
-                        onButtonPressed={() => navigation.navigate('MainProducts')}
+                        onButtonPressed={() => navigation.navigate('Products')}
                     />
                 </View>
             </View>
@@ -89,11 +121,22 @@ const FinishUfprRegister = ({ navigation }) => {
                     <Text style={styles.SubTitle}>
                         Escolha uma foto de perfil
                     </Text>
-                    <TouchableOpacity>
-                        <View style={styles.ChoosePhoto}>
-                            <Icon name="camera" size={25} color="white" />
-                        </View>
-                    </TouchableOpacity>
+                    {
+                        image === null ?
+                            <TouchableOpacity onPress={handleImagePick}>
+                                <View style={styles.ChoosePhoto}>
+                                    <Icon name="camera" size={25} color="white" />
+                                </View>
+                            </TouchableOpacity>
+
+                            :
+
+                            <Image
+                                style={styles.PerfilPhoto}
+                                source={{ uri: image }}
+                            />
+
+                    }
                     <CustomTopLabelInput label="Email" />
                     <CustomInputs
                         hintText='beatriznogueira@ufpr.br'
@@ -116,6 +159,7 @@ const FinishUfprRegister = ({ navigation }) => {
                 flexDirection: "column-reverse",
                 flex: 1,
                 justifyContent: 'flex-start',
+                overflow: 'hidden'
             }}
         >
             <Image
@@ -127,7 +171,7 @@ const FinishUfprRegister = ({ navigation }) => {
 
     return (
         height <= 670 ? <ScrollView>{content}</ScrollView> : content
-        
+
     );
 }
 

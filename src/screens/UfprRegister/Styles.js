@@ -5,19 +5,19 @@ import { StyleSheet } from 'react-native';
 const styles = StyleSheet.create({
     Screen: {
         flex: 1,
-        paddingHorizontal : Spacing.MainPadding, 
-        paddingTop : Spacing.TopSpacingScreen,
-        backgroundColor : Colors.backgroundWhite
+        paddingHorizontal: Spacing.MainPadding,
+        paddingTop: Spacing.TopSpacingScreen,
+        backgroundColor: Colors.backgroundWhite
     },
-    Title: { 
-        fontSize: 25, 
-        color: Colors.mainRed, 
-        fontFamily : 'ralway-regular-semi',  
+    Title: {
+        fontSize: 25,
+        color: Colors.mainRed,
+        fontFamily: 'ralway-regular-semi',
         // fontWeight: "500"
     },
     SubTitle: {
-        fontSize: FontSizes.Tall, 
-        fontFamily : 'ralway-regular-semi',  
+        fontSize: FontSizes.Tall,
+        fontFamily: 'ralway-regular-semi',
         color: Colors.mainGrey,
         // fontWeight: "500",
     },
@@ -32,13 +32,13 @@ const styles = StyleSheet.create({
     buttonLabel: {
         color: "white",
         fontSize: FontSizes.Normal,
-        fontFamily : 'ralway-regular-semi',  
+        fontFamily: 'ralway-regular-semi',
         // fontWeight: "500",
     },
     Instructions: {
         color: Colors.lightGrey,
         fontSize: FontSizes.Lower,
-        fontFamily : 'ralway-regular-semi',  
+        fontFamily: 'ralway-regular-semi',
         // fontWeight: "500",
     },
     RestOfScreen: {
@@ -82,17 +82,25 @@ const styles = StyleSheet.create({
         alignSelf: "center",
         color: Colors.mainGrey,
         fontSize: FontSizes.Tall,
-        fontFamily : 'ralway-regular-bold',  
+        fontFamily: 'ralway-regular-bold',
         // fontWeight: "bold",
+    },
+    PerfilPhoto: {
+        // aspectRatio : 16 / 9, 
+        width: 150,
+        height: 150,
+        borderRadius: 75,
+        alignSelf: "center",
+        marginVertical: Spacing.MainMargin,
     },
     SubTitleModalStyle: {
         alignSelf: "center",
         color: Colors.lightGrey,
         fontSize: FontSizes.Normal,
-        fontFamily : 'ralway-regular-semi',  
+        fontFamily: 'ralway-regular-semi',
         // fontWeight: "500",
         textAlign: "justify",
-      },
+    },
     ChoosePhoto: {
         justifyContent: "center",
         alignItems: "center",

@@ -161,6 +161,7 @@ const UfprRegister = ({ navigation }) => {
                 flexDirection: "column-reverse",
                 flex: 1,
                 justifyContent: "space-between",
+                overflow : 'hidden'
             }}
         >
             <Image
