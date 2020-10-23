@@ -70,7 +70,7 @@ const Style = StyleSheet.create({
     fontSize: FontSize.Lower,
     // fontWeight: "500",
   },
-  logoStyle: { alignSelf: "center", width: 55, height: 55, bottom: 0 }, 
+  logoStyle: { alignSelf: "center", width: 55, height: 55, overflow:'hidden' }, 
   TentInfo : {
     fontSize : FontSize.Normal, 
     fontFamily : 'ralway-regular-semi', 
