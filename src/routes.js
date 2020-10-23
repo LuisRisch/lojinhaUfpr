@@ -24,6 +24,7 @@ import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister";
 
 import LoadComponent from "./components/Load/LoadComponent";
 import CustomDrawer from "./components/CustomDrawer";
+import { StackActions } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
 
@@ -37,8 +38,32 @@ const LoginRoutes = ({ navigation, route }) => {
       initialRouteName="Login"
       screenOptions={{ headerShown: false }}
     >
-      <Drawer.Screen name="Login" component={Home} />
-      <Stack.Screen name="Register" component={Register} />
+      <Stack.Screen name="Login" component={Home} />
+      <Stack.Screen
+        name="Register"
+        component={Register}
+        options={{
+          headerStyle: {
+            backgroundColor: Colors.backgroundWhite,
+            elevation: 0,
+          },
+          headerShown: true,
+          title: "Cadastro",
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <TouchableOpacity
+              onPress={() => navigation.dispatch(StackActions.popToTop())}
+            >
+              <Icon
+                name="chevron-left"
+                size={20}
+                color="#c4c4c4"
+                style={{ marginLeft: 18 }}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
       <Stack.Screen name="UfprRegister" component={UfprRegister} />
       <Stack.Screen name="FinishUfprRegister" component={FinishUfprRegister} />
     </Stack.Navigator>

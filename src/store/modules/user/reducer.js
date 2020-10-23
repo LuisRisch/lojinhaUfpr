@@ -11,8 +11,8 @@ export default function user(state = INITIAL_STATE, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case "@user/SIGN_IN": {
-        const { token, cpf, email, id, name } = action.payload.user;
-        draft.data = { cpf, email, id, name };
+        const { token, cpf, email, id, name, avatar } = action.payload.user;
+        draft.data = { cpf, email, id, name, avatar };
         draft.signed = true;
         draft.token = token;
         break;

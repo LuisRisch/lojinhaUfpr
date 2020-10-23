@@ -9,7 +9,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { View, TouchableOpacity, Text, Image } from "react-native";
 import { useSelector } from "react-redux";
 
-import { styles } from "./styles"; 
+import { styles } from "./styles";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
@@ -26,24 +26,21 @@ const getFonts = () =>
 const CustomDrawer = (props) => {
   const { user } = props;
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  
-  if(fontsLoaded){
+
+  if (fontsLoaded) {
     return (
       <DrawerContentScrollView {...props}>
         <View style={styles.User_Top_Information}>
-          {/* {user.picture.url ? (
+          {user.avatar ? (
             <Image
-              source={{ uri: user.picture.url }}
+              source={{ uri: user.avatar.url }}
               style={styles.Circle_Box_Photo}
             />
           ) : (
             <View style={styles.Circle_Box_Photo}>
               <Icon name="camera" size={15} color="white" />
             </View>
-          )} */}
-          <View style={styles.Circle_Box_Photo}>
-              <Icon name="camera" size={15} color="white" />
-            </View>
+          )}
           <View
             style={{
               marginLeft: Spacing.MainMargin - 9, //9px
@@ -79,12 +76,10 @@ const CustomDrawer = (props) => {
       </DrawerContentScrollView>
     );
   } else {
-    return <AppLoading 
-      startAsync={getFonts} 
-      onFinish={() => setFontsLoaded(true)}
-    />
+    return (
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
   }
-  
 };
 
 export default CustomDrawer;
