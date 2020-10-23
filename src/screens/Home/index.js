@@ -13,7 +13,11 @@ import {
 import AsyncStorage from "@react-native-community/async-storage";
 import { useDispatch, useSelector } from "react-redux";
 import isCPFValid from "../../services/cpfValidator";
-import { userSignIn, userRemember } from "../../store/modules/user/actions";
+import {
+  userSignIn,
+  userRemember,
+  userSignOut,
+} from "../../store/modules/user/actions";
 import CustomButtons from "../../components/CustomButtons";
 import CustomInputs from "../../components/CustomInputs";
 import CustomSwitchButton from "../../components/CustomSwitchButton";
@@ -253,7 +257,10 @@ const Home = ({ navigation }) => {
             <CustomButtons
               Label="Entrar sem fazer login"
               Color={{ Color: "#FA8072" }}
-              onButtonPressed={() => navigation.navigate("Products")}
+              onButtonPressed={() => {
+                dispatch(userSignOut());
+                navigation.navigate("Products");
+              }}
             />
             <View
               style={{

@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import {
-    View,
-    Text,
-    Image,
-    TouchableOpacity,
-    Modal,
-    ScrollView,
-    Dimensions,
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  Modal,
+  ScrollView,
+  Dimensions,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as ImagePicker from "expo-image-picker";
@@ -31,324 +31,330 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 
 const getFonts = () =>
-    Font.loadAsync({
-        "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
-        "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
-        "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
-        "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
-        "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
-    });
+  Font.loadAsync({
+    "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+    "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+    "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
+    "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
+  });
 
 const CreateAnnouncement = ({ navigation }) => {
-    const user = useSelector((state) => state.user);
+  const user = useSelector((state) => state.user);
 
-    const [fontsLoaded, setFontsLoaded] = useState(false);
-    const [isShowCategoryOpen, setIsShowCategory] = useState(false);
-    const [productTitle, setProductTitle] = useState("");
-    const [productcategory, setCategory] = useState({
-        title: "Nenhuma categoria selecionada",
-        id: -1,
-    });
-    const [productDescription, setProductDescription] = useState("");
-    const [payment, setPayment] = useState("");
-    const [delivery, setDelivery] = useState("");
-    const [price, setPrice] = useState("");
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [isShowCategoryOpen, setIsShowCategory] = useState(false);
+  const [productTitle, setProductTitle] = useState("");
+  const [productcategory, setCategory] = useState({
+    title: "Nenhuma categoria selecionada",
+    id: -1,
+  });
+  const [productDescription, setProductDescription] = useState("");
+  const [payment, setPayment] = useState("");
+  const [delivery, setDelivery] = useState("");
+  const [price, setPrice] = useState("");
 
-    const [categoryList, setCategoryList] = useState([]);
-    const [imageList, setImageList] = useState([]);
+  const [categoryList, setCategoryList] = useState([]);
+  const [imageList, setImageList] = useState([]);
 
-    const loadCategories = async () => {
-        if (categoryList != []) {
-            const response = await api.get("/categories");
+  const loadCategories = async () => {
+    if (categoryList != []) {
+      const response = await api.get("/categories");
 
-            if (response.status === 200 && response.data) {
-                setCategoryList([...response.data]);
-            }
-        }
-    };
-
-    useEffect(() => {
-        loadCategories();
-        (async () => {
-            if (Platform.OS !== "web") {
-                const {
-                    status,
-                } = await ImagePicker.requestCameraRollPermissionsAsync();
-                if (status !== "granted") {
-                    Alert.alert(
-                        "Permissões necessárias",
-                        "Necessitamos de algumas permissões para poder cadastrar produtos!"
-                    );
-                }
-            }
-        })();
-    }, []);
-
-    // i = index of the category array
-    const CategoryHandler = (item) => {
-        setCategory(item);
-        setIsShowCategory(false);
-    };
-
-    const product = [];
-
-    const handleSubmit = async () => {
-        const schema = Yup.object().shape({
-            price: Yup.string().required(),
-            title: Yup.string().required(),
-            deliveryDescription: Yup.string().required().max(250),
-            paymentDescription: Yup.string().required().max(60),
-            category: Yup.number().positive().required(),
-        });
-
-        let data = {
-            price,
-            title: productTitle,
-            description: productDescription,
-            paymentDescription: productDescription,
-            deliveryDescription: delivery,
-            category: parseInt(productcategory.id),
-            user: user.data.id,
-        };
-
-        if (!(await schema.isValid(data))) {
-            alert("info inválida");
-            return 1;
-        }
-        const form = new FormData();
-
-        let realPrice = price.split("$");
-
-        if (realPrice[1]) {
-            data.price = realPrice[1];
-        } else {
-            data.price = realPrice[0];
-        }
-
-        if (imageList.length > 0) {
-            imageList.forEach((item) => {
-                form.append("files", {
-                    uri: item,
-                    name: "image.jpg",
-                    type: "image/jpeg",
-                });
-            });
-        } else {
-            alert("min de imagens é 1");
-            return 1;
-        }
-
-        const response = await api.post("/files", form, {
-            headers: {
-                Authorization: `Bearer ${user.token}`,
-            },
-        });
-
-        let picture = [];
-        if (response.status === 200) {
-            picture = response.data;
-        }
-
-        await api
-            .post(
-                "/product",
-                { ...data, picture },
-                {
-                    headers: {
-                        Authorization: `Bearer ${user.token}`,
-                    },
-                }
-            )
-            .catch((err) => console.log(err.response.data.error));
-    };
-
-    const height = Dimensions.get("window").height;
-
-    const handleImagePick = async () => {
-        console.log(user.data.id);
-        if (imageList.length < 5) {
-            let result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.Images,
-                allowsEditing: true,
-                aspect: [4, 4],
-                quality: 0.7,
-            });
-
-            if (!result.cancelled) {
-                let array = imageList;
-                array.push(result.uri);
-                setImageList(array);
-                console.log(array);
-            }
-        } else {
-            alert("máximo de imagens é 5");
-        }
-    };
-
-    const content = (
-        <View style={styles.screen}>
-            <View style={styles.header}>
-                <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                    <Icon
-                        name="align-left"
-                        size={20}
-                        color="#c4c4c4"
-                        style={{ marginLeft: 18 }}
-                    />
-                </TouchableOpacity>
-            </View>
-            <ScrollView showsVerticalScrollIndicator={false}>
-                <CustomCloseIcon />
-                <Text style={styles.title}>Anunciar produto/serviço</Text>
-
-                {/* Titulo produto */}
-
-                <BoxProduct>
-                    <CustomTopLabel label="Nome do produto/serviço" />
-                    <CustomSubLabel content="Este será o título. Lembre-se de que, quando você tiver vendas, não poderá editá-lo" />
-                    <CustomInputs
-                        hintText="Ex: Camiseta customizada feita sobre demanda"
-                        onChangeText={(text) => setProductTitle(text)}
-                    />
-                </BoxProduct>
-
-                <BoxProduct>
-                    <CustomTopLabel label="Preço" />
-                    <CustomSubLabel content="Qual o valor a cobrar?" />
-                    <CustomInputs
-                        hintText="Ex: 9,99"
-                        onChangeText={(text) => setPrice(text)}
-                    />
-                </BoxProduct>
-
-                {/* Categoria do produto */}
-
-                <BoxProduct>
-                    <CustomTopLabel label="Categoria do produto" />
-                    <CustomSubLabel content="Selecione a categoria que melhor descreve o produto que irá ser anunciado" />
-                    <View style={styles.category_box}>
-                        <Text>{productcategory.title || ""}</Text>
-                        <View style={styles.icon_box}>
-                            <TouchableOpacity
-                                onPress={() => setIsShowCategory(!isShowCategoryOpen)}
-                            >
-                                <Icon name="angle-down" color="white" size={18} />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </BoxProduct>
-
-                {/* Descriçaõ do produto */}
-
-                <BoxProduct>
-                    <CustomTopLabel label="Descrição do produto/serviço" />
-                    <CustomSubLabel content="Irá contextualizar o interessado sobre do que se trata o produto/serviço a ser divulgado" />
-                    <CustomInputs
-                        hintText="Ex: Digite aqui a descrição"
-                        onChangeText={(text) => setProductDescription(text)}
-                    />
-                </BoxProduct>
-
-                {/* Pagamento */}
-
-                <BoxProduct>
-                    <CustomTopLabel label="Forma de Pagamento" />
-                    <CustomSubLabel content="Digite as formas de pagamento" />
-                    <CustomInputs
-                        hintText="Ex: Somente dinheiro"
-                        onChangeText={(text) => setPayment(text)}
-                    />
-                </BoxProduct>
-
-                {/* Entrega */}
-
-                <BoxProduct>
-                    <CustomTopLabel label="Formas de entrega" />
-                    <CustomSubLabel content="Quais são os meios de entrega?" />
-                    <CustomInputs
-                        hintText="Ex: Por meio do correio"
-                        onChangeText={(text) => setDelivery(text)}
-                    />
-                </BoxProduct>
-
-                <TouchableOpacity style={styles.pictureBox} onPress={handleImagePick}>
-                    {imageList.length === 0 ? (
-                        <>
-                            <Icon name="camera" size={40} color={Colors.mainRed} />
-                            <Text style={{ color: Colors.darkGrey }}>
-                                Adicione suas fotos aqui
-                            </Text>
-                        </>
-                    ) : (
-                            imageList.map((item) => (
-                                <Image
-                                    style={styles.pictureComponent}
-                                    source={{ uri: item }}
-                                    key={item}
-                                />
-                            ))
-                        )}
-                </TouchableOpacity>
-
-                <View style={{ justifyContent: "space-between", flex: 1 }}>
-                    <CustomButton Label="Anunciar" onButtonPressed={handleSubmit} />
-                    <Image
-                        source={require("../../assets/logo.png")}
-                        style={{
-                            alignSelf: "center",
-                            width: 55,
-                            height: 55,
-                            bottom: 0,
-                            marginTop: 20,
-                        }}
-                    />
-                </View>
-
-                {/* Esse modal mostra as categorias possíveis para se anunciar um produto */}
-
-                <Modal
-                    visible={isShowCategoryOpen}
-                    transparent={true}
-                    animationType={"slide"}
-                >
-                    <View style={styles.BackModalScreen}>
-                        <View style={styles.BackModalAlert}>
-                            <View style={{ alignSelf: "flex-end" }}>
-                                <CustomCloseIcon
-                                    icon="close"
-                                    onPress={() => setIsShowCategory(!isShowCategoryOpen)}
-                                />
-                            </View>
-                            <Text style={styles.TitleModalStyle}>Categorias</Text>
-                            <View style={styles.sizedBox}></View>
-                            {categoryList.map((item) => (
-                                <View
-                                    key={item.id}
-                                    style={{ alignItems: "flex-start", marginVertical: 5 }}
-                                >
-                                    <TouchableOpacity onPress={() => CategoryHandler(item)}>
-                                        <Text style={styles.category_text}>{item.title}</Text>
-                                    </TouchableOpacity>
-                                </View>
-                            ))}
-                        </View>
-                    </View>
-                </Modal>
-            </ScrollView>
-        </View>
-    );
-
-    if (fontsLoaded) {
-        if (height < 670) {
-            return <ScrollView>{content}</ScrollView>;
-        } else {
-            return content;
-        }
-    } else {
-        return (
-            <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
-        );
+      if (response.status === 200 && response.data) {
+        setCategoryList([...response.data]);
+      }
     }
+  };
+
+  useEffect(() => {
+    const leaveScreen = navigation.addListener("focus", () => {
+      if (!user.id) {
+        navigation.navigate("Products");
+      }
+    });
+
+    loadCategories();
+    (async () => {
+      if (Platform.OS !== "web") {
+        const {
+          status,
+        } = await ImagePicker.requestCameraRollPermissionsAsync();
+        if (status !== "granted") {
+          Alert.alert(
+            "Permissões necessárias",
+            "Necessitamos de algumas permissões para poder cadastrar produtos!"
+          );
+        }
+      }
+    })();
+  }, []);
+
+  // i = index of the category array
+  const CategoryHandler = (item) => {
+    setCategory(item);
+    setIsShowCategory(false);
+  };
+
+  const product = [];
+
+  const handleSubmit = async () => {
+    const schema = Yup.object().shape({
+      price: Yup.string().required(),
+      title: Yup.string().required(),
+      deliveryDescription: Yup.string().required().max(250),
+      paymentDescription: Yup.string().required().max(60),
+      category: Yup.number().positive().required(),
+    });
+
+    let data = {
+      price,
+      title: productTitle,
+      description: productDescription,
+      paymentDescription: productDescription,
+      deliveryDescription: delivery,
+      category: parseInt(productcategory.id),
+      user: user.data.id,
+    };
+
+    if (!(await schema.isValid(data))) {
+      alert("info inválida");
+      return 1;
+    }
+    const form = new FormData();
+
+    let realPrice = price.split("$");
+
+    if (realPrice[1]) {
+      data.price = realPrice[1];
+    } else {
+      data.price = realPrice[0];
+    }
+
+    if (imageList.length > 0) {
+      imageList.forEach((item) => {
+        form.append("files", {
+          uri: item,
+          name: "image.jpg",
+          type: "image/jpeg",
+        });
+      });
+    } else {
+      alert("min de imagens é 1");
+      return 1;
+    }
+
+    const response = await api.post("/files", form, {
+      headers: {
+        Authorization: `Bearer ${user.token}`,
+      },
+    });
+
+    let picture = [];
+    if (response.status === 200) {
+      picture = response.data;
+    }
+
+    await api
+      .post(
+        "/product",
+        { ...data, picture },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .catch((err) => alert(err.response.data.error));
+  };
+
+  const height = Dimensions.get("window").height;
+
+  const handleImagePick = async () => {
+    console.log(user.data.id);
+    if (imageList.length < 5) {
+      let result = await ImagePicker.launchImageLibraryAsync({
+        mediaTypes: ImagePicker.MediaTypeOptions.Images,
+        allowsEditing: true,
+        aspect: [4, 4],
+        quality: 0.7,
+      });
+
+      if (!result.cancelled) {
+        let array = imageList;
+        array.push(result.uri);
+        setImageList(array);
+        console.log(array);
+      }
+    } else {
+      alert("máximo de imagens é 5");
+    }
+  };
+
+  const content = (
+    <View style={styles.screen}>
+      <View style={styles.header}>
+        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+          <Icon
+            name="align-left"
+            size={20}
+            color="#c4c4c4"
+            style={{ marginLeft: 18 }}
+          />
+        </TouchableOpacity>
+      </View>
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <CustomCloseIcon />
+        <Text style={styles.title}>Anunciar produto/serviço</Text>
+
+        {/* Titulo produto */}
+
+        <BoxProduct>
+          <CustomTopLabel label="Nome do produto/serviço" />
+          <CustomSubLabel content="Este será o título. Lembre-se de que, quando você tiver vendas, não poderá editá-lo" />
+          <CustomInputs
+            hintText="Ex: Camiseta customizada feita sobre demanda"
+            onChangeText={(text) => setProductTitle(text)}
+          />
+        </BoxProduct>
+
+        <BoxProduct>
+          <CustomTopLabel label="Preço" />
+          <CustomSubLabel content="Qual o valor a cobrar?" />
+          <CustomInputs
+            hintText="Ex: 9,99"
+            onChangeText={(text) => setPrice(text)}
+          />
+        </BoxProduct>
+
+        {/* Categoria do produto */}
+
+        <BoxProduct>
+          <CustomTopLabel label="Categoria do produto" />
+          <CustomSubLabel content="Selecione a categoria que melhor descreve o produto que irá ser anunciado" />
+          <View style={styles.category_box}>
+            <Text>{productcategory.title || ""}</Text>
+            <View style={styles.icon_box}>
+              <TouchableOpacity
+                onPress={() => setIsShowCategory(!isShowCategoryOpen)}
+              >
+                <Icon name="angle-down" color="white" size={18} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </BoxProduct>
+
+        {/* Descriçaõ do produto */}
+
+        <BoxProduct>
+          <CustomTopLabel label="Descrição do produto/serviço" />
+          <CustomSubLabel content="Irá contextualizar o interessado sobre do que se trata o produto/serviço a ser divulgado" />
+          <CustomInputs
+            hintText="Ex: Digite aqui a descrição"
+            onChangeText={(text) => setProductDescription(text)}
+          />
+        </BoxProduct>
+
+        {/* Pagamento */}
+
+        <BoxProduct>
+          <CustomTopLabel label="Forma de Pagamento" />
+          <CustomSubLabel content="Digite as formas de pagamento" />
+          <CustomInputs
+            hintText="Ex: Somente dinheiro"
+            onChangeText={(text) => setPayment(text)}
+          />
+        </BoxProduct>
+
+        {/* Entrega */}
+
+        <BoxProduct>
+          <CustomTopLabel label="Formas de entrega" />
+          <CustomSubLabel content="Quais são os meios de entrega?" />
+          <CustomInputs
+            hintText="Ex: Por meio do correio"
+            onChangeText={(text) => setDelivery(text)}
+          />
+        </BoxProduct>
+
+        <TouchableOpacity style={styles.pictureBox} onPress={handleImagePick}>
+          {imageList.length === 0 ? (
+            <>
+              <Icon name="camera" size={40} color={Colors.mainRed} />
+              <Text style={{ color: Colors.darkGrey }}>
+                Adicione suas fotos aqui
+              </Text>
+            </>
+          ) : (
+            imageList.map((item) => (
+              <Image
+                style={styles.pictureComponent}
+                source={{ uri: item }}
+                key={item}
+              />
+            ))
+          )}
+        </TouchableOpacity>
+
+        <View style={{ justifyContent: "space-between", flex: 1 }}>
+          <CustomButton Label="Anunciar" onButtonPressed={handleSubmit} />
+          <Image
+            source={require("../../assets/logo.png")}
+            style={{
+              alignSelf: "center",
+              width: 55,
+              height: 55,
+              bottom: 0,
+              marginTop: 20,
+            }}
+          />
+        </View>
+
+        {/* Esse modal mostra as categorias possíveis para se anunciar um produto */}
+
+        <Modal
+          visible={isShowCategoryOpen}
+          transparent={true}
+          animationType={"slide"}
+        >
+          <View style={styles.BackModalScreen}>
+            <View style={styles.BackModalAlert}>
+              <View style={{ alignSelf: "flex-end" }}>
+                <CustomCloseIcon
+                  icon="close"
+                  onPress={() => setIsShowCategory(!isShowCategoryOpen)}
+                />
+              </View>
+              <Text style={styles.TitleModalStyle}>Categorias</Text>
+              <View style={styles.sizedBox}></View>
+              {categoryList.map((item) => (
+                <View
+                  key={item.id}
+                  style={{ alignItems: "flex-start", marginVertical: 5 }}
+                >
+                  <TouchableOpacity onPress={() => CategoryHandler(item)}>
+                    <Text style={styles.category_text}>{item.title}</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </View>
+        </Modal>
+      </ScrollView>
+    </View>
+  );
+
+  if (fontsLoaded) {
+    if (height < 670) {
+      return <ScrollView>{content}</ScrollView>;
+    } else {
+      return content;
+    }
+  } else {
+    return (
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
+  }
 };
 
 export default CreateAnnouncement;
