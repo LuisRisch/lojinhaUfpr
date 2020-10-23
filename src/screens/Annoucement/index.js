@@ -68,12 +68,6 @@ const CreateAnnouncement = ({ navigation }) => {
   };
 
   useEffect(() => {
-    const leaveScreen = navigation.addListener("focus", () => {
-      if (!user.id) {
-        navigation.navigate("Products");
-      }
-    });
-
     loadCategories();
     (async () => {
       if (Platform.OS !== "web") {
