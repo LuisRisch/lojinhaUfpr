@@ -108,7 +108,7 @@ const CreateAnnouncement = ({ navigation }) => {
       paymentDescription: productDescription,
       deliveryDescription: delivery,
       category: parseInt(productcategory.id),
-      user: user.data.id,
+      user: user.data._id,
     };
 
     if (!(await schema.isValid(data))) {
