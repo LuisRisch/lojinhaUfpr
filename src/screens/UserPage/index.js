@@ -63,6 +63,30 @@ const UserPage = ({ navigation }) => {
 
   const disptach = useDispatch();
 
+  const ResetState = () => {
+    setEditInfo(false);
+    setNewName(null);
+    setNewEmail(null);
+    setOldPassword(null);
+    setNewPassword(null);
+
+    setImage("");
+
+    setNameError({
+      error: false,
+      message: "",
+    });
+
+    setEmailError({
+      error: false,
+      message: "",
+    });
+    setPasswordError({
+      error: false,
+      message: "",
+    });
+  };
+
   const EditHandler = () => {
     if (!signed) {
       alert(
@@ -159,6 +183,7 @@ const UserPage = ({ navigation }) => {
       .catch((err) => alert(err.response.data.error));
 
     if (response.status === 200) {
+      ResetState();
       alert("ok");
     }
   };
