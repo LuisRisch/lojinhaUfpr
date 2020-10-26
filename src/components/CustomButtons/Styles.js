@@ -8,6 +8,7 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainRed,
     marginTop: Spacing.MainMargin,
     height: 35,
+    width : '100%',
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 5,
