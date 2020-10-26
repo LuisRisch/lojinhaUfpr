@@ -16,3 +16,10 @@ export function userRemember() {
     type: "@user/REMEMBER",
   };
 }
+
+export function userRefreshInfo(user) {
+  return {
+    type: "@user/REFRESH",
+    payload: { user },
+  };
+}

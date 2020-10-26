@@ -26,6 +26,10 @@ export default function user(state = INITIAL_STATE, action) {
         draft.rememberPassword = !draft.rememberPassword;
         break;
       }
+      case "@user/REFRESH_INFO": {
+        draft.data = { ...action.payload.user };
+        break;
+      }
       default:
     }
   });

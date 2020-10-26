@@ -8,13 +8,17 @@ import {
   Dimensions,
   TouchableOpacity,
 } from "react-native";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import * as ImagePicker from "expo-image-picker";
 
+import { userRefreshInfo } from "../../store/modules/user/actions";
 import CustomInputs from "../../components/CustomInputs";
 import CustomButtons from "../../components/CustomButtons";
 import CustomTopLabel from "../../components/CustomTopLabelInput";
 import Spacing from "../../data/Spacing";
 import { Style } from "./styles";
+
+import api from "../../services/api";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
@@ -31,8 +35,10 @@ const getFonts = () =>
 
 const UserPage = ({ navigation }) => {
   const [EditInfo, setEditInfo] = useState(false);
-  const [newName, setNewName] = useState("");
-  const [newEmail, setNewEmail] = useState("");
+  const [newName, setNewName] = useState(null);
+  const [newEmail, setNewEmail] = useState(null);
+
+  const [image, setImage] = useState("");
 
   const [nameError, setNameError] = useState({
     error: false,
@@ -48,6 +54,8 @@ const UserPage = ({ navigation }) => {
   const user = useSelector((state) => state.user.data);
   const signed = useSelector((state) => state.user.signed);
   const height = Dimensions.get("window").height;
+
+  const disptach = useDispatch();
 
   const EditHandler = () => {
     if (!signed) {
@@ -84,32 +92,70 @@ const UserPage = ({ navigation }) => {
     setNewEmail(text);
   };
 
-  const onSubmit = () => {
-    if (!isEmpty(newName) && !isEmpty(newEmail) && !newEmail.includes("@")) {
-      //Salvar os novos dados do usuário
-      console.log("bacana");
-    } else {
-      if (isEmpty(newName)) {
-        setNameError({
-          error: true,
-          message: "Este campo precisa ser preenchido",
-        });
+  const handleImagePick = async () => {
+    let result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [4, 4],
+      quality: 0.7,
+    });
+    if (!result.cancelled) {
+      setImage(result.uri);
+    }
+  };
+  const onSubmit = async () => {
+    console.log("oi");
+    let imageID = null;
+    if (image) {
+      const form = new FormData();
+
+      form.append("files", {
+        uri: image,
+        name: "image.jpg",
+        type: "image/jpeg",
+      });
+
+      const response = await api
+        .post("/files", form)
+        .catch((err) => alert(err.response.data.error));
+
+      if (response.data) {
+        imageID = response.data;
       }
-      if (isEmpty(newEmail)) {
-        setEmailError({
-          error: true,
-          message: "Este campo precisa ser preenchido",
-        });
-      } else if (!newEmail.includes("a")) {
-        setEmailError({
-          error: true,
-          message: "o email não contém @",
-        });
-      }
+    }
+    const data = { name: newName, email: newEmail, avatar_id: imageID };
+
+    console.log(data);
+
+    const response = await api
+      .put(`/user/${user._id}`, data, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .catch((err) => alert(err.response.data.error));
+
+    if (response.status === 200) {
+      alert("ok");
+    }
+  };
+
+  const loadUserInfo = async () => {
+    const response = await api
+      .get(`/user/${user._id}`, {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      })
+      .catch((err) => alert(err.response.data.error));
+
+    if (response.data) {
+      disptach(userRefreshInfo(response.data));
     }
   };
 
   useEffect(() => {
+    loadUserInfo();
     console.log(user);
   }, []);
 
@@ -124,10 +170,23 @@ const UserPage = ({ navigation }) => {
       </View>
       {user.avatar ? (
         <>
-          <Image
-            source={{ uri: user.avatar.url }}
-            style={Style.PhotoContainer}
-          />
+          {EditInfo ? (
+            <TouchableOpacity
+              style={Style.PhotoContainer}
+              onPress={handleImagePick}
+            >
+              {image ? (
+                <Image source={{ uri: image }} style={Style.PhotoContainer} />
+              ) : (
+                <Icon name="camera" size={25} color="white" />
+              )}
+            </TouchableOpacity>
+          ) : (
+            <Image
+              source={{ uri: user.avatar.url }}
+              style={Style.PhotoContainer}
+            />
+          )}
           <View style={Style.nameAndChangePhotoBox}>
             <Text style={Style.personNameStyle}>{user ? user.name : ""}</Text>
             <TouchableOpacity onPress={EditHandler}>
@@ -145,9 +204,22 @@ const UserPage = ({ navigation }) => {
         </>
       ) : (
         <>
-          <View style={Style.PhotoContainer}>
-            <Icon name="camera" size={25} color="white" />
-          </View>
+          {EditInfo ? (
+            <TouchableOpacity
+              style={Style.PhotoContainer}
+              onPress={handleImagePick}
+            >
+              {image ? (
+                <Image source={{ uri: image }} style={Style.PhotoContainer} />
+              ) : (
+                <Icon name="camera" size={25} color="white" />
+              )}
+            </TouchableOpacity>
+          ) : (
+            <View style={Style.PhotoContainer}>
+              <Icon name="camera" size={25} color="white" />
+            </View>
+          )}
           <View style={Style.nameAndChangePhotoBox}>
             <Text style={Style.personNameStyle}>{user ? user.name : ""}</Text>
             <TouchableOpacity onPress={EditHandler}>
