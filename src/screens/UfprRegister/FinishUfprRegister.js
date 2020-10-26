@@ -100,7 +100,10 @@ const FinishUfprRegister = ({ navigation }) => {
                     </Text>
                     <CustomButtons
                         Label="Ok!"
-                        onButtonPressed={() => navigation.navigate('Products')}
+                        onButtonPressed={() => {
+                            setIsConfirmRegisterModalVisible(!isConfirmRegisterModalVisible)
+                            navigation.navigate('ConfirmRegister')
+                        }}
                     />
                 </View>
             </View>
