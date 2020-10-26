@@ -93,6 +93,9 @@ const CreateAnnouncement = ({ navigation }) => {
   const product = [];
 
   const handleSubmit = async () => {
+    if (!user.data.student) {
+      return alert("Apenas estudantes da UFPR podem anunciar produtos!");
+    }
     const schema = Yup.object().shape({
       price: Yup.string().required(),
       title: Yup.string().required(),
