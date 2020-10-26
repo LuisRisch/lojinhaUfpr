@@ -37,6 +37,8 @@ const UserPage = ({ navigation }) => {
   const [EditInfo, setEditInfo] = useState(false);
   const [newName, setNewName] = useState(null);
   const [newEmail, setNewEmail] = useState(null);
+  const [oldPassword, setOldPassword] = useState(null);
+  const [newPassword, setNewPassword] = useState(null);
 
   const [image, setImage] = useState("");
 
@@ -46,6 +48,10 @@ const UserPage = ({ navigation }) => {
   });
 
   const [emailError, setEmailError] = useState({
+    error: false,
+    message: "",
+  });
+  const [passwordError, setPasswordError] = useState({
     error: false,
     message: "",
   });
@@ -104,7 +110,18 @@ const UserPage = ({ navigation }) => {
     }
   };
   const onSubmit = async () => {
-    console.log("oi");
+    if (newPassword && !oldPassword) {
+      return setPasswordError({
+        error: true,
+        message: "Digite sua senha antiga para alterar!",
+      });
+    }
+    if (newPassword && newPassword.length < 8) {
+      return setPasswordError({
+        error: true,
+        message: "Senha nova muito pequena. Mínimo de tamanho é 8.",
+      });
+    }
     let imageID = null;
     if (image) {
       const form = new FormData();
@@ -123,7 +140,13 @@ const UserPage = ({ navigation }) => {
         imageID = response.data;
       }
     }
-    const data = { name: newName, email: newEmail, avatar_id: imageID };
+    const data = {
+      name: newName,
+      email: newEmail,
+      avatar_id: imageID,
+      oldPassword,
+      newPassword,
+    };
 
     console.log(data);
 
@@ -250,6 +273,24 @@ const UserPage = ({ navigation }) => {
               />
 
               <View style={{ height: 9 }}></View>
+
+              <CustomTopLabel label="Senha atual" />
+              <CustomInputs
+                value={oldPassword}
+                onChangeText={(text) => setOldPassword(text)}
+                hintText="Digite seu novo nome"
+                error={passwordError.error}
+                errorMessage={passwordError.message}
+              />
+
+              <CustomTopLabel label="Nova senha" />
+              <CustomInputs
+                value={newPassword}
+                onChangeText={(text) => setNewPassword(text)}
+                hintText="Digite seu novo nome"
+                error={passwordError.error}
+                errorMessage={passwordError.message}
+              />
             </>
           )}
 
