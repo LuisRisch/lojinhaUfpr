@@ -1,4 +1,4 @@
-import {StyleSheet , StatusBar} from 'react-native'
+import { StyleSheet, StatusBar } from 'react-native'
 import Colors from '../../data/Colors';
 import FontSizes from '../../data/FontSizes';
 import Spacing from '../../data/Spacing';
@@ -62,6 +62,19 @@ const styles = StyleSheet.create({
         // fontWeight: "500",
         textAlign: "justify",
     },
-}) 
+    timerWarning:{
+        color: Colors.mainGrey,
+        fontFamily: "ralway-regular-semi",
+        fontSize: FontSizes.Lower,
+        textAlign : 'center'
+    },
+    timer: { 
+        marginTop: 9,
+        fontFamily: 'Mplus-semi',
+        fontSize: FontSizes.Tall,
+        textAlign: 'center', 
+        color: Colors.mainRed
+    }
+})
 
 export { styles }
