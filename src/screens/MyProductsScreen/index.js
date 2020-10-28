@@ -33,86 +33,32 @@ const getFonts = () =>
   });
 
 const MyProducts = ({ navigation }) => {
-  const arrAddOneInLenght = [""];
-  const defaultTitle = "Início";
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
-  const [ListOfProducts, setListOfProduct] = useState(
-    ListOfGeneral.concat(arrAddOneInLenght)
-  ); // just to add one more in lenght
+  const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral);
 
-  const loadApi = async () => {
-    setLoadingData(true);
-    const response = await api.get("/products");
-    if (response.status === 200 && response.data) {
-      setListOfProduct([...response.data]);
-    }
-    setLoadingData(false);
-    // setListOfProduct(ListOfGeneral);
-  };
+//   const loadApi = async () => {
+//     setLoadingData(true);
+//     const response = await api.get("/products");
+//     if (response.status === 200 && response.data) {
+//       setListOfProduct([...response.data]);
+//     }
+//     setLoadingData(false);
+//     // setListOfProduct(ListOfGeneral);
+//   };
 
-  useEffect(() => {
-    loadApi();
-  }, []);
-
-  const [isModalUserAreaVisible, setIsModalUserAreaVisible] = useState(false);
-  const [showFilter, setShowFilter] = useState(false);
+//   useEffect(() => {
+//     loadApi();
+//   }, []);
 
   const onProductCardPressed = (item) => {
     navigation.navigate("ProductScreen", { item });
   };
-  const [title, setTitle] = useState(defaultTitle);
 
-  // Filtrará os produtos por uma certa categoria
-  const ChangeCategory = (i) => {
-    setTitle(defaultTitle + " > " + CategoryList[i]);
-    if (i === 0) {
-      //Como nao há um arquivo para esse tipo de categoria coloque a lista geral, mas quando haver o backend
-      //deve-se ser a lista de salgados aqui
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 1) {
-      //deve-se ser a lista de doces
-      setListOfProduct(ListOfSweets);
-    } else if (i === 2) {
-      //deve-se ser a lista de artesanatos
-      setListOfProduct(ListOfCrafts);
-    } else if (i === 3) {
-      //deve-se ser a lista de Roupas
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 4) {
-      //deve-se ser a lista de Livros
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 5) {
-      //deve-se ser a lista de Servicos
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 6) {
-      //deve-se ser a lista de eletronicos
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 7) {
-      //deve-se ser a lista de moveis
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 8) {
-      //deve-se ser a lista de esporte
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 9) {
-      //deve-se ser a lista de calaçados
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 10) {
-      //deve-se ser a lista de outros
-      setListOfProduct(ListOfGeneral);
-    }
-    setShowFilter(!showFilter);
-  };
-
+  // renderiza cada item da lista de produtos  
   const renderItemCard = ({ item, index }) => {
     console.log(item)
-    return index === ListOfProducts.length - 1 ? (
-        <TouchableOpacity style={styles.loadMoreProductsContainer}>
-          <View style={{ height: Spacing.MainMargin }}></View>
-          <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
-          <Icon name="plus-circle" size={22} color={Colors.mainRed} />
-        </TouchableOpacity> ) : (
-    <TouchableOpacity style={{}} onPress={() => onProductCardPressed(item)}>
+    return <TouchableOpacity style={{}} onPress={() => onProductCardPressed(item)}>
         <View style={styles.Products_Card_Horizontally}>
         <Image
             source={{
@@ -147,7 +93,7 @@ const MyProducts = ({ navigation }) => {
             </View>
         </View>
         </View>
-    </TouchableOpacity> )
+    </TouchableOpacity> 
   }
 
   if (fontsLoaded) {
@@ -155,13 +101,7 @@ const MyProducts = ({ navigation }) => {
       <View style={styles.screen}>
         <View>
           <View style={styles.Top_Secundary_Informations}>
-            <Text style={styles.Top_Secundary_Layout_Informations}>
-              {title}
-            </Text>
-
-            <TouchableOpacity onPress={() => setShowFilter(!showFilter)}>
-              <Text style={styles.Filter_Layout}>Filtrar</Text>
-            </TouchableOpacity>
+            <Text style={styles.Top_Secundary_Layout_Informations}>Meus Produtos</Text>
           </View>
           <View style={{ padding: 20, marginTop: -30 }}>
               <FlatList
@@ -172,39 +112,11 @@ const MyProducts = ({ navigation }) => {
                 scrollEnabled={true}
                 scrollIndicatorInsets={false}
                 showsVerticalScrollIndicator={false}
-                onRefresh={loadApi}
+                // onRefresh={loadApi}
                 refreshing={loadingData}
               />
           </View>
         </View>
-
-        {/**************** Este modal irá mostra o filtro de categorias ****************/}
-
-        <Modal visible={showFilter} transparent={true} animationType={"slide"}>
-          <View style={styles.BackModalScreen}>
-            <View style={styles.BackModalAlert}>
-              <View
-                style={{ flexDirection: "row", justifyContent: "flex-end" }}
-              >
-                <TouchableOpacity onPress={() => setShowFilter(!showFilter)}>
-                  <Icon name="close" color={Colors.mainRed} size={18} />
-                </TouchableOpacity>
-              </View>
-              <Text style={styles.TitleModalStyle}>Categorias</Text>
-              <View style={styles.sizedBox}></View>
-              {CategoryList.map((c, index) => (
-                <View
-                  key={index}
-                  style={{ alignItems: "flex-start", marginVertical: 5 }}
-                >
-                  <TouchableOpacity onPress={() => ChangeCategory(index)}>
-                    <Text style={styles.category_text}>{c}</Text>
-                  </TouchableOpacity>
-                </View>
-              ))}
-            </View>
-          </View>
-        </Modal>
       </View>
     );
   } else {
