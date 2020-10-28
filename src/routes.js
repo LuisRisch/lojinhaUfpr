@@ -24,6 +24,7 @@ import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister";
 import ConfirmRegister from './screens/ConfirmRegister';
 import PushNotification from './screens/PushNotificationText';
 import ForgotPassword from './screens/ForgotPassword';
+import MyProductsScreen from './screens/MyProductsScreen';
 
 import LoadComponent from "./components/Load/LoadComponent";
 import CustomDrawer from "./components/CustomDrawer";
@@ -199,6 +200,52 @@ const StackRoutes = ({ navigation, route }) => {
     );
 };
 
+const MyProductsStack = ({ navigation, route }) => {
+    const dispatch = useDispatch();
+
+    return (
+        <Stack.Navigator
+            initialRouteName="Meus Produtos"
+            screenOptions={{ headerShown: false }}
+        >
+            <Stack.Screen
+                name="MyProducts"
+                component={MyProductsScreen}
+                options={{
+                    headerStyle: {
+                        backgroundColor: Colors.backgroundWhite,
+                        elevation: 0,
+                    },
+                    headerShown: true,
+                    title: "",
+                    headerLeft: () => (
+                        <TouchableOpacity onPress={() => navigation.openDrawer()}>
+                            <Icon
+                                name="align-left"
+                                size={20}
+                                color="#c4c4c4"
+                                style={{ marginLeft: 18 }}
+                            />
+                        </TouchableOpacity>
+                    ),
+                    headerRight: () => (
+                        <TouchableOpacity
+                            onPress={() => navigation.navigate("SearchProduct")}
+                        >
+                            <Icon
+                                name="search"
+                                size={20}
+                                color="#c4c4c4"
+                                style={{ marginRight: 18 }}
+                            />
+                        </TouchableOpacity>
+                    ),
+                }}  
+            />
+        </Stack.Navigator>
+    );
+};
+
 function Routes() {
     const user = useSelector((state) => state.user.data);
 
@@ -234,6 +281,11 @@ function Routes() {
                         dispatch(chatLeave());
                     },
                 }}
+            />
+            <Drawer.Screen
+                name="MyProducts"
+                component={MyProductsStack}          
+                options={{title: "Meus Produtos"}}
             />
             <Drawer.Screen
                 name="CreateAnnouncement"

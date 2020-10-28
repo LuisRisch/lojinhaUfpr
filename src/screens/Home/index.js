@@ -109,49 +109,53 @@ const Home = ({ navigation }) => {
 	}
 
 	const height = Dimensions.get("window").height;
+	// const handleLogin = async () => {
+	// 	if (Cpf && Pass) {
+	// 		// if (!isCPFValid(Cpf)) {
+	// 		//   setErrorInCpf(true);
+	// 		//   setCpfError("Número do CPF inválido!");
+	// 		//   return 0;
+	// 		// } COMENTADO DURANTE O DESENVOLVIMENTO
+	// 		await api
+	// 			.post("/login", { cpf: Cpf, password: Pass })
+	// 			.then((res) => {
+	// 				if (res.status === 200) {
+	// 					dispatch(userSignIn(res.data));
+	// 					navigation.navigate("Products");
+	// 					setErrorInCpf(false);
+	// 					setErrorInPass(false);
+	// 				}
+	// 			})
+	// 			.catch((err) => {
+	// 				console.log(err);
+	// 				setErrorInCpf({
+	// 					error: true,
+	// 					message: "Informações inválidas!",
+	// 				});
+	// 				setErrorInPass({
+	// 					error: true,
+	// 					message: "Informações inválidas!",
+	// 				});
+	// 				Alert.alert(
+	// 					"Informações inválidas!",
+	// 					"As suas informações de cpf e senha estão inválidas"
+	// 				);
+	// 			});
+	// 	} else {
+	// 		setErrorInCpf({
+	// 			error: true,
+	// 			message: "Este campo não foi preenchido",
+	// 		});
+	// 		setErrorInPass({
+	// 			error: true,
+	// 			message: "Este campo não foi preenchido",
+	// 		});
+	// 	}
+	// };
+	
 	const handleLogin = async () => {
-		if (Cpf && Pass) {
-			// if (!isCPFValid(Cpf)) {
-			//   setErrorInCpf(true);
-			//   setCpfError("Número do CPF inválido!");
-			//   return 0;
-			// } COMENTADO DURANTE O DESENVOLVIMENTO
-			await api
-				.post("/login", { cpf: Cpf, password: Pass })
-				.then((res) => {
-					if (res.status === 200) {
-						dispatch(userSignIn(res.data));
-						navigation.navigate("Products");
-						setErrorInCpf(false);
-						setErrorInPass(false);
-					}
-				})
-				.catch((err) => {
-					console.log(err);
-					setErrorInCpf({
-						error: true,
-						message: "Informações inválidas!",
-					});
-					setErrorInPass({
-						error: true,
-						message: "Informações inválidas!",
-					});
-					Alert.alert(
-						"Informações inválidas!",
-						"As suas informações de cpf e senha estão inválidas"
-					);
-				});
-		} else {
-			setErrorInCpf({
-				error: true,
-				message: "Este campo não foi preenchido",
-			});
-			setErrorInPass({
-				error: true,
-				message: "Este campo não foi preenchido",
-			});
-		}
-	};
+		navigation.navigate("Products");
+	}
 
 	const RedifinePassHandler = (text) => {
 		if (errorInRedifinePass.error) {
