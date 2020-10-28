@@ -21,7 +21,9 @@ import Register from "./screens/Register";
 import ProductSummary from "./components/ProductSummaryModal/ProductSummar";
 import UfprRegister from "./screens/UfprRegister/Index";
 import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister"; 
-import ConfirmRegister from './screens/ConfirmRegister'
+import ConfirmRegister from './screens/ConfirmRegister';
+import PushNotification from './screens/PushNotificationText';
+import ForgotPassword from './screens/ForgotPassword';
 
 import LoadComponent from "./components/Load/LoadComponent";
 import CustomDrawer from "./components/CustomDrawer";
@@ -67,6 +69,8 @@ const LoginRoutes = ({ navigation, route }) => {
             />
             <Stack.Screen name="UfprRegister" component={UfprRegister} />
             <Stack.Screen name="ConfirmRegister" component={ConfirmRegister} />
+            <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
+            {/* <Stack.Screen name="PushNotification" component={PushNotification} /> */}
             <Stack.Screen name="FinishUfprRegister" component={FinishUfprRegister} />
         </Stack.Navigator>
     );

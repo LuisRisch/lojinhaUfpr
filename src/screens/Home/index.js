@@ -85,7 +85,28 @@ const Home = ({ navigation }) => {
 	const [isALertModalVisible, setIsAlertModalVisible] = useState(false);
 	const changeStateAlertModal = () => {
 		setIsAlertModalVisible(!isALertModalVisible);
-	};
+	}; 
+
+	const ResetPassHandler = () => {
+		console.log(Email.includes('@'))
+		if(Email.length >= 1 && Email.includes('@')){
+			navigation.navigate('ForgotPassword')
+		} else{
+			if(Email.length === 0){
+				setErrorInRedifinePass({
+					error : true, 
+					message : 'Você precisa preencher este campo'
+				})
+			} else {
+				if(!Email.includes('@')){
+					setErrorInRedifinePass({
+						error : true, 
+						message : 'O email precisa incluir o caractere @'
+					})	
+				}
+			}
+		}
+	}
 
 	const height = Dimensions.get("window").height;
 	const handleLogin = async () => {
@@ -197,8 +218,12 @@ const Home = ({ navigation }) => {
 						<Text style={styles.lowerTexT}>
 							Enviaremos um email com as informações necessárias para a
 							redefinação da senha
-            </Text>
-						<CustomButtons Label="Enviar" Color={{ Color: "#ed524a" }} />
+            			</Text>
+						<CustomButtons 
+							Label="Enviar" 
+							Color={{ Color: "#ed524a" }} 
+							onButtonPressed={ResetPassHandler}
+						/>
 					</ScrollView>
 				</View>
 			</View>
