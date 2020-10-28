@@ -8,6 +8,7 @@ import CustomTopLabel from '../../components/CustomTopLabelInput'
 import { styles } from './styles';
 import FontSizes from '../../data/FontSizes';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const getFonts = () =>
     Font.loadAsync({
@@ -131,66 +132,54 @@ const ConfirmRegister = ({ navigation }) => {
                             />
                         </View>
                     </View>
-                </Modal>
+                </Modal> 
 
-                <View>
-                    <Text style={styles.title}>
-                        Seja Bem vindo novo usuário!
+                <ScrollView>
+                    <View>
+                        <Text style={styles.title}>
+                            Seja Bem vindo novo usuário!
                     </Text>
-                    <View style={{ height: 18 }}></View>
-                    <Text style={styles.subTitle}>
-                        Agora que você já se cadastrou na nossa plataforma, precisamos que você confirme o seu email.
+                        <View style={{ height: 18 }}></View>
+                        <Text style={styles.subTitle}>
+                            Agora que você já se cadastrou na nossa plataforma, precisamos que você confirme o seu email.
                     </Text>
-                    <View style={{ height: 9 }}></View>
-                    <Text style={styles.instructions}>
-                        Para isso, precisamos que você entre no email cadastrado, pois enviamos um email com um código que deverá ser inserido
-                        no campo a baixo
+                        <View style={{ height: 9 }}></View>
+                        <Text style={styles.instructions}>
+                            Para isso, precisamos que você entre no email cadastrado, pois enviamos um email com um código que deverá ser inserido
+                            no campo a baixo
                     </Text>
-                </View>
-
-                <View style={styles.inputs}>
-                    <CustomTopLabel
-                        label='Código'
-                    />
-                    <CustomInput
-                        hintText=''
-                        error={errorInCode.error}
-                        errorMessage={errorInCode.message}
-                        onChangeText={(text) => CodeHandler(text)}
-                    />
-                    <CustomButtons
-                        Label='Verificar'
-                        onButtonPressed={onSubmitt}
-                    />
-                    <CustomButtons
-                        Label='Reinviar código'
-                        onButtonPressed={ResendCode}
-                    />
-                    <View style={{ marginTop: 18 }}>
-                        <Text style={styles.timerWarning}>
-                            O código irá expirar quando o timer chegar em 5 minutos
-                        </Text>
-                        <Text style={styles.timer}>
-                            {`${mins}:${secs}`}
-                        </Text>
                     </View>
-                </View>
 
-                <View
-                    style={{
-                        position: 'absolute',
-                        alignSelf: 'center',
-                        bottom: 0,
-                        overflow: 'hidden'
-                    }}
-                >
-                    <Image
-                        source={require("../../assets/logo.png")}
-                        style={{ alignSelf: "center", width: 55, height: 55 }}
-                    />
-                </View>
+                    <View style={{ marginTop: 28 }}/>
 
-
+                    <View style={styles.inputs}>
+                        <CustomTopLabel
+                            label='Código'
+                        />
+                        <CustomInput
+                            hintText=''
+                            error={errorInCode.error}
+                            errorMessage={errorInCode.message}
+                            onChangeText={(text) => CodeHandler(text)}
+                        />
+                        <CustomButtons
+                            Label='Verificar'
+                            onButtonPressed={onSubmitt}
+                        />
+                        <CustomButtons
+                            Label='Reinviar código'
+                            onButtonPressed={ResendCode}
+                        />
+                        <View style={{ marginTop: 18 }}>
+                            <Text style={styles.timerWarning}>
+                                O código irá expirar quando o timer chegar em 5 minutos
+                        </Text>
+                            <Text style={styles.timer}>
+                                {`${mins}:${secs}`}
+                            </Text>
+                        </View>
+                    </View>
+                </ScrollView>
             </SafeAreaView>
         )
     } else {
