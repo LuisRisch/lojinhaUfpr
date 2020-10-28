@@ -1,13 +1,14 @@
 import FontSizes from "../../data/FontSizes";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
-import { StyleSheet } from 'react-native';
+import { StyleSheet, StatusBar } from 'react-native';
+
 const styles = StyleSheet.create({
     Screen: {
         flex: 1,
-        paddingHorizontal: Spacing.MainPadding,
-        paddingTop: Spacing.TopSpacingScreen,
-        backgroundColor: Colors.backgroundWhite
+        padding: 20,
+        marginTop: StatusBar.currentHeight,
+        backgroundColor: Colors.backgroundWhite,
     },
     Title: {
         fontSize: 25,
