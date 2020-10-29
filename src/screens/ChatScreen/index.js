@@ -15,7 +15,7 @@ import {
 
 import api from "../../services/api";
 
-import styles from "./styles"; 
+import styles from "./styles";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
@@ -29,7 +29,7 @@ const getFonts = () =>
     "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
   });
 
-const ChatScreen = ({ route, navigation }) => { 
+const ChatScreen = ({ route, navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const { chatID } = route.params;
   const { data: user, token } = useSelector((state) => state.user);
@@ -147,7 +147,7 @@ const ChatScreen = ({ route, navigation }) => {
       </View>
     );
   };
-  if(fontsLoaded){
+  if (fontsLoaded) {
     return (
       <View style={styles.screen}>
         <FlatList
@@ -171,10 +171,9 @@ const ChatScreen = ({ route, navigation }) => {
       </View>
     );
   } else {
-    return <AppLoading
-      startAsync={getFonts} 
-      onFinish={() => setFontsLoaded(true)}
-    />
+    return (
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
   }
 };
 

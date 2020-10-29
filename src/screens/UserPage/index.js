@@ -59,6 +59,7 @@ const UserPage = ({ navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const user = useSelector((state) => state.user.data);
   const signed = useSelector((state) => state.user.signed);
+  const token = useSelector((state) => state.user.token);
   const height = Dimensions.get("window").height;
 
   const disptach = useDispatch();
@@ -207,6 +208,25 @@ const UserPage = ({ navigation }) => {
     console.log(user);
   }, []);
 
+  const handleVerification = async () => {
+    console.log(user.token);
+    const response = await api
+      .post(
+        `/generate_code/${user._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .catch((err) => alert(err.response.data.error));
+    if (response.data) {
+      alert("Verifique seu email!");
+      navigation.navigate("ConfirmRegister");
+    }
+  };
+
   const content = (
     <View style={Style.screen}>
       <View style={Style.header}>
@@ -352,6 +372,12 @@ const UserPage = ({ navigation }) => {
           <View style={Style.TextBox}>
             <Text>{user ? user.cpf : ""}</Text>
           </View>
+          {user.mail_verification ? null : (
+            <CustomButtons
+              Label="Verificar email"
+              onButtonPressed={handleVerification}
+            />
+          )}
         </View>
       )}
       <View
