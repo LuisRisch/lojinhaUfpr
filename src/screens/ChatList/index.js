@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { View, TouchableOpacity, FlatList, Text, Image } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import CustomIcon from '../../components/CustomIconButton';
 import { useSelector, useDispatch } from "react-redux";
-import { chatLeave } from "../../store/modules/chat/actions";
+import { chatLeave } from "../../store/modules/chat/actions"; 
 
 import api from "../../services/api";
 
@@ -61,7 +62,11 @@ const ChatScreen = ({ navigation }) => {
         setTimeout(() => {
             setpopUpMenu(false);
         }, 10000);
-    };
+    }; 
+
+    const onIconPress = (item) => {
+        
+    }
 
     const renderChatList = ({ item }) => {
         return (
@@ -107,7 +112,9 @@ const ChatScreen = ({ navigation }) => {
                     {
                         open ?
                             <View style={{alignItems : 'flex-end' , flexDirection : 'row'}}>
-                                
+                                <CustomIcon
+                                    onPress={() => onIconPress(item)}
+                                />
                             </View>
 
                             :

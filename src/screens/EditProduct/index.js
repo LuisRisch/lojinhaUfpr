@@ -23,7 +23,8 @@ const getFonts = () =>
         "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
     });
 
-const EditProduct = ({navigation}) => {
+const EditProduct = ({ route , navigation}) => {
+    const { item: product } = route.params;
     const [fontsLoaded, setFontsLoaded] = useState(false)
     const [productTitle, setProductTitle] = useState("");
     const [productcategory, setCategory] = useState({
