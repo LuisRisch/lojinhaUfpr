@@ -428,7 +428,7 @@ const Register = ({ navigation }) => {
 
                         <Text style={styles.lowerTexT}>
                             *Para a sua segurança, coloque uma senha com letras e números
-            </Text>
+                        </Text>
 
                         {isCheckBoxSelected ? (
                             <TouchableOpacity
