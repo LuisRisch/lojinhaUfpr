@@ -23,7 +23,8 @@ import UfprRegister from "./screens/UfprRegister/Index";
 import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister"; 
 import ConfirmRegister from './screens/ConfirmRegister';
 import PushNotification from './screens/PushNotificationText';
-import ForgotPassword from './screens/ForgotPassword';
+import ForgotPassword from './screens/ForgotPassword'; 
+import EditProduct from './screens/EditProduct';
 
 import LoadComponent from "./components/Load/LoadComponent";
 import CustomDrawer from "./components/CustomDrawer";
@@ -52,6 +53,31 @@ const LoginRoutes = ({ navigation, route }) => {
                     },
                     headerShown: true,
                     title: "Cadastro",
+                    headerTitleAlign: "center",
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            onPress={() => navigation.dispatch(StackActions.popToTop())}
+                        >
+                            <Icon
+                                name="chevron-left"
+                                size={20}
+                                color="#c4c4c4"
+                                style={{ marginLeft: 18 }}
+                            />
+                        </TouchableOpacity>
+                    ),
+                }}
+            /> 
+            <Stack.Screen
+                name="EditProduct"
+                component={EditProduct}
+                options={{
+                    headerStyle: {
+                        backgroundColor: Colors.backgroundWhite,
+                        elevation: 0,
+                    },
+                    headerShown: true,
+                    title: "Edição de produtos",
                     headerTitleAlign: "center",
                     headerLeft: () => (
                         <TouchableOpacity
