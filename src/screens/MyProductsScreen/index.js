@@ -17,6 +17,8 @@ import { Items } from "../../data/Tabs";
 import { styles } from "./styles";
 import { CategoryList } from "../../data/Categories";
 
+import CustomIconButton from "../../components/CustomIconButton"; 
+
 import api from "../../services/api";
 import FontSizes from "../../data/FontSizes";
 
@@ -59,7 +61,7 @@ export default function MyProducts({ navigation }) {
   const renderItemCard = ({ item, index }) => {
     console.log(item)
     return <TouchableOpacity style={{}} onPress={() => onProductCardPressed(item)}>
-        <View style={styles.Products_Card_Horizontally}>
+        <View style={[styles.Products_Card_Horizontally, item.status === "INATIVO" ? {backgroundColor: 'lightgrey'} : {}]}>
             <Image
                 source={{
                 uri: item.picture === null ? null : item.picture[0].url,
@@ -77,8 +79,27 @@ export default function MyProducts({ navigation }) {
                 <View style={styles.Price_Box_Horizontally}>
                     <Text style={styles.Price_Layout}>R$ {item.price}</Text>
                 </View>
-                <View>
-                    
+                <View style={{flexDirection: 'row', marginLeft: 10, marginTop: 5, justifyContent: 'flex-end'}}>
+                    <CustomIconButton
+                      name="trash-2"
+                      onPress={() => {
+
+                      }}
+                      viewStyle={{marginRight: 7}}
+                    />
+                    <CustomIconButton
+                      name="edit"
+                      onPress={() => {
+
+                      }}
+                      viewStyle={{marginRight: 7}}
+                    />
+                    <CustomIconButton
+                      name={item.status === "ATIVO" ? "pause" : "play" }
+                      onPress={() => {
+
+                      }}
+                    />
                 </View>
             </View>
         </View>
