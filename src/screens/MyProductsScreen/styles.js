@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   },
   Products_Card_Informations: {
     marginLeft: 12,
-    justifyContent: "space-between",
+    // justifyContent: "space-between",
     alignContent: "flex-start",
   },
   Products_Title_Horizontally: {

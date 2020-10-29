@@ -32,7 +32,7 @@ const getFonts = () =>
     "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
   });
 
-const MyProducts = ({ navigation }) => {
+export default function MyProducts({ navigation }) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral);
@@ -60,70 +60,55 @@ const MyProducts = ({ navigation }) => {
     console.log(item)
     return <TouchableOpacity style={{}} onPress={() => onProductCardPressed(item)}>
         <View style={styles.Products_Card_Horizontally}>
-        <Image
-            source={{
-            uri: item.picture === null ? null : item.picture[0].url,
-            }}
-            style={styles.Image_Horizontaly_Display}
-            resizeMode="cover"
-        />
-        <View style={styles.Products_Card_Informations}>
-            <Text
-            numberOfLines={2}
-            style={styles.Products_Title_Horizontally}
-            >
-            {item.title}
-            </Text>
-            <View style={styles.Price_Box_Horizontally}>
-            <Text style={styles.Price_Layout}>R$ {item.price}</Text>
-            </View>
-            <View>
-            <Text
+            <Image
+                source={{
+                uri: item.picture === null ? null : item.picture[0].url,
+                }}
+                style={styles.Image_Horizontaly_Display}
+                resizeMode="cover"
+            />
+            <View style={styles.Products_Card_Informations}>
+                <Text
                 numberOfLines={2}
-                style={styles.AnnouncedBy_Horizontally_Label}
-            >
-                Vendido por:
-            </Text>
-            <Text
-                numberOfLines={2}
-                style={styles.AnnouncedBy_Horizontally_Name}
-            >
-                {item.user.name}
-            </Text>
+                style={styles.Products_Title_Horizontally}
+                >
+                {item.title}
+                </Text>
+                <View style={styles.Price_Box_Horizontally}>
+                    <Text style={styles.Price_Layout}>R$ {item.price}</Text>
+                </View>
+                <View>
+                    
+                </View>
             </View>
-        </View>
         </View>
     </TouchableOpacity> 
   }
 
-  if (fontsLoaded) {
-    return (
-      <View style={styles.screen}>
-        <View>
-          <View style={styles.Top_Secundary_Informations}>
-            <Text style={styles.Top_Secundary_Layout_Informations}>Meus Produtos</Text>
-          </View>
-          <View style={{ padding: 20, marginTop: -30 }}>
-              <FlatList
-                data={ListOfProducts}
-                renderItem={renderItemCard}
-                key={"_"}
-                keyExtractor={(item) => "_" + item._id}
-                scrollEnabled={true}
-                scrollIndicatorInsets={false}
-                showsVerticalScrollIndicator={false}
-                // onRefresh={loadApi}
-                refreshing={loadingData}
-              />
-          </View>
-        </View>
-      </View>
-    );
-  } else {
-    return (
-      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
-    );
-  }
-};
+  ///////////////////////////////////////////////////////////////////////////
 
-export default MyProducts;
+  return fontsLoaded 
+    ? // caso as fontes ja tenham sido carregadas
+    ( <View style={styles.screen}>
+    <View>
+      <View style={styles.Top_Secundary_Informations}>
+        <Text style={styles.Top_Secundary_Layout_Informations}>Meus Produtos</Text>
+      </View>
+      <View style={{ padding: 20, marginTop: -30 }}>
+          <FlatList
+            data={ListOfProducts}
+            renderItem={renderItemCard}
+            key={"_"}
+            keyExtractor={(item) => "_" + item._id}
+            scrollEnabled={true}
+            scrollIndicatorInsets={false}
+            showsVerticalScrollIndicator={false}
+            // onRefresh={loadApi}
+            refreshing={loadingData}
+          />
+      </View>
+    </View>
+  </View> ) : ( // carregando fontes ainda
+    <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+  )
+};
