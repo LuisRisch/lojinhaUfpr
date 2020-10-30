@@ -7,7 +7,6 @@ const styles = StyleSheet.create({
     Screen: {
         flex: 1,
         padding: 20,
-        marginTop: StatusBar.currentHeight,
         backgroundColor: Colors.backgroundWhite,
     },
     Title: {

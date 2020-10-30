@@ -116,9 +116,6 @@ const UfprRegister = ({ navigation }) => {
     const height = Dimensions.get("window").height;
     const content = <View style={styles.Screen}>
         <View>
-            <View style={{ alignSelf: 'flex-end' }}>
-                <CustomCloseIcon icon="arrow-circle-left" onPress={handleBack} />
-            </View>
             <View>
                 <Text style={styles.Title}>Instruções</Text>
                 <View style={{ height: 18 }}></View>
