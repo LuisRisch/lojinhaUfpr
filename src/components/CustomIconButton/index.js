@@ -7,7 +7,7 @@ export default function CustomButtons(props) {
     return (
         <TouchableOpacity
             style={[styles.viewStyle, props.viewStyle]}
-            onPress={() => { props.onPress }}
+            onPress={props.onPress}
         >
             <Feather 
                 name={props.name || "trash-2"} 
