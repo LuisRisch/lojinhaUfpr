@@ -24,21 +24,22 @@ const getFonts = () =>
     });
 
 const EditProduct = ({ route , navigation}) => {
-    const { item: product } = route.params;
+    const obj  = {...route.params} 
+    console.log(obj)
     const [fontsLoaded, setFontsLoaded] = useState(false)
-    const [productTitle, setProductTitle] = useState("");
+    const [productTitle, setProductTitle] = useState(obj.title);
     const [productcategory, setCategory] = useState({
-        title: "Nenhuma categoria selecionada",
+        title: obj.category,
         id: -1,
     });
-    const [productDescription, setProductDescription] = useState("");
-    const [payment, setPayment] = useState("");
-    const [delivery, setDelivery] = useState("");
-    const [price, setPrice] = useState("");
+    const [productDescription, setProductDescription] = useState(obj.description);
+    const [payment, setPayment] = useState(obj.payment);
+    const [delivery, setDelivery] = useState(obj.delivery);
+    const [price, setPrice] = useState(obj.price);
 
     const [categoryList, setCategoryList] = useState([]);
     const [isShowCategoryOpen, setIsShowCategory] = useState(false);
-    const [imageList, setImageList] = useState([]);
+    const [imageList, setImageList] = useState([...obj.picture]);
 
     const handleImagePick = async () => {
         if (imageList.length < 5) {
@@ -103,6 +104,7 @@ const EditProduct = ({ route , navigation}) => {
                         <CustomInputs
                             hintText="Ex: Camiseta customizada feita sobre demanda"
                             onChangeText={(text) => setProductTitle(text)}
+                            value={productTitle}
                         />
                     </BoxProduct>
 
@@ -112,6 +114,7 @@ const EditProduct = ({ route , navigation}) => {
                         <CustomInputs
                             hintText="Ex: 9,99"
                             onChangeText={(text) => setPrice(text)}
+                            value={price}
                         />
                     </BoxProduct>
 
@@ -140,6 +143,7 @@ const EditProduct = ({ route , navigation}) => {
                         <CustomInputs
                             hintText="Ex: Digite aqui a descrição"
                             onChangeText={(text) => setProductDescription(text)}
+                            value={productDescription}
                         />
                     </BoxProduct>
 
@@ -151,6 +155,7 @@ const EditProduct = ({ route , navigation}) => {
                         <CustomInputs
                             hintText="Ex: Somente dinheiro"
                             onChangeText={(text) => setPayment(text)}
+                            value={payment}
                         />
                     </BoxProduct>
 
@@ -162,6 +167,7 @@ const EditProduct = ({ route , navigation}) => {
                         <CustomInputs
                             hintText="Ex: Por meio do correio"
                             onChangeText={(text) => setDelivery(text)}
+                            value={delivery}
                         />
                     </BoxProduct>
 
@@ -177,8 +183,8 @@ const EditProduct = ({ route , navigation}) => {
                                 imageList.map((item) => (
                                     <Image
                                         style={styles.pictureComponent}
-                                        source={{ uri: item }}
-                                        key={item}
+                                        source={{ uri: item.url }}
+                                        key={item.url}
                                     />
                                 ))
                             )}
