@@ -28,6 +28,7 @@ export default function CustomInputs(props) {
           style={props.error ? styles.errorContainer : styles.textInputContainer}
         >
           <TextInput
+            multiline={true}
             placeholder={props.hintText}
             onChangeText={(this, props.onChangeText)}
             value={props.value} 
