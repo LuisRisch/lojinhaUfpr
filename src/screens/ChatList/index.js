@@ -64,11 +64,13 @@ const ChatScreen = ({ navigation }) => {
         }, 10000);
     }; 
 
-    const onIconPress = (item) => {
-        
+    const onIconPress = (index) => {
+        const list = [...chatList] 
+        list.slice(index , 1) 
+        setChatList(list)
     }
 
-    const renderChatList = ({ item }) => {
+    const renderChatList = ({ item , index }) => {
         return (
             <View style={styles.chatHolder}>
                 <TouchableOpacity
@@ -111,9 +113,9 @@ const ChatScreen = ({ navigation }) => {
                     <Text style={styles.rightBoxText}>{item.last_message.hour}</Text>
                     {
                         open ?
-                            <View style={{alignItems : 'flex-end' , flexDirection : 'row'}}>
+                            <View style={{alignItems : 'flex-end'}}>
                                 <CustomIcon
-                                    onPress={() => onIconPress(item)}
+                                    onPress={() => onIconPress(index)}
                                 />
                             </View>
 
