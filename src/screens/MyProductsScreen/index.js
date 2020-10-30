@@ -57,10 +57,6 @@ export default function MyProducts({ navigation }) {
         navigation.navigate("ProductScreen", { item });
     };
 
-    const onEditPress = (item) => {
-        navigation.navigate("EditProduct", {item})
-    }
-
     // renderiza cada item da lista de produtos  
     const renderItemCard = ({ item, index }) => {
         return <TouchableOpacity style={{}} onPress={() => onProductCardPressed(item)}>
@@ -93,7 +89,15 @@ export default function MyProducts({ navigation }) {
                         <CustomIconButton
                             name="edit"
                             onPress={() => {
-                                onEditPress(item)
+                                navigation.navigate("EditProduct", {
+                                    title: item.title,
+                                    price: item.price,
+                                    category: item.category, 
+                                    description: item.description,  
+                                    payment: item.paymentDescription, 
+                                    delivery: item.deliveryDescription,
+                                    picture: item.picture
+                                })
                             }}
                             viewStyle={{ marginRight: 7 }}
                         />
