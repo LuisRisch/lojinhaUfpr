@@ -4,7 +4,7 @@ import { createDrawerNavigator } from "@react-navigation/drawer";
 import { useSelector, useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { chatLeave } from "./store/modules/chat/actions";
-import { TouchableOpacity, Image } from "react-native";
+import { TouchableOpacity, Image, View } from "react-native";
 
 import Colors from "./data/Colors";
 
@@ -69,15 +69,15 @@ const LoginRoutes = ({ navigation, route }) => {
                 }}
             /> 
             <Stack.Screen
-                name="EditProduct"
-                component={EditProduct}
+                name="UfprRegister"
+                component={UfprRegister}
                 options={{
                     headerStyle: {
                         backgroundColor: Colors.backgroundWhite,
                         elevation: 0,
                     },
                     headerShown: true,
-                    title: "Edição de produtos",
+                    title: "Registro UFPR",
                     headerTitleAlign: "center",
                     headerLeft: () => (
                         <TouchableOpacity
@@ -92,12 +92,27 @@ const LoginRoutes = ({ navigation, route }) => {
                         </TouchableOpacity>
                     ),
                 }}
+            /> 
+            <Stack.Screen
+                name="FinishUfprRegister"
+                component={FinishUfprRegister}
+                options={{
+                    headerStyle: {
+                        backgroundColor: Colors.backgroundWhite,
+                        elevation: 0,
+                    },
+                    title:'Registro UFPR', 
+                    headerLeft: () => (
+                        <View>
+                        </View>
+                    ),
+                    headerShown: true,
+                    headerTitleAlign: "center",
+                }}
             />
-            <Stack.Screen name="UfprRegister" component={UfprRegister} />
             <Stack.Screen name="ConfirmRegister" component={ConfirmRegister} />
             <Stack.Screen name="ForgotPassword" component={ForgotPassword} />
             {/* <Stack.Screen name="PushNotification" component={PushNotification} /> */}
-            <Stack.Screen name="FinishUfprRegister" component={FinishUfprRegister} />
         </Stack.Navigator>
     );
 };
@@ -214,7 +229,32 @@ const StackRoutes = ({ navigation, route }) => {
                         </TouchableOpacity>
                     ),
                 })}
-            />
+            /> 
+            <Stack.Screen
+                name="EditProduct"
+                component={EditProduct}
+                options={{
+                    headerStyle: {
+                        backgroundColor: Colors.backgroundWhite,
+                        elevation: 0,
+                    },
+                    headerShown: true,
+                    title: "Edição de produtos",
+                    headerTitleAlign: "center",
+                    headerLeft: () => (
+                        <TouchableOpacity
+                            onPress={() => navigation.dispatch(StackActions.popToTop())}
+                        >
+                            <Icon
+                                name="chevron-left"
+                                size={20}
+                                color="#c4c4c4"
+                                style={{ marginLeft: 18 }}
+                            />
+                        </TouchableOpacity>
+                    ),
+                }}
+            /> 
             <Stack.Screen
                 name="ConfirmAnnouncement"
                 component={ConfirmAnnouncement}
