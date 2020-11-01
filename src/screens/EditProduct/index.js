@@ -52,7 +52,9 @@ const EditProduct = ({ route , navigation}) => {
 
             if (!result.cancelled) {
                 let array = [...imageList];
-                array.push(result.uri);
+                array.push({
+                    url : result.uri
+                });
                 setImageList(array);
                 console.log(array);
             }
@@ -74,6 +76,10 @@ const EditProduct = ({ route , navigation}) => {
 
     const handleSubmit = () => {
 
+    }
+
+    const HandleDeletePhoto = () => {
+        setImageList([])
     }
 
     useEffect(() => {
@@ -192,6 +198,12 @@ const EditProduct = ({ route , navigation}) => {
 
                     <View style={{ justifyContent: "space-between", flex: 1 }}>
                         <CustomButton Label="Postar novas informações" onButtonPressed={handleSubmit} />
+                        {
+                            imageList.length >= 1 ? 
+                            <CustomButton Label="Deletar as fotos" onButtonPressed={HandleDeletePhoto} />
+                            : 
+                            <View/>
+                        }
                         <Image
                             source={require("../../assets/logo.png")}
                             style={{

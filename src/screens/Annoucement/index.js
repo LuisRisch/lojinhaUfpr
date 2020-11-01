@@ -67,6 +67,10 @@ const CreateAnnouncement = ({ navigation }) => {
         }
     };
 
+    const HandleDeletePhoto = () => {
+        setImageList([])
+    }
+
     useEffect(() => {
         loadCategories();
         (async () => {
@@ -177,7 +181,7 @@ const CreateAnnouncement = ({ navigation }) => {
             });
 
             if (!result.cancelled) {
-                let array = imageList;
+                let array = [...imageList];
                 array.push(result.uri);
                 setImageList(array);
                 console.log(array);
@@ -294,6 +298,12 @@ const CreateAnnouncement = ({ navigation }) => {
 
                 <View style={{ justifyContent: "space-between", flex: 1 }}>
                     <CustomButton Label="Anunciar" onButtonPressed={handleSubmit} />
+                    {
+                        imageList.length >= 1 ?
+                            <CustomButton Label="Deletar as fotos" onButtonPressed={HandleDeletePhoto} />
+                            :
+                            <View />
+                    }
                     <Image
                         source={require("../../assets/logo.png")}
                         style={{
