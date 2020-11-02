@@ -46,7 +46,7 @@ const ChatScreen = ({ route, navigation }) => {
 
   const loadChat = async () => {
     const response = await api
-      .get(`/chat/${chatID}/${user.id}`, {
+      .get(`/chat/${chatID}/${user._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -54,7 +54,7 @@ const ChatScreen = ({ route, navigation }) => {
       .catch((err) => alert(err.response.data.error));
 
     if (response) {
-      if (response.data.buyer._id != user.id) {
+      if (response.data.buyer._id != user._id) {
         setUserType("seller");
       }
       dispatch(chatSave(response.data.messages, response.data._id));
@@ -95,7 +95,7 @@ const ChatScreen = ({ route, navigation }) => {
           {
             message: text,
             sent_by: userType,
-            user: user.id,
+            user: user._id,
             chat: chatID,
           },
           {

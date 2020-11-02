@@ -23,3 +23,10 @@ export function userRefreshInfo(user) {
     payload: { user },
   };
 }
+
+export function userUpdateExpoToken(expoToken) {
+  return {
+    type: "@user/UPDATE_EXPO_TOKEN",
+    payload: { expoToken },
+  };
+}
