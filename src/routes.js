@@ -24,6 +24,7 @@ import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister";
 import ConfirmRegister from './screens/ConfirmRegister';
 import PushNotification from './screens/PushNotificationText';
 import EditProduct from './screens/EditProduct';
+import FullScreenImage from './screens/FullScreenImage';
 import ForgotPassword from './screens/ForgotPassword';
 import MyProductsScreen from  './screens/MyProductsScreen';
 import LoadComponent from "./components/Load/LoadComponent";
@@ -254,6 +255,10 @@ const StackRoutes = ({ navigation, route }) => {
                         </TouchableOpacity>
                     ),
                 }}
+            /> 
+            <Stack.Screen
+                name="FullScreenImage"
+                component={FullScreenImage}
             /> 
             <Stack.Screen
                 name="ConfirmAnnouncement"
