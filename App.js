@@ -1,4 +1,5 @@
 import React from "react";
+import * as Notifications from "expo-notifications";
 import { StyleSheet, View } from "react-native";
 
 import { PersistGate } from "redux-persist/integration/react";
@@ -13,6 +14,14 @@ import "react-native-gesture-handler";
 import Routes from "./src/routes";
 
 import { store, persistor } from "./src/store/index";
+
+Notifications.setNotificationHandler({
+  handleNotification: async () => ({
+    shouldShowAlert: false,
+    shouldPlaySound: false,
+    shouldSetBadge: false,
+  }),
+});
 
 const App = () => {
   return (
