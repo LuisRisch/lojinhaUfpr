@@ -7,6 +7,12 @@ import { Styles } from "./styles";
 import api from "../../services/api";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
+import { Style } from "../UserPage/styles";
+import { styles } from "../../components/CustomInputs/Styles";
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from "react-native-gesture-handler";
 
 const getFonts = () =>
   Font.loadAsync({
@@ -19,8 +25,10 @@ const getFonts = () =>
 
 const ConfirmAnnouncement = ({ navigation, route }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [currCircle, setCurrCircle] = useState(0);
 
   const { item: product } = route.params;
+  const images = [...product.picture];
   const { data: user, token } = useSelector((state) => state.user);
   const height = Dimensions.get("window").height;
 
@@ -59,7 +67,16 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
     }
   };
 
-  // var product = { ...ListOfCrafts[0] };
+  const HandleScroll = (event) => {
+    const VIEW_SIZE = event.nativeEvent.layoutMeasurement.width;
+    const CONTENT_OF_SET = event.nativeEvent.contentOffset.x;
+    const SELECTED_INDEX = Math.round(CONTENT_OF_SET / VIEW_SIZE);
+    setCurrCircle(SELECTED_INDEX);
+  };
+
+  const HandleImagePressed = (params) => {
+    navigation.navigate("FullScreenImage", { params: params });
+  };
 
   const content = (
     <View style={Styles.screen}>
@@ -76,13 +93,42 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
         {/****************** Box que da espaçamento entre os dois ******************/}
         <View style={Styles.sizedBox}></View>
 
-        <Image
-          source={{
-            uri: product.picture ? product.picture[0].url : null,
-          }}
-          style={Styles.imageStyle}
-          resizeMode="contain"
-        />
+        <TouchableWithoutFeedback onPress={() => HandleImagePressed(images)}>
+          <ScrollView
+            horizontal
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+            onMomentumScrollEnd={HandleScroll}
+          >
+            {images.map((image, index) => (
+              <Image
+                key={index}
+                source={{ uri: image.url }}
+                style={Styles.imageStyle}
+                resizeMode="contain"
+              />
+            ))}
+          </ScrollView>
+          <View style={Styles.circlesContainer}>
+            {images.map((img, i) => (
+              <View
+                key={i}
+                style={[
+                  currCircle === i ? Styles.currCircle : Styles.wihiteCircle,
+                  { opacity: i === currCircle ? 1 : 0.5 },
+                ]}
+              />
+            ))}
+          </View>
+        </TouchableWithoutFeedback>
+
+        {/* <Image
+              source={{
+                  uri: product.picture ? product.picture[0].url : null,
+              }}
+              style={Styles.imageStyle}
+              resizeMode="contain"
+          /> */}
 
         {/****************** Box que da espaçamento entre os dois ******************/}
         <View style={Styles.sizedBox}></View>
