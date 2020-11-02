@@ -12,6 +12,18 @@ var product5 = {
       url:
         "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/artesanato.jpg?alt=media&token=e2cb9924-0e7f-4d84-83cd-2265e236fdc0",
     },
+    {
+      url:
+        "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/artesanato.jpg?alt=media&token=e2cb9924-0e7f-4d84-83cd-2265e236fdc0",
+    },
+    {
+      url:
+        "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/artesanato.jpg?alt=media&token=e2cb9924-0e7f-4d84-83cd-2265e236fdc0",
+    },
+    {
+      url:
+        "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/artesanato.jpg?alt=media&token=e2cb9924-0e7f-4d84-83cd-2265e236fdc0",
+    },
   ],
   id: 5,
   paymentDescription: "Aceito pagamento somente em dinheiro",
