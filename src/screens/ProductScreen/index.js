@@ -27,7 +27,7 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [currCircle, setCurrCircle] = useState(0);
 
-  const { item: product } = route.params;
+  const { item: product, categoryLabel } = route.params;
   const images = [...product.picture];
   const { data: user, token } = useSelector((state) => state.user);
   const height = Dimensions.get("window").height;
@@ -86,7 +86,7 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
 
         <View style={Styles.header}>
           <Text style={Styles.textCategoryStyle}>
-            {"Inicio " + "> " + product.category}
+            {"Inicio " + "> " + categoryLabel}
           </Text>
         </View>
 

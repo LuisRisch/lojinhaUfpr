@@ -12,91 +12,95 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 
 const getFonts = () =>
-    Font.loadAsync({
-        "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
-        "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
-        "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
-        "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
-        "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
-    });
+  Font.loadAsync({
+    "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+    "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+    "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
+    "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
+  });
 
 const SearchProduct = ({ navigation }) => {
-    const [fontsLoaded, setFontsLoaded] = useState(false);
-    const [search, setSearch] = useState("");
-    const [errorInSearch, setError] = useState(false);
-    const InputHandler = (text) => {
-        setSearch(text);
-        console.log(search);
-    };
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [search, setSearch] = useState("");
+  const [errorInSearch, setError] = useState(false);
+  const InputHandler = (text) => {
+    setSearch(text);
+    console.log(search);
+  };
 
-    const keyWords = [
-        "Cerâmica",
-        "Cadernos",
-        "Inglês",
-        "Chaveiros",
-        "Sofá",
-        "NoteBook",
-        "Brincos",
-        "Salgados",
-        "Tatuagem",
-        "Celular",
-        "Decorações",
-        "Camiseta",
-        "Televisão",
-        "Aula",
-        "Sapato",
-        "Coxinha",
-        "Torta",
-        "Ilustração",
-    ];
-    if (fontsLoaded) {
-        return (
-            <View style={{ flex: 1, backgroundColor: "#fff" }}>
-                <View
-                    style={{
-                        height: 40,
-                        marginTop: StatusBar.currentHeight,
-                        alignItems: "flex-start",
-                        justifyContent: "center",
-                    }}
-                >
-                    <TouchableOpacity onPress={() => navigation.navigate("MainProducts")}>
-                        <Icon
-                            name="arrow-left"
-                            size={20}
-                            color="#c4c4c4"
-                            style={{ marginLeft: 18 }}
-                        />
-                    </TouchableOpacity>
-                </View>
-                <View
-                    style={{ flex: 1, backgroundColor: "#fff", paddingHorizontal: 18 }}
-                >
-                    <Text
-                        style={{ 
-                            color: Color.mainRed, 
-                            fontSize: 35, 
-                            // fontWeight: "bold", 
-                            fontFamily : 'ralway-regular-bold' 
-                            }}
-                    >
-                        Pesquisar
-                    </Text>
+  const handleSearch = () => {
+    navigation.navigate("MainProducts", { searchParams: search });
+  };
 
-                    {/************** Sized box **************/}
-                    <View style={{ height: Spacing.MainMargin }}></View>
-                    <CustomInput
-                        onChangeText={(text) => InputHandler(text)}
-                        error={errorInSearch}
-                        errorMessage="Não foi encontado!"
-                        hintText="Procurar"
-                        value={search}
-                    />
+  const keyWords = [
+    "Cerâmica",
+    "Cadernos",
+    "Inglês",
+    "Chaveiros",
+    "Sofá",
+    "NoteBook",
+    "Brincos",
+    "Salgados",
+    "Tatuagem",
+    "Celular",
+    "Decorações",
+    "Camiseta",
+    "Televisão",
+    "Aula",
+    "Sapato",
+    "Coxinha",
+    "Torta",
+    "Ilustração",
+  ];
+  if (fontsLoaded) {
+    return (
+      <View style={{ flex: 1, backgroundColor: "#fff" }}>
+        <View
+          style={{
+            height: 40,
+            marginTop: StatusBar.currentHeight,
+            alignItems: "flex-start",
+            justifyContent: "center",
+          }}
+        >
+          <TouchableOpacity onPress={() => navigation.navigate("MainProducts")}>
+            <Icon
+              name="arrow-left"
+              size={20}
+              color="#c4c4c4"
+              style={{ marginLeft: 18 }}
+            />
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{ flex: 1, backgroundColor: "#fff", paddingHorizontal: 18 }}
+        >
+          <Text
+            style={{
+              color: Color.mainRed,
+              fontSize: 35,
+              // fontWeight: "bold",
+              fontFamily: "ralway-regular-bold",
+            }}
+          >
+            Pesquisar
+          </Text>
 
-                    {/************** Sized box **************/}
-                    <View style={{ height: Spacing.MainMargin }}></View>
+          {/************** Sized box **************/}
+          <View style={{ height: Spacing.MainMargin }}></View>
+          <CustomInput
+            onChangeText={(text) => InputHandler(text)}
+            error={errorInSearch}
+            errorMessage="Não foi encontado!"
+            hintText="Procurar"
+            value={search}
+          />
 
-                    {/* <Text
+          {/************** Sized box **************/}
+          <View style={{ height: Spacing.MainMargin }}></View>
+
+          {/* <Text
             style={{
               color: Color.mainGrey,
               fontSize: FontSizes.SuperTall,
@@ -106,7 +110,7 @@ const SearchProduct = ({ navigation }) => {
             Palavras-chave
           </Text> */}
 
-                    {/* <View style={{ width: "100%", flexDirection: "row", flexWrap: "wrap" }}>
+          {/* <View style={{ width: "100%", flexDirection: "row", flexWrap: "wrap" }}>
             {keyWords.map((word, index) => (
               <TouchableOpacity onPress={() => console.log(index)} key={index}>
               <View
@@ -126,25 +130,25 @@ const SearchProduct = ({ navigation }) => {
               </TouchableOpacity>
               ))}
             </View> */}
-                    <View
-                        style={{
-                            position: "absolute",
-                            bottom: 0,
-                            width: "100%",
-                            marginLeft: 18,
-                            marginBottom: 18,
-                        }}
-                    >
-                        <CustomButton Label="Buscar" />
-                    </View>
-                </View>
-            </View>
-        );
-    } else {
-        return (
-            <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
-        );
-    }
+          <View
+            style={{
+              position: "absolute",
+              bottom: 0,
+              width: "100%",
+              marginLeft: 18,
+              marginBottom: 18,
+            }}
+          >
+            <CustomButton Label="Buscar" onButtonPressed={handleSearch} />
+          </View>
+        </View>
+      </View>
+    );
+  } else {
+    return (
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
+  }
 };
 
 export default SearchProduct;

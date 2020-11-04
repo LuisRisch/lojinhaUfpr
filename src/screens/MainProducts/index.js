@@ -15,7 +15,6 @@ import { ListOfSweets } from "../../../temp/Products/Sweets";
 import { ListOfCrafts } from "../../../temp/Products/Crafts/";
 import { Items } from "../../data/Tabs";
 import { styles } from "./styles";
-import { CategoryList } from "../../data/Categories";
 
 import api from "../../services/api";
 import FontSizes from "../../data/FontSizes";
@@ -32,9 +31,11 @@ const getFonts = () =>
     "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
   });
 
-const MainProducts = ({ navigation }) => {
+const MainProducts = ({ navigation, route }) => {
+  const { params } = route;
   const arrAddOneInLenght = [""];
   const defaultTitle = "Início";
+  const [categoriesList, setCategories] = useState([]);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(-1);
@@ -49,6 +50,24 @@ const MainProducts = ({ navigation }) => {
     if (response.status === 200 && response.data) {
       setListOfProduct([...response.data]);
     }
+
+    const categories = await api.get("/categories");
+    if (categories.status === 200 && categories.data) {
+      setCategories(categories.data);
+    }
+    setLoadingData(false);
+    // setListOfProduct(ListOfGeneral);
+  };
+
+  const loadSearch = async (searchParams) => {
+    setLoadingData(true);
+    const response = await api.get("/products", {
+      params: searchParams,
+    });
+    if (response.status === 200 && response.data) {
+      setListOfProduct([...response.data]);
+      console.log(response.data);
+    }
     setLoadingData(false);
     // setListOfProduct(ListOfGeneral);
   };
@@ -56,6 +75,12 @@ const MainProducts = ({ navigation }) => {
   useEffect(() => {
     loadApi();
   }, []);
+
+  useEffect(() => {
+    if (params && params.seachParams) {
+      loadSearch(params.seachParams);
+    }
+  }, [params]);
 
   const [
     isListVisualisationSelected,
@@ -72,7 +97,10 @@ const MainProducts = ({ navigation }) => {
   const [showFilter, setShowFilter] = useState(false);
 
   const onProductCardPressed = (item) => {
-    navigation.navigate("ProductScreen", { item });
+    navigation.navigate("ProductScreen", {
+      item,
+      categoryLabel: categoriesList[item.category].title,
+    });
   };
   const [title, setTitle] = useState(defaultTitle);
 
@@ -95,9 +123,17 @@ const MainProducts = ({ navigation }) => {
       });
 
       if (response.data) {
-        setListOfProduct([...ListOfProducts, ...response.data]);
+        setListOfProduct(response.data);
       }
     }
+  };
+
+  const handleResetCaregories = () => {
+    loadApi();
+    setCurrentPage(0);
+    setTitle(defaultTitle);
+    setCurrentCategory(-1);
+    setShowFilter(false);
   };
 
   const ChangePage = () => {
@@ -107,9 +143,10 @@ const MainProducts = ({ navigation }) => {
   };
   // Filtrará os produtos por uma certa categoria
   const ChangeCategory = (i) => {
-    setTitle(defaultTitle + " > " + CategoryList[i]);
+    setTitle(defaultTitle + " > " + categoriesList[i].title);
+    setCurrentPage(0);
     setCurrentCategory(i);
-    loadProductsWithParams(currentPage, i);
+    loadProductsWithParams(0, i);
     setShowFilter(!showFilter);
   };
 
@@ -310,14 +347,25 @@ const MainProducts = ({ navigation }) => {
                 </TouchableOpacity>
               </View>
               <Text style={styles.TitleModalStyle}>Categorias</Text>
+              <TouchableOpacity onPress={handleResetCaregories}>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "ralway-regular-semi",
+                    marginTop: 10,
+                  }}
+                >
+                  Nenhuma categoria
+                </Text>
+              </TouchableOpacity>
               <View style={styles.sizedBox}></View>
-              {CategoryList.map((c, index) => (
+              {categoriesList.map((item) => (
                 <View
-                  key={index}
+                  key={item.id}
                   style={{ alignItems: "flex-start", marginVertical: 5 }}
                 >
-                  <TouchableOpacity onPress={() => ChangeCategory(index)}>
-                    <Text style={styles.category_text}>{c}</Text>
+                  <TouchableOpacity onPress={() => ChangeCategory(item.id)}>
+                    <Text style={styles.category_text}>{item.title}</Text>
                   </TouchableOpacity>
                 </View>
               ))}
