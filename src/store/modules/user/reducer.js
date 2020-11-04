@@ -4,6 +4,7 @@ const INITIAL_STATE = {
   data: {},
   signed: false,
   token: "",
+  expoToken: "",
   rememberPassword: false,
 };
 
@@ -29,6 +30,9 @@ export default function user(state = INITIAL_STATE, action) {
       case "@user/REFRESH_INFO": {
         draft.data = { ...action.payload.user };
         break;
+      }
+      case "@user/UPDATE_EXPO_TOKEN": {
+        draft.expoToken = action.payload.expoToken;
       }
       default:
     }

@@ -10,9 +10,7 @@ import {
   SafeAreaView,
   Alert,
 } from "react-native";
-import AsyncStorage from "@react-native-community/async-storage";
 import { useDispatch, useSelector } from "react-redux";
-import isCPFValid from "../../services/cpfValidator";
 import {
   userSignIn,
   userRemember,
@@ -23,13 +21,13 @@ import CustomInputs from "../../components/CustomInputs";
 import CustomSwitchButton from "../../components/CustomSwitchButton";
 import CustomTopLabelInput from "../../components/CustomTopLabelInput";
 import CustomPasswordInput from "../../components/CustomPasswordInput";
-import CustomCloseIcon from "../../components/CustomCloseIcon";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { styles } from "./styles";
 import Colors from "../../data/Colors";
-import FontSizes from "../../data/FontSizes";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
+import { registerForPushNotificationsAsync } from "../../services/notifications";
+import { userUpdateExpoToken } from "../../store/modules/user/actions";
 // Navegacao
 import api from "../../services/api";
 
@@ -45,7 +43,7 @@ const Home = ({ navigation }) => {
   const [loginModalVisible, setModalLoginVisible] = useState(true);
   const [isModalResetPassVisible, setIsModalResetPassVisible] = useState(false);
 
-  const userSigned = useSelector((state) => state.user.signed);
+  const user = useSelector((state) => state.user);
   const rememberPassword = useSelector((state) => state.user.rememberPassword);
 
   const [Cpf, setCpf] = useState("");
@@ -69,8 +67,17 @@ const Home = ({ navigation }) => {
     dispatch(userRemember());
   };
 
+  const expoRegister = async () => {
+    await registerForPushNotificationsAsync().then((token) =>
+      dispatch(userUpdateExpoToken(token))
+    );
+  };
+
   useEffect(() => {
-    if (userSigned && rememberPassword) {
+    if (!user.expoToken) {
+      expoRegister();
+    }
+    if (user.data && rememberPassword) {
       navigation.navigate("Products");
     }
   }, []);
@@ -122,8 +129,13 @@ const Home = ({ navigation }) => {
       //   setCpfError("Número do CPF inválido!");
       //   return 0;
       // } COMENTADO DURANTE O DESENVOLVIMENTO
+      let notificationToken = user.expoToken || null;
       await api
-        .post("/login", { cpf: Cpf, password: Pass })
+        .post("/login", {
+          cpf: Cpf,
+          password: Pass,
+          notificationToken,
+        })
         .then((res) => {
           if (res.status === 200) {
             dispatch(userSignIn(res.data));

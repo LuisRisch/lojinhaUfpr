@@ -37,6 +37,8 @@ const MainProducts = ({ navigation }) => {
   const defaultTitle = "Início";
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState(-1);
+  const [currentPage, setCurrentPage] = useState(0);
   const [ListOfProducts, setListOfProduct] = useState(
     ListOfGeneral.concat(arrAddOneInLenght)
   ); // just to add one more in lenght
@@ -74,51 +76,50 @@ const MainProducts = ({ navigation }) => {
   };
   const [title, setTitle] = useState(defaultTitle);
 
+  const loadProductsWithParams = async (page, category) => {
+    if (category === -1) {
+      const response = await api.get("/products", {
+        params: {
+          page,
+        },
+      });
+      if (response.data) {
+        setListOfProduct([...ListOfProducts, ...response.data]);
+      }
+    } else {
+      const response = await api.get("/products", {
+        params: {
+          category,
+          page,
+        },
+      });
+
+      if (response.data) {
+        setListOfProduct([...ListOfProducts, ...response.data]);
+      }
+    }
+  };
+
+  const ChangePage = () => {
+    let newPage = currentPage + 1;
+    setCurrentPage(newPage);
+    loadProductsWithParams(newPage, currentCategory);
+  };
   // Filtrará os produtos por uma certa categoria
   const ChangeCategory = (i) => {
     setTitle(defaultTitle + " > " + CategoryList[i]);
-    if (i === 0) {
-      //Como nao há um arquivo para esse tipo de categoria coloque a lista geral, mas quando haver o backend
-      //deve-se ser a lista de salgados aqui
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 1) {
-      //deve-se ser a lista de doces
-      setListOfProduct(ListOfSweets);
-    } else if (i === 2) {
-      //deve-se ser a lista de artesanatos
-      setListOfProduct(ListOfCrafts);
-    } else if (i === 3) {
-      //deve-se ser a lista de Roupas
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 4) {
-      //deve-se ser a lista de Livros
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 5) {
-      //deve-se ser a lista de Servicos
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 6) {
-      //deve-se ser a lista de eletronicos
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 7) {
-      //deve-se ser a lista de moveis
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 8) {
-      //deve-se ser a lista de esporte
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 9) {
-      //deve-se ser a lista de calaçados
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 10) {
-      //deve-se ser a lista de outros
-      setListOfProduct(ListOfGeneral);
-    }
+    setCurrentCategory(i);
+    loadProductsWithParams(currentPage, i);
     setShowFilter(!showFilter);
   };
 
   const renderItemCard = ({ item, index }) =>
     isListVisualisationSelected ? (
       index === ListOfProducts.length - 1 ? (
-        <TouchableOpacity style={styles.loadMoreProductsContainer}>
+        <TouchableOpacity
+          style={styles.loadMoreProductsContainer}
+          onPress={ChangePage}
+        >
           <View style={{ height: Spacing.MainMargin }}></View>
           <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
           <Icon name="plus-circle" size={22} color={Colors.mainRed} />
@@ -162,7 +163,10 @@ const MainProducts = ({ navigation }) => {
         </TouchableOpacity>
       )
     ) : index === ListOfProducts.length - 1 ? (
-      <TouchableOpacity style={styles.loadMoreProductsContainer}>
+      <TouchableOpacity
+        style={styles.loadMoreProductsContainer}
+        onPress={ChangePage}
+      >
         <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
         <Icon name="plus-circle" size={22} color={Colors.mainRed} />
       </TouchableOpacity>
