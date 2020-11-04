@@ -80,7 +80,13 @@ const styles = StyleSheet.create({
   subText: {
     fontSize: FontSizes.TooLower,
     fontFamily : 'ralway-regular',
-  },
+  }, 
+  ChatTypes:{
+    fontFamily : 'ralway-regular-semi',
+    color : Colors.mainRed, 
+    fontSize : FontSizes.Tall
+  
+  }
 });
 
 export default styles;

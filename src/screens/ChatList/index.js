@@ -11,6 +11,7 @@ import styles from "./styles";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 
 const getFonts = () =>
     Font.loadAsync({
@@ -139,7 +140,22 @@ const ChatScreen = ({ navigation }) => {
                     </TouchableOpacity>
                     <Text style={styles.title}>Chat</Text>
                 </View>
-                <FlatList
+                
+                <View style={{flex : 1}}> 
+                    <View style={{flex : 1}}>
+                        <Text style={styles.ChatTypes}>
+                            Quero vender
+                        </Text>
+                    </View> 
+
+                    <View style={{flex : 1}}>
+                        <Text style={styles.ChatTypes}>
+                            Quero comprar
+                        </Text>
+                    </View>
+                </View>
+                
+                {/* <FlatList
                     data={chatList}
                     renderItem={renderChatList}
                     keyExtractor={(item) => item._id}
@@ -147,7 +163,7 @@ const ChatScreen = ({ navigation }) => {
                     showsVerticalScrollIndicator={false}
                     refreshing={loading}
                     onRefresh={loadChats}
-                />
+                /> */}
             </View>
         );
     } else {
