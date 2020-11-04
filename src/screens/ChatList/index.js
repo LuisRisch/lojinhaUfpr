@@ -28,18 +28,41 @@ const ChatScreen = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
   const [open, setOpen] = useState(false);
 
+  const [chatBuyList, setBuyList] = useState([]);
+  const [chatSellList, setSellList] = useState([]);
+  const [buyingListActive, setListActive] = useState(true);
+
   const loadChats = async () => {
     setLoading(true);
-    const response = await api
+    if (user.student) {
+      const seller = await api
+        .get(`/chats/${user._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            selling: true,
+          },
+        })
+        .catch((err) => alert(err.response.data.error));
+
+      if (seller) {
+        setSellList(seller.data);
+      }
+    }
+    const buyer = await api
       .get(`/chats/${user._id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
+        params: {
+          buying: true,
+        },
       })
       .catch((err) => alert(err.response.data.error));
 
-    if (response) {
-      setChatList(response.data);
+    if (buyer) {
+      setBuyList(buyer.data);
     }
     setLoading(false);
   };
@@ -115,17 +138,33 @@ const ChatScreen = ({ navigation }) => {
               <CustomIcon onPress={() => onIconPress(index)} />
             </View>
           ) : (
-              <TouchableOpacity
-                style={{ alignItems: "flex-end", marginTop: 5 }}
-                onPress={popUpMenuHandler}
-              >
-                <Icon name="ellipsis-h" size={20} color="#c4c4c4" />
-              </TouchableOpacity>
-            )}
+            <TouchableOpacity
+              style={{ alignItems: "flex-end", marginTop: 5 }}
+              onPress={popUpMenuHandler}
+            >
+              <Icon name="ellipsis-h" size={20} color="#c4c4c4" />
+            </TouchableOpacity>
+          )}
         </View>
       </View>
     );
   };
+
+  const handleListSwitch = () => {
+    if (!user.student) {
+      return alert("Apenas alunos da UFPR podem vender produtos!");
+    }
+    setListActive(!buyingListActive);
+  };
+
+  const ChatScreens = ["Minhas vendas", "Minhas compras"];
+  const ChatScreensComponent = (item, index) => (
+    <View style={{ flex: 1 }}>
+      <Text style={styles.ChatTypes}>
+        {index === 0 ? "Minhas vendas" : "Minhas compras"}
+      </Text>
+    </View>
+  );
 
   if (fontsLoaded) {
     return (
@@ -136,29 +175,42 @@ const ChatScreen = ({ navigation }) => {
           </TouchableOpacity>
           <Text style={styles.title}>Chat</Text>
         </View>
-        <View style={{ flex: 1 }}>
-          <View style={{ flex: 1 }}>
-            <Text style={styles.ChatTypes}>
-              Quero vender
-            </Text>
-          </View>
+        <TouchableOpacity onPress={handleListSwitch}>
+          <Text
+            style={{
+              textAlign: "center",
+              fontFamily: "ralway-regular-semi",
+              marginBottom: 10,
+            }}
+          >
+            {buyingListActive ? "Ver minhas vendas" : "Ver minhas compras"}
+          </Text>
+        </TouchableOpacity>
+        <Text style={styles.ChatTypes}>
+          {buyingListActive ? "Minhas compras" : "Minhas vendas"}
+        </Text>
 
-          <View style={{ flex: 1 }}>
-            <Text style={styles.ChatTypes}>
-              Quero comprar
-            </Text>
-          </View>
-        </View>
-        
-        {/* <FlatList
-          data={chatList}
-          renderItem={renderChatList}
-          keyExtractor={(item) => item._id}
-          scrollEnabled={true}
-          showsVerticalScrollIndicator={false}
-          refreshing={loading}
-          onRefresh={loadChats}
-        /> */}
+        {buyingListActive ? (
+          <FlatList
+            data={chatBuyList}
+            renderItem={renderChatList}
+            keyExtractor={(item) => item._id}
+            scrollEnabled={true}
+            showsVerticalScrollIndicator={false}
+            refreshing={loading}
+            onRefresh={loadChats}
+          />
+        ) : (
+          <FlatList
+            data={chatSellList}
+            renderItem={renderChatList}
+            keyExtractor={(item) => item._id}
+            scrollEnabled={true}
+            showsVerticalScrollIndicator={false}
+            refreshing={loading}
+            onRefresh={loadChats}
+          />
+        )}
       </View>
     );
   } else {
@@ -169,4 +221,3 @@ const ChatScreen = ({ navigation }) => {
 };
 
 export default ChatScreen;
-
