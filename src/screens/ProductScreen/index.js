@@ -73,7 +73,7 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
     } 
 
     const HandleImagePressed = (params) => {
-        navigation.navigate('FullScreenImage', { params : params} )
+        navigation.navigate("FullScreenImage", { params : params} )
     }
 
     const content = (
@@ -109,14 +109,6 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
                         ))}
                     </View>
                 </TouchableWithoutFeedback>
-
-                {/* <Image
-                    source={{
-                        uri: product.picture ? product.picture[0].url : null,
-                    }}
-                    style={Styles.imageStyle}
-                    resizeMode="contain"
-                /> */}
 
                 {/****************** Box que da espaçamento entre os dois ******************/}
                 <View style={Styles.sizedBox}></View>
