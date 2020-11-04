@@ -18,7 +18,7 @@ import CreateAnnouncement from "./screens/Annoucement";
 import ConfirmAnnouncement from "./screens/ConfirmAnnoucement";
 import SearchProduct from "./screens/SearchProduct";
 import Register from "./screens/Register";
-import ProductSummary from "./components/ProductSummaryModal/ProductSummar";
+import ProductSummary from "./screens/ProductSummaryModal/ProductSummar";
 import UfprRegister from "./screens/UfprRegister/Index";
 import FinishUfprRegister from "./screens/UfprRegister/FinishUfprRegister"; 
 import ConfirmRegister from './screens/ConfirmRegister';
