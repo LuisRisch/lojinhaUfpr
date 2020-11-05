@@ -45,24 +45,29 @@ const MainProducts = ({ navigation, route }) => {
   ); // just to add one more in lenght
 
   const loadApi = async () => {
-    setLoadingData(true);
-    const response = await api.get("/products");
+    const response = await api.get("/products", {
+      params: {
+        onlyActive: true,
+      },
+    });
     if (response.status === 200 && response.data) {
       setListOfProduct([...response.data]);
     }
+    // setListOfProduct(ListOfGeneral);
+  };
 
+  const loadCategories = async () => {
     const categories = await api.get("/categories");
     if (categories.status === 200 && categories.data) {
       setCategories(categories.data);
     }
-    setLoadingData(false);
-    // setListOfProduct(ListOfGeneral);
   };
 
   const loadSearch = async (searchParams) => {
     setLoadingData(true);
+    console.log("oi");
     const response = await api.get("/products", {
-      params: searchParams,
+      params: { title: searchParams, onlyActive: true },
     });
     if (response.status === 200 && response.data) {
       setListOfProduct([...response.data]);
@@ -73,12 +78,16 @@ const MainProducts = ({ navigation, route }) => {
   };
 
   useEffect(() => {
+    setLoadingData(true);
     loadApi();
+    loadCategories();
+    setLoadingData(false);
   }, []);
 
   useEffect(() => {
-    if (params && params.seachParams) {
-      loadSearch(params.seachParams);
+    if (params && params.searchParams) {
+      console.log("oi");
+      loadSearch(params.searchParams);
     }
   }, [params]);
 
@@ -109,6 +118,7 @@ const MainProducts = ({ navigation, route }) => {
       const response = await api.get("/products", {
         params: {
           page,
+          onlyActive: true,
         },
       });
       if (response.data) {
@@ -119,6 +129,7 @@ const MainProducts = ({ navigation, route }) => {
         params: {
           category,
           page,
+          onlyActive: true,
         },
       });
 
