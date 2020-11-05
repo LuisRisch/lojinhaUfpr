@@ -4,7 +4,7 @@ import {
   Text,
   FlatList,
   Image,
-  Modal,
+  Alert,
   TouchableOpacity,
 } from "react-native";
 import { ListOfGeneral } from "../../../temp/Products/General";
@@ -57,6 +57,52 @@ export default function MyProducts({ navigation }) {
     navigation.navigate("ProductScreen", { item });
   };
 
+  const switchProductPause = async (isActive, id) => {
+    const response = await api
+      .put(
+        `/product/${id}/${user._id}`,
+        { active: !isActive },
+        {
+          headers: {
+            Authorization: `Bearer ${user.token}`,
+          },
+        }
+      )
+      .catch((err) => alert(err.response.data.error));
+
+    if (response.status === 200) {
+      alert("Ok!");
+    }
+  };
+
+  const handlePauseItem = (isActive, id) => {
+    if (isActive) {
+      Alert.alert(
+        "Tem certeza que quer pausar esse produto?",
+        "Os outros usuários não conseguirão entrar em contato com você com relação a ele!",
+        [
+          {
+            text: "Pausar",
+            onPress: async () => await switchProductPause(isActive, id),
+          },
+          { text: "Cancelar" },
+        ]
+      );
+    } else {
+      Alert.alert(
+        "Tem certeza que quer despausar esse produto?",
+        "Os outros usuários voltarão a poder fazer contato com você sobre ele!",
+        [
+          {
+            text: "Despausar",
+            onPress: async () => await switchProductPause(isActive, id),
+          },
+          { text: "Cancelar" },
+        ]
+      );
+    }
+  };
+
   // renderiza cada item da lista de produtos
   const renderItemCard = ({ item, index }) => {
     return (
@@ -64,7 +110,7 @@ export default function MyProducts({ navigation }) {
         <View
           style={[
             styles.Products_Card_Horizontally,
-            item.status === "INATIVO" ? { backgroundColor: "lightgrey" } : {},
+            !item.active ? { backgroundColor: "lightgrey", opacity: 0.5 } : {},
           ]}
         >
           <Image
@@ -102,8 +148,8 @@ export default function MyProducts({ navigation }) {
                 viewStyle={{ marginRight: 7 }}
               />
               <CustomIconButton
-                name={item.status === "ATIVO" ? "pause" : "play"}
-                onPress={() => {}}
+                name={item.active ? "pause" : "play"}
+                onPress={() => handlePauseItem(item.active, item._id)}
               />
             </View>
           </View>
