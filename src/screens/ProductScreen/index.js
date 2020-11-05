@@ -151,10 +151,23 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
             </Text>
           </View>
 
-          <CustomButton
-            Label="Entrar em contato com o vendedor"
-            onButtonPressed={handleChat}
-          />
+          {product.active ? (
+            <CustomButton
+              Label="Entrar em contato com o vendedor"
+              onButtonPressed={handleChat}
+            />
+          ) : (
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "ralway-regular-semi",
+                margin: 20,
+                fontSize: 16,
+              }}
+            >
+              Anúncio pausado!
+            </Text>
+          )}
 
           {/****************** Box que da espaçamento entre os dois ******************/}
           <View style={Styles.sizedBox}></View>
