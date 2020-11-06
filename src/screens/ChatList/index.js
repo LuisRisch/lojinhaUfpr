@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { View, TouchableOpacity, FlatList, Text, Image } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  FlatList,
+  Text,
+  Image,
+  Alert,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import CustomIcon from "../../components/CustomIconButton";
 import { useSelector, useDispatch } from "react-redux";
@@ -44,7 +51,12 @@ const ChatScreen = ({ navigation }) => {
             selling: true,
           },
         })
-        .catch((err) => alert(err.response.data.error));
+        .catch((err) =>
+          Alert.alert(
+            "Ocorreu um erro ao buscar suas informações!",
+            err.response.data.error
+          )
+        );
 
       if (seller) {
         setSellList(seller.data);
@@ -59,7 +71,12 @@ const ChatScreen = ({ navigation }) => {
           buying: true,
         },
       })
-      .catch((err) => alert(err.response.data.error));
+      .catch((err) =>
+        Alert.alert(
+          "Ocorreu um erro ao buscar suas informações",
+          err.response.data.error
+        )
+      );
 
     if (buyer) {
       setBuyList(buyer.data);
@@ -152,7 +169,10 @@ const ChatScreen = ({ navigation }) => {
 
   const handleListSwitch = () => {
     if (!user.student) {
-      return alert("Apenas alunos da UFPR podem vender produtos!");
+      return Alert.alert(
+        "Infelizmente você não pode fazer isso.",
+        "Apenas estudantes da UFPR podem anunciar produtos!"
+      );
     }
     setListActive(!buyingListActive);
   };

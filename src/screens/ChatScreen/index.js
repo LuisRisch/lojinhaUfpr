@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { View, TouchableOpacity, FlatList, Text, Platform } from "react-native";
+import { View, TouchableOpacity, FlatList, Text, Alert } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -51,7 +51,12 @@ const ChatScreen = ({ route, navigation }) => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .catch((err) => alert(err.response.data.error));
+      .catch((err) =>
+        Alert.alert(
+          "Ocorreu um erro ao buscar esse chat!",
+          err.response.data.error
+        )
+      );
 
     if (response) {
       if (response.data.buyer._id != user._id) {
@@ -104,7 +109,12 @@ const ChatScreen = ({ route, navigation }) => {
             },
           }
         )
-        .catch((err) => alert(err.response.data.error));
+        .catch((err) =>
+          Alert.alert(
+            "Ops...Ocorreu um erro ao enviar sua mensagem!",
+            err.response.data.error
+          )
+        );
     }
     // console.log(MessageList);
     // console.log(MessageList.length)

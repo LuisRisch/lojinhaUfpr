@@ -7,6 +7,7 @@ import {
   Modal,
   ScrollView,
   Dimensions,
+  Alert,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as ImagePicker from "expo-image-picker";
@@ -98,7 +99,10 @@ const CreateAnnouncement = ({ navigation }) => {
 
   const handleSubmit = async () => {
     if (!user.data.student) {
-      return alert("Apenas estudantes da UFPR podem anunciar produtos!");
+      return Alert.alert(
+        "Infelizmente você não pode fazer isso.",
+        "Apenas estudantes da UFPR podem anunciar produtos!"
+      );
     }
     const schema = Yup.object().shape({
       price: Yup.string().required(),
@@ -119,7 +123,10 @@ const CreateAnnouncement = ({ navigation }) => {
     };
 
     if (!(await schema.isValid(data))) {
-      alert("info inválida");
+      Alert.alert(
+        "Informações inválidas",
+        "Por favor, verifique as informações inseridas"
+      );
       return 1;
     }
     const form = new FormData();
@@ -132,7 +139,7 @@ const CreateAnnouncement = ({ navigation }) => {
       data.price = realPrice[0];
     }
 
-    if (imageList.length > 0) {
+    if (imageList.length > 0 && imageList.length <= 5) {
       imageList.forEach((item) => {
         form.append("files", {
           uri: item,
@@ -141,7 +148,17 @@ const CreateAnnouncement = ({ navigation }) => {
         });
       });
     } else {
-      alert("min de imagens é 1");
+      if (imageList.length === 0) {
+        Alert.alert(
+          "Por favor, adicione uma imagem",
+          "É necessário pelo menos 1 imagem para publicar."
+        );
+      } else if (imageList.length > 5) {
+        Alert.alert(
+          "Por favor, remova imagens",
+          "O máximo de imagens para publicação é 5."
+        );
+      }
       return 1;
     }
 
@@ -166,7 +183,12 @@ const CreateAnnouncement = ({ navigation }) => {
           },
         }
       )
-      .catch((err) => alert(err.response.data.error));
+      .catch((err) =>
+        Alert.alert(
+          "Ocorreu um erro ao postar o produto",
+          err.response.data.error
+        )
+      );
 
     if (productResponse.status === 200) {
       navigation.navigate("MainProducts");
@@ -191,7 +213,10 @@ const CreateAnnouncement = ({ navigation }) => {
         console.log(array);
       }
     } else {
-      alert("máximo de imagens é 5");
+      Alert.alert(
+        "Por favor, remova imagens",
+        "O máximo de imagens para publicação é 5."
+      );
     }
   };
 

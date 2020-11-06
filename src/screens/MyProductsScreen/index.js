@@ -68,10 +68,18 @@ export default function MyProducts({ navigation }) {
           },
         }
       )
-      .catch((err) => alert(err.response.data.error));
+      .catch((err) =>
+        Alert.alert(
+          "Ocorreu um erro ao atualizar seu produto",
+          err.response.data.error
+        )
+      );
 
     if (response.status === 200) {
-      alert("Ok!");
+      Alert.alert(
+        "Alteração feita com sucesso!",
+        "Atualize sua lista de produto para ver as alterações"
+      );
     }
   };
 
@@ -178,7 +186,7 @@ export default function MyProducts({ navigation }) {
             scrollEnabled={true}
             scrollIndicatorInsets={false}
             showsVerticalScrollIndicator={false}
-            // onRefresh={loadApi}
+            onRefresh={loadApi}
             refreshing={loadingData}
           />
         </View>

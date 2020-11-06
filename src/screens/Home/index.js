@@ -99,7 +99,12 @@ const Home = ({ navigation }) => {
     if (Email.length >= 1 && Email.includes("@")) {
       const response = await api
         .post("/request_pass_reset", { email: Email })
-        .catch((err) => alert(err.response.data.error));
+        .catch((err) =>
+          Alert.alert(
+            "Ocorreu um erro ao gerar seu código!",
+            err.response.data.error
+          )
+        );
       if (response.data) {
         navigation.navigate("ForgotPassword", { email: Email });
       }

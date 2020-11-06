@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import {
   View,
-  StyleSheet,
+  Alert,
   Image,
   Text,
   TouchableOpacity,
@@ -72,7 +72,10 @@ const EditProduct = ({ route, navigation }) => {
       }
       console.log(newImageList);
     } else {
-      alert("máximo de imagens é 5");
+      Alert.alert(
+        "Por favor, remova imagens",
+        "O máximo de imagens para publicação é 5."
+      );
     }
   };
 
@@ -88,7 +91,10 @@ const EditProduct = ({ route, navigation }) => {
 
   const handleSubmit = async () => {
     if (!user.student) {
-      return alert("Apenas estudantes da UFPR podem anunciar produtos!");
+      return Alert.alert(
+        "Infelizmente você não pode fazer isso.",
+        "Apenas estudantes da UFPR podem anunciar produtos!"
+      );
     }
 
     let data = {
@@ -145,7 +151,12 @@ const EditProduct = ({ route, navigation }) => {
           },
         }
       )
-      .catch((err) => alert(err.response.data.error));
+      .catch((err) =>
+        Alert.alert(
+          "Ocorreu um erro ao atualizar o produto",
+          err.response.data.error
+        )
+      );
 
     if (productResponse.status === 200) {
       navigation.navigate("MainProducts");

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
-import { View, SafeAreaView, Text, Image, Modal } from "react-native";
+import { View, SafeAreaView, Text, Image, Modal, Alert } from "react-native";
 import CustomInput from "../../components/CustomInputs";
 import CustomButtons from "../../components/CustomButtons";
 import CustomTopLabel from "../../components/CustomTopLabelInput";
@@ -110,7 +110,12 @@ const ForgotPassword = ({ navigation, route }) => {
 
       const response = await api
         .put("verify_pass_reset", requestData)
-        .catch((err) => alert(err.response.data.error));
+        .catch((err) =>
+          Alert.alert(
+            "Ocorreu um erro ao verificar seu código!",
+            err.response.data.error
+          )
+        );
       if (response.data) {
         setShowModalSuccess(true);
       }

@@ -7,6 +7,7 @@ import {
   ScrollView,
   Dimensions,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import * as ImagePicker from "expo-image-picker";
@@ -90,7 +91,8 @@ const UserPage = ({ navigation }) => {
 
   const EditHandler = () => {
     if (!signed) {
-      alert(
+      Alert.alert(
+        "Erro ao editar suas informações",
         "Você não está logado, portanto não poderá alterar nenhum dado pessoal"
       );
     } else {
@@ -159,7 +161,12 @@ const UserPage = ({ navigation }) => {
 
       const response = await api
         .post("/files", form)
-        .catch((err) => alert(err.response.data.error));
+        .catch((err) =>
+          Alert.alert(
+            "Ocorreu um erro ao enviar suas imagens!",
+            err.response.data.error
+          )
+        );
 
       if (response.data) {
         imageID = response.data;
@@ -181,11 +188,19 @@ const UserPage = ({ navigation }) => {
           Authorization: `Bearer ${user.token}`,
         },
       })
-      .catch((err) => alert(err.response.data.error));
+      .catch((err) =>
+        Alert.alert(
+          "Ocorreu um erro ao atualizar suas informações",
+          err.response.data.error
+        )
+      );
 
     if (response.status === 200) {
       ResetState();
-      alert("ok");
+      Alert.alert(
+        "Informações atualizadas com sucesso!",
+        "Saia do app e entre novamente para ver as alterações."
+      );
     }
   };
 
@@ -196,7 +211,12 @@ const UserPage = ({ navigation }) => {
           Authorization: `Bearer ${user.token}`,
         },
       })
-      .catch((err) => alert(err.response.data.error));
+      .catch((err) =>
+        Alert.alert(
+          "Ocorreu um erro ao carregar suas informações",
+          err.response.data.error
+        )
+      );
 
     if (response.data) {
       disptach(userRefreshInfo(response.data));
@@ -220,9 +240,17 @@ const UserPage = ({ navigation }) => {
           },
         }
       )
-      .catch((err) => alert(err.response.data.error));
+      .catch((err) =>
+        Alert.alert(
+          "Ocorreu um erro ao gerar seu código de verificação",
+          err.response.data.error
+        )
+      );
     if (response.data) {
-      alert("Verifique seu email!");
+      Alert.alert(
+        "Código gerado com sucesso!",
+        "Verifique seu email e insira o código aqui no app."
+      );
       navigation.navigate("ConfirmRegister");
     }
   };
