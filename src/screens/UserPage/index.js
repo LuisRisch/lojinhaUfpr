@@ -12,7 +12,7 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import * as ImagePicker from "expo-image-picker";
 
-import { userRefreshInfo } from "../../store/modules/user/actions";
+import { userRefreshInfo, userSignOut } from "../../store/modules/user/actions";
 import CustomInputs from "../../components/CustomInputs";
 import CustomButtons from "../../components/CustomButtons";
 import CustomTopLabel from "../../components/CustomTopLabelInput";
@@ -65,7 +65,7 @@ const UserPage = ({ navigation }) => {
 
   const disptach = useDispatch();
 
-  const ResetState = () => {
+  const handleResetState = () => {
     setEditInfo(false);
     setNewName(null);
     setNewEmail(null);
@@ -136,7 +136,7 @@ const UserPage = ({ navigation }) => {
       setImage(result.uri);
     }
   };
-  const onSubmit = async () => {
+  const handleEditUserInfo = async () => {
     if (newPassword && !oldPassword) {
       return setPasswordError({
         error: true,
@@ -196,10 +196,20 @@ const UserPage = ({ navigation }) => {
       );
 
     if (response.status === 200) {
-      ResetState();
+      if (newPassword) {
+        Alert.alert(
+          "Você foi deslogado!",
+          "Por favor, loge novamente com sua nova senha."
+        );
+        disptach(userSignOut());
+        handleResetState();
+        return 0;
+      }
+      handleResetState();
+      loadUserInfo();
       Alert.alert(
         "Informações atualizadas com sucesso!",
-        "Saia do app e entre novamente para ver as alterações."
+        "Suas informações foram alteradas corretamente."
       );
     }
   };
@@ -223,13 +233,7 @@ const UserPage = ({ navigation }) => {
     }
   };
 
-  useEffect(() => {
-    loadUserInfo();
-    console.log(user);
-  }, []);
-
   const handleVerification = async () => {
-    console.log(user.token);
     const response = await api
       .post(
         `/generate_code/${user._id}`,
@@ -378,7 +382,7 @@ const UserPage = ({ navigation }) => {
 
           <View style={{ height: 9 }}></View>
 
-          <CustomButtons Label="Salvar" onButtonPressed={onSubmit} />
+          <CustomButtons Label="Salvar" onButtonPressed={handleEditUserInfo} />
         </View>
       ) : (
         <View style={{ marginTop: Spacing.MainMargin * 2 }}>

@@ -27,8 +27,12 @@ export default function user(state = INITIAL_STATE, action) {
         draft.rememberPassword = !draft.rememberPassword;
         break;
       }
-      case "@user/REFRESH_INFO": {
-        draft.data = { ...action.payload.user };
+      case "@user/REFRESH": {
+        const { name, email, avatar } = action.payload.user;
+
+        draft.data.name = name || draft.data.name;
+        draft.data.email = email || draft.data.email;
+        draft.data.avatar = avatar.url ? avatar : draft.data.avatar;
         break;
       }
       case "@user/UPDATE_EXPO_TOKEN": {

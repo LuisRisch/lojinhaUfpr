@@ -32,7 +32,7 @@ export default function MyProducts({ navigation }) {
   const user = useSelector((state) => state.user.data);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
-  const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral);
+  const [ListOfProducts, setListOfProduct] = useState([]);
 
   const loadApi = async () => {
     setLoadingData(true);
@@ -41,9 +41,9 @@ export default function MyProducts({ navigation }) {
         user: user._id,
       },
     });
-    console.log(response.data);
     if (response.status === 200 && response.data) {
-      setListOfProduct([...response.data]);
+      console.log(response.data);
+      setListOfProduct(response.data);
     }
     setLoadingData(false);
     // setListOfProduct(ListOfGeneral);
