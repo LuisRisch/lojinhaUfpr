@@ -6,7 +6,7 @@ export default (reducers) => {
     {
       key: "lojinha",
       storage: AsyncStorage,
-      whitelist: ["user"],
+      whitelist: ["user", "excludedData"],
     },
     reducers
   );

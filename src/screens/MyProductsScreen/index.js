@@ -35,18 +35,18 @@ export default function MyProducts({ navigation }) {
   const [ListOfProducts, setListOfProduct] = useState([]);
 
   const loadApi = async () => {
-    // setLoadingData(true);
-    // const response = await api.get("/products", {
-    //   params: {
-    //     user: user._id,
-    //   },
-    // });
-    // if (response.status === 200 && response.data) {
-    //   console.log(response.data);
-    //   setListOfProduct(response.data);
-    // }
-    // setLoadingData(false);
-    setListOfProduct(ListOfGeneral);
+    setLoadingData(true);
+    const response = await api.post("/products", {
+      params: {
+        user: user._id,
+      },
+    });
+    if (response.status === 200 && response.data) {
+      console.log(response.data);
+      setListOfProduct(response.data);
+    }
+    setLoadingData(false);
+    // setListOfProduct(ListOfGeneral);
   };
 
   useEffect(() => {
@@ -122,13 +122,13 @@ export default function MyProducts({ navigation }) {
           onPress: async () => {
             const arr = [...ListOfProducts];
             arr.splice(index, 1);
-            setListOfProduct(arr)
-          }
+            setListOfProduct(arr);
+          },
         },
         { text: "Cancelar" },
       ]
     );
-  }
+  };
 
   // renderiza cada item da lista de produtos
   const renderItemCard = ({ item, index }) => {
@@ -212,6 +212,6 @@ export default function MyProducts({ navigation }) {
       </View>
     </View> // carregando fontes ainda
   ) : (
-      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
-    );
+    <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+  );
 }

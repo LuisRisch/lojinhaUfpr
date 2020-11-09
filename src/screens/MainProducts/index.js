@@ -47,7 +47,7 @@ const MainProducts = ({ navigation, route }) => {
   ); // just to add one more in lenght
 
   const loadApi = async () => {
-    const response = await api.get("/products", {
+    const response = await api.post("/products", {
       params: {
         onlyActive: true,
       },
@@ -68,7 +68,7 @@ const MainProducts = ({ navigation, route }) => {
   const loadSearch = async (searchParams) => {
     setLoadingData(true);
     console.log("oi");
-    const response = await api.get("/products", {
+    const response = await api.post("/products", {
       params: { title: searchParams, onlyActive: true },
     });
     if (response.status === 200 && response.data) {
@@ -117,7 +117,7 @@ const MainProducts = ({ navigation, route }) => {
 
   const loadProductsWithParams = async (page, category) => {
     if (category === -1) {
-      const response = await api.get("/products", {
+      const response = await api.post("/products", {
         params: {
           page,
           onlyActive: true,
@@ -127,7 +127,7 @@ const MainProducts = ({ navigation, route }) => {
         setListOfProduct([...ListOfProducts, ...response.data]);
       }
     } else {
-      const response = await api.get("/products", {
+      const response = await api.post("/products", {
         params: {
           category,
           page,
@@ -164,102 +164,94 @@ const MainProducts = ({ navigation, route }) => {
   };
 
   const renderItemCard = ({ item, index }) =>
-    isListVisualisationSelected ?
-      (
-        index === ListOfProducts.length - 1 ? (
-          <TouchableOpacity
-            style={styles.loadMoreProductsContainer}
-            onPress={ChangePage}
-          >
-            <View style={{ height: Spacing.MainMargin }}></View>
-            <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
-            <Icon name="plus-circle" size={22} color={Colors.mainRed} />
-          </TouchableOpacity>
-        ) :
-
-
-          <TouchableOpacity style={{}} onPress={() => onProductCardPressed(item)}>
-            <View style={styles.Products_Card_Horizontally}>
-              <Image
-                source={{
-                  uri: item.picture === null ? null : item.picture[0].url,
-                }}
-                style={styles.Image_Horizontaly_Display}
-                resizeMode="cover"
-              />
-              <View style={styles.Products_Card_Informations}>
-                <Text
-                  numberOfLines={2}
-                  style={styles.Products_Title_Horizontally}
-                >
-                  {item.title}
-                </Text>
-                <View style={styles.Price_Box_Horizontally}>
-                  <Text style={styles.Price_Layout}>R$ {item.price}</Text>
-                </View>
-                <View>
-                  <Text
-                    numberOfLines={2}
-                    style={styles.AnnouncedBy_Horizontally_Label}
-                  >
-                    Vendido por:
-                </Text>
-                  <Text
-                    numberOfLines={2}
-                    style={styles.AnnouncedBy_Horizontally_Name}
-                  >
-                    {item.user.name}
-                  </Text>
-                </View>
-              </View>
-            </View>
-          </TouchableOpacity>
-
-      )
-      :
-
+    isListVisualisationSelected ? (
       index === ListOfProducts.length - 1 ? (
         <TouchableOpacity
           style={styles.loadMoreProductsContainer}
           onPress={ChangePage}
         >
+          <View style={{ height: Spacing.MainMargin }}></View>
           <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
           <Icon name="plus-circle" size={22} color={Colors.mainRed} />
         </TouchableOpacity>
-      ) :
-
-        (
-          <TouchableOpacity
-            style={styles.Box_Card_Grid_Products}
-            onPress={() => onProductCardPressed(item)}
-          >
+      ) : (
+        <TouchableOpacity style={{}} onPress={() => onProductCardPressed(item)}>
+          <View style={styles.Products_Card_Horizontally}>
             <Image
               source={{
                 uri: item.picture === null ? null : item.picture[0].url,
               }}
-              style={styles.Image_Layout_Grid}
+              style={styles.Image_Horizontaly_Display}
               resizeMode="cover"
             />
-            <Text
-              lineBreakMode={true}
-              numberOfLines={2}
-              style={styles.Products_Title_Horizontally}
-            >
-              {item.title}
-            </Text>
-            <View style={styles.Box_Price_Grid}>
-              <Text style={styles.Price_Layout_Grid}>R$ {item.price}</Text>
-            </View>
-            <View>
-              <Text numberOfLines={2} style={styles.AnnouncedBy_Horizontally_Label}>
-                Vendido por:
+            <View style={styles.Products_Card_Informations}>
+              <Text
+                numberOfLines={2}
+                style={styles.Products_Title_Horizontally}
+              >
+                {item.title}
               </Text>
-              <Text numberOfLines={2} style={styles.AnnouncedBy_Horizontally_Name}>
-                {item.user.name}
-              </Text>
+              <View style={styles.Price_Box_Horizontally}>
+                <Text style={styles.Price_Layout}>R$ {item.price}</Text>
+              </View>
+              <View>
+                <Text
+                  numberOfLines={2}
+                  style={styles.AnnouncedBy_Horizontally_Label}
+                >
+                  Vendido por:
+                </Text>
+                <Text
+                  numberOfLines={2}
+                  style={styles.AnnouncedBy_Horizontally_Name}
+                >
+                  {item.user.name}
+                </Text>
+              </View>
             </View>
-          </TouchableOpacity>
-        );
+          </View>
+        </TouchableOpacity>
+      )
+    ) : index === ListOfProducts.length - 1 ? (
+      <TouchableOpacity
+        style={styles.loadMoreProductsContainer}
+        onPress={ChangePage}
+      >
+        <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
+        <Icon name="plus-circle" size={22} color={Colors.mainRed} />
+      </TouchableOpacity>
+    ) : (
+      <TouchableOpacity
+        style={styles.Box_Card_Grid_Products}
+        onPress={() => onProductCardPressed(item)}
+      >
+        <Image
+          source={{
+            uri: item.picture === null ? null : item.picture[0].url,
+          }}
+          style={styles.Image_Layout_Grid}
+          resizeMode="cover"
+        />
+        <Text
+          lineBreakMode={true}
+          numberOfLines={2}
+          style={styles.Products_Title_Horizontally}
+        >
+          {item.title}
+        </Text>
+        <View style={styles.Box_Price_Grid}>
+          <Text style={styles.Price_Layout_Grid}>R$ {item.price}</Text>
+        </View>
+        <View>
+          <Text numberOfLines={2} style={styles.AnnouncedBy_Horizontally_Label}>
+            Vendido por:
+          </Text>
+          <Text numberOfLines={2} style={styles.AnnouncedBy_Horizontally_Name}>
+            {item.user.name}
+          </Text>
+        </View>
+      </TouchableOpacity>
+    );
   if (fontsLoaded) {
     return (
       <View style={styles.screen}>
@@ -285,7 +277,7 @@ const MainProducts = ({ navigation, route }) => {
               <Text style={styles.Filter_Layout}>Filtrar</Text>
             </TouchableOpacity>
           </View>
-          <View style={{ padding: 20 , marginTop : -30}}>
+          <View style={{ padding: 20, marginTop: -30 }}>
             {isListVisualisationSelected ? (
               <FlatList
                 data={ListOfProducts}
@@ -299,18 +291,18 @@ const MainProducts = ({ navigation, route }) => {
                 refreshing={loadingData}
               />
             ) : (
-                <FlatList
-                  data={ListOfProducts}
-                  renderItem={renderItemCard}
-                  key={"#"}
-                  keyExtractor={(item) => "#" + item._id}
-                  numColumns={2}
-                  scrollEnabled={true}
-                  showsVerticalScrollIndicator={false}
-                  onRefresh={loadApi}
-                  refreshing={loadingData}
-                />
-              )}
+              <FlatList
+                data={ListOfProducts}
+                renderItem={renderItemCard}
+                key={"#"}
+                keyExtractor={(item) => "#" + item._id}
+                numColumns={2}
+                scrollEnabled={true}
+                showsVerticalScrollIndicator={false}
+                onRefresh={loadApi}
+                refreshing={loadingData}
+              />
+            )}
           </View>
         </View>
 
