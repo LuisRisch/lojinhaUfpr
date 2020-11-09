@@ -14,16 +14,19 @@ export default function user(state = INITIAL_STATE, action) {
         break;
       }
       case "@exclude/PRODUCT": {
-        draft.products.push(action.payload.id);
+        console.log(draft.products);
+        const { id, title } = action.payload;
+        draft.products.push({ id, title });
         break;
       }
       case "@exclude/CHAT": {
-        draft.chats.push(action.payload.id);
+        const { id, title } = action.payload;
+        draft.chats.push({ id, title });
         break;
       }
       case "@exclude/RESTORE_PRODUCT": {
         const index = draft.products.findIndex(
-          (id) => id === action.payload.id
+          (item) => item.id === action.payload.id
         );
         if (index >= 0) {
           draft.products.splice(index, 1);
@@ -31,7 +34,9 @@ export default function user(state = INITIAL_STATE, action) {
         break;
       }
       case "@exclude/RESTORE_CHAT": {
-        const index = draft.chats.findIndex((id) => id === action.payload.id);
+        const index = draft.chats.findIndex(
+          (item) => item.id === action.payload.id
+        );
         if (index >= 0) {
           draft.chats.splice(index, 1);
         }

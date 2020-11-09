@@ -7,9 +7,14 @@ import {
   Alert,
   TouchableOpacity,
 } from "react-native";
+import { useSelector, useDispatch } from "react-redux";
+
+import {
+  excludeProduct,
+  restoreProduct,
+} from "../../store/modules/excludedData/actions";
 import { ListOfGeneral } from "../../../temp/Products/General";
 import { styles } from "./styles";
-import { useSelector } from "react-redux";
 
 import CustomIconButton from "../../components/CustomIconButton";
 
@@ -30,19 +35,32 @@ const getFonts = () =>
 
 export default function MyProducts({ navigation }) {
   const user = useSelector((state) => state.user.data);
+  const excluded = useSelector((state) => state.excludedData.products);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [ListOfProducts, setListOfProduct] = useState([]);
 
+  const dispatch = useDispatch();
+
   const loadApi = async () => {
     setLoadingData(true);
-    const response = await api.post("/products", {
-      params: {
-        user: user._id,
+    const excludedList = [];
+    if (excluded != 0) {
+      excluded.map((item) => excludedList.push(item.id));
+    }
+    console.log(excludedList);
+    const response = await api.post(
+      "/products",
+      {
+        exclude: excludedList,
       },
-    });
+      {
+        params: {
+          user: user._id,
+        },
+      }
+    );
     if (response.status === 200 && response.data) {
-      console.log(response.data);
       setListOfProduct(response.data);
     }
     setLoadingData(false);
@@ -112,7 +130,7 @@ export default function MyProducts({ navigation }) {
   };
 
   //i = index of the product
-  const handleDeleteItem = (index, id) => {
+  const handleDeleteItem = (index, id, title) => {
     Alert.alert(
       "Tem certeza que quer deletar esse produto?",
       "Os outros NÃO voltarão a poder fazer contato com você sobre ele!",
@@ -123,6 +141,7 @@ export default function MyProducts({ navigation }) {
             const arr = [...ListOfProducts];
             arr.splice(index, 1);
             setListOfProduct(arr);
+            dispatch(excludeProduct({ id, title }));
           },
         },
         { text: "Cancelar" },
@@ -164,7 +183,7 @@ export default function MyProducts({ navigation }) {
             >
               <CustomIconButton
                 name="trash-2"
-                onPress={() => handleDeleteItem(index, item._id)}
+                onPress={() => handleDeleteItem(index, item._id, item.title)}
                 viewStyle={{ marginRight: 7 }}
               />
               <CustomIconButton

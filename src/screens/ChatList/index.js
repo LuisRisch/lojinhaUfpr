@@ -30,6 +30,7 @@ const getFonts = () =>
 
 const ChatScreen = ({ navigation }) => {
   const { data: user, token } = useSelector((state) => state.user);
+  const excluded = useSelector((state) => state.excludedData.chats);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [chatList, setChatList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -41,16 +42,27 @@ const ChatScreen = ({ navigation }) => {
 
   const loadChats = async () => {
     setLoading(true);
+    const excludedList = [];
+    if (excluded != 0) {
+      excluded.map((item) => excludedList.push(item.id));
+    }
+    console.log(excludedList);
     if (user.student) {
       const seller = await api
-        .get(`/chats/${user._id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
+        .post(
+          `/chats/${user._id}`,
+          {
+            exclude: excludedList,
           },
-          params: {
-            selling: true,
-          },
-        })
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            params: {
+              selling: true,
+            },
+          }
+        )
         .catch((err) =>
           Alert.alert(
             "Ocorreu um erro ao buscar suas informações!",
@@ -63,14 +75,18 @@ const ChatScreen = ({ navigation }) => {
       }
     }
     const buyer = await api
-      .get(`/chats/${user._id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        params: {
-          buying: true,
-        },
-      })
+      .post(
+        `/chats/${user._id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          params: {
+            buying: true,
+          },
+        }
+      )
       .catch((err) =>
         Alert.alert(
           "Ocorreu um erro ao buscar suas informações",

@@ -5,17 +5,17 @@ export function excludeRegisterUser(user_id) {
   };
 }
 
-export function excludeProduct(id) {
+export function excludeProduct({ id, title }) {
   return {
     type: "@exclude/PRODUCT",
-    payload: { id },
+    payload: { id, title },
   };
 }
 
-export function excludeChat(id) {
+export function excludeChat({ id, title }) {
   return {
     type: "@exclude/CHAT",
-    payload: { id },
+    payload: { id, title },
   };
 }
 

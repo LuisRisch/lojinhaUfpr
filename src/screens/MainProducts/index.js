@@ -47,11 +47,15 @@ const MainProducts = ({ navigation, route }) => {
   ); // just to add one more in lenght
 
   const loadApi = async () => {
-    const response = await api.post("/products", {
-      params: {
-        onlyActive: true,
-      },
-    });
+    const response = await api.post(
+      "/products",
+      {},
+      {
+        params: {
+          onlyActive: true,
+        },
+      }
+    );
     if (response.status === 200 && response.data) {
       setListOfProduct([...response.data]);
     }
@@ -68,9 +72,13 @@ const MainProducts = ({ navigation, route }) => {
   const loadSearch = async (searchParams) => {
     setLoadingData(true);
     console.log("oi");
-    const response = await api.post("/products", {
-      params: { title: searchParams, onlyActive: true },
-    });
+    const response = await api.post(
+      "/products",
+      {},
+      {
+        params: { title: searchParams, onlyActive: true },
+      }
+    );
     if (response.status === 200 && response.data) {
       setListOfProduct([...response.data]);
       console.log(response.data);
@@ -117,23 +125,31 @@ const MainProducts = ({ navigation, route }) => {
 
   const loadProductsWithParams = async (page, category) => {
     if (category === -1) {
-      const response = await api.post("/products", {
-        params: {
-          page,
-          onlyActive: true,
-        },
-      });
+      const response = await api.post(
+        "/products",
+        {},
+        {
+          params: {
+            page,
+            onlyActive: true,
+          },
+        }
+      );
       if (response.data) {
         setListOfProduct([...ListOfProducts, ...response.data]);
       }
     } else {
-      const response = await api.post("/products", {
-        params: {
-          category,
-          page,
-          onlyActive: true,
-        },
-      });
+      const response = await api.post(
+        "/products",
+        {},
+        {
+          params: {
+            category,
+            page,
+            onlyActive: true,
+          },
+        }
+      );
 
       if (response.data) {
         setListOfProduct(response.data);
