@@ -1,5 +1,5 @@
 var product5 = {
-  title: "Vaso de flores feito em casa!",
+  title: "Vaso de flores feito em casa",
   description:
     "Lindo vaso de flores, em que o vaso feito foi á mão. As flores provém do exterior",
   category: "Artesanato",
@@ -25,7 +25,7 @@ var product5 = {
         "https://firebasestorage.googleapis.com/v0/b/lojinhaufpr.appspot.com/o/artesanato.jpg?alt=media&token=e2cb9924-0e7f-4d84-83cd-2265e236fdc0",
     },
   ],
-  id: 5,
+  id: 4,
   paymentDescription: "Aceito pagamento somente em dinheiro",
   deliveryDescription:
     "Posso entregar na sua casa, marcamos um local de encontro, ou até mesmo em algum campus da UFPR",
@@ -54,7 +54,7 @@ var product6 = {
   status: "INATIVO"
 };
 
-
-var ListOfGeneral = [product5, product6, product5, product5, product5, product5, product5, product5, product5, product5, product5, product5, product5, product5, product5];
+product5
+var ListOfGeneral = [product5 , product6 , product6 , product6 , product6 , product6 , product6, product6, product6,product6,product6]
 
 export { ListOfGeneral };
