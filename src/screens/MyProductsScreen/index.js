@@ -35,18 +35,18 @@ export default function MyProducts({ navigation }) {
   const [ListOfProducts, setListOfProduct] = useState([]);
 
   const loadApi = async () => {
-    setLoadingData(true);
-    const response = await api.get("/products", {
-      params: {
-        user: user._id,
-      },
-    });
-    if (response.status === 200 && response.data) {
-      console.log(response.data);
-      setListOfProduct(response.data);
-    }
-    setLoadingData(false);
-    // setListOfProduct(ListOfGeneral);
+    // setLoadingData(true);
+    // const response = await api.get("/products", {
+    //   params: {
+    //     user: user._id,
+    //   },
+    // });
+    // if (response.status === 200 && response.data) {
+    //   console.log(response.data);
+    //   setListOfProduct(response.data);
+    // }
+    // setLoadingData(false);
+    setListOfProduct(ListOfGeneral);
   };
 
   useEffect(() => {
@@ -111,6 +111,25 @@ export default function MyProducts({ navigation }) {
     }
   };
 
+  //i = index of the product
+  const handleDeleteItem = (index, id) => {
+    Alert.alert(
+      "Tem certeza que quer deletar esse produto?",
+      "Os outros NÃO voltarão a poder fazer contato com você sobre ele!",
+      [
+        {
+          text: "Deletar",
+          onPress: async () => {
+            const arr = [...ListOfProducts];
+            arr.splice(index, 1);
+            setListOfProduct(arr)
+          }
+        },
+        { text: "Cancelar" },
+      ]
+    );
+  }
+
   // renderiza cada item da lista de produtos
   const renderItemCard = ({ item, index }) => {
     return (
@@ -145,7 +164,7 @@ export default function MyProducts({ navigation }) {
             >
               <CustomIconButton
                 name="trash-2"
-                onPress={() => {}}
+                onPress={() => handleDeleteItem(index, item._id)}
                 viewStyle={{ marginRight: 7 }}
               />
               <CustomIconButton
@@ -177,7 +196,7 @@ export default function MyProducts({ navigation }) {
             Meus Produtos
           </Text>
         </View>
-        <View style={{ padding: 20, marginTop: -30 }}>
+        <View style={{ padding: 20, marginTop: -30, marginBottom: 100 }}>
           <FlatList
             data={ListOfProducts}
             renderItem={renderItemCard}
@@ -193,6 +212,6 @@ export default function MyProducts({ navigation }) {
       </View>
     </View> // carregando fontes ainda
   ) : (
-    <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
-  );
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
 }
