@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { chatLeave } from "./store/modules/chat/actions";
 import { TouchableOpacity, Image, View } from "react-native";
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
 import Colors from "./data/Colors";
 
@@ -309,6 +310,27 @@ const MyProductsStack = ({ navigation, route }) => {
     </Stack.Navigator>
   );
 };
+
+const Tab = createBottomTabNavigator();
+
+function MyTabs() {
+  return (
+    <Tab.Navigator
+    >
+      <Tab.Screen
+        name="MainProducts"
+        component={MainProducts}
+        options={{
+          tabBarLabel: 'Home',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" color={'red'} size={20} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+}
+
 
 function Routes() {
   const user = useSelector((state) => state.user.data);
