@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { chatLeave } from "./store/modules/chat/actions";
 import { TouchableOpacity, Image, View } from "react-native";
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import Colors from "./data/Colors";
 
@@ -315,22 +315,20 @@ const Tab = createBottomTabNavigator();
 
 function MyTabs() {
   return (
-    <Tab.Navigator
-    >
+    <Tab.Navigator>
       <Tab.Screen
         name="MainProducts"
         component={MainProducts}
         options={{
-          tabBarLabel: 'Home',
+          tabBarLabel: "Home",
           tabBarIcon: ({ color, size }) => (
-            <Icon name="home" color={'red'} size={20} />
+            <Icon name="home" color={"red"} size={20} />
           ),
         }}
       />
     </Tab.Navigator>
   );
 }
-
 
 function Routes() {
   const user = useSelector((state) => state.user.data);
@@ -381,7 +379,7 @@ function Routes() {
       <Drawer.Screen
         name="Login"
         component={LoginRoutes}
-        options={{ title: "Sair", gestureEnabled: false }}
+        options={{ title: "", gestureEnabled: false }}
       />
     </Drawer.Navigator>
   );

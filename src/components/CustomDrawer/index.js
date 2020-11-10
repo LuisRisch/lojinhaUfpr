@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import {
   DrawerContentScrollView,
   DrawerItemList,
+  DrawerItem,
 } from "@react-navigation/drawer";
+import Icon from "react-native-vector-icons/FontAwesome";
+import { View, Alert, Text, Image } from "react-native";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
-import Icon from "react-native-vector-icons/FontAwesome";
-import { View, TouchableOpacity, Text, Image } from "react-native";
-import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { userSignOut } from "../../store/modules/user/actions";
 
 import { styles } from "./styles";
 
@@ -23,9 +25,23 @@ const getFonts = () =>
     "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
   });
 
-const CustomDrawer = (props) => {
-  const { user } = props;
+const CustomDrawer = ({ user, navigation, ...props }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const logOut = () => {
+    navigation.navigate("Login");
+    dispatch(userSignOut());
+  };
+
+  const handleLogOut = () => {
+    Alert.alert(
+      "Tem certeza que quer sair?",
+      "Você precisará fazer login novamente!",
+      [{ text: "Sair", onPress: logOut }, { text: "Cancelar" }]
+    );
+  };
 
   if (fontsLoaded) {
     return (
@@ -60,7 +76,96 @@ const CustomDrawer = (props) => {
             alignSelf: "center",
           }}
         />
-        <DrawerItemList {...props} />
+        <DrawerItem
+          onPress={() => navigation.navigate("UserPage")}
+          label="Sua conta"
+          labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
+          icon={({}) => (
+            <Icon
+              name="user-circle"
+              size={23}
+              color={Colors.mainRed}
+              style={{ width: 25 }}
+            />
+          )}
+        />
+        <DrawerItem
+          onPress={() => navigation.navigate("Products")}
+          label="Loja"
+          labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
+          icon={({}) => (
+            <Icon
+              name="shopping-basket"
+              size={23}
+              color={Colors.mainRed}
+              style={{ width: 25 }}
+            />
+          )}
+        />
+        <DrawerItem
+          onPress={() => navigation.navigate("ChatList")}
+          label="Chat"
+          labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
+          icon={({}) => (
+            <Icon
+              name="comment"
+              size={23}
+              color={Colors.mainRed}
+              style={{ width: 25 }}
+            />
+          )}
+        />
+        <DrawerItem
+          onPress={() => navigation.navigate("MyProducts")}
+          label="Meus Produtos"
+          labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
+          icon={({}) => (
+            <Icon
+              name="archive"
+              size={23}
+              color={Colors.mainRed}
+              style={{ width: 25 }}
+            />
+          )}
+        />
+        <DrawerItem
+          onPress={() => navigation.navigate("CreateAnnouncement")}
+          label="Anunciar produto/serviço"
+          labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
+          icon={({}) => (
+            <Icon
+              name="external-link-square"
+              size={23}
+              color={Colors.mainRed}
+              style={{ width: 25 }}
+            />
+          )}
+        />
+        <DrawerItem
+          label="Acolhimento UFPR"
+          labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
+          icon={({}) => (
+            <Icon
+              name="bank"
+              size={23}
+              color={Colors.mainRed}
+              style={{ width: 25 }}
+            />
+          )}
+        />
+        <DrawerItem
+          label="Sair"
+          onPress={handleLogOut}
+          labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
+          icon={({}) => (
+            <Icon
+              name="sign-out"
+              size={23}
+              color={Colors.mainRed}
+              style={{ width: 25 }}
+            />
+          )}
+        />
         <View
           style={{
             borderBottomWidth: 1,
