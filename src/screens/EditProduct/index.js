@@ -36,18 +36,18 @@ const EditProduct = ({ route, navigation }) => {
   const obj = { ...route.params };
   console.log(obj);
   const user = useSelector((state) => state.user.data);
+  const categoryList = useSelector((state) => state.categories.data);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [productTitle, setProductTitle] = useState(obj.title);
   const [productcategory, setCategory] = useState({
-    title: obj.category,
-    id: -1,
+    title: categoryList[obj.category].title,
+    id: categoryList[obj.category].id,
   });
   const [productDescription, setProductDescription] = useState(obj.description);
   const [payment, setPayment] = useState(obj.paymentDescription);
   const [delivery, setDelivery] = useState(obj.deliveryDescription);
   const [price, setPrice] = useState(obj.price);
 
-  const [categoryList, setCategoryList] = useState([]);
   const [isShowCategoryOpen, setIsShowCategory] = useState(false);
   const [imageList, setImageList] = useState([...obj.picture]);
   const [newImageList, setNewImages] = useState([]);
@@ -79,14 +79,10 @@ const EditProduct = ({ route, navigation }) => {
     }
   };
 
-  const loadCategories = async () => {
-    if (categoryList != []) {
-      const response = await api.get("/categories");
-
-      if (response.status === 200 && response.data) {
-        setCategoryList([...response.data]);
-      }
-    }
+  const handleCategoryPick = (id, title) => {
+    console.log(id);
+    setCategory({ id, title });
+    setIsShowCategory(false);
   };
 
   const handleSubmit = async () => {
@@ -96,11 +92,11 @@ const EditProduct = ({ route, navigation }) => {
         "Apenas estudantes da UFPR podem anunciar produtos!"
       );
     }
-
     let data = {
       price,
       title: productTitle,
       description: productDescription,
+      category: productcategory.id,
       paymentDescription: payment,
       deliveryDescription: delivery,
     };
@@ -159,6 +155,10 @@ const EditProduct = ({ route, navigation }) => {
       );
 
     if (productResponse.status === 200) {
+      Alert.alert(
+        "Produto editado com sucesso!",
+        "De um refresh na sua página de produtos para atualizar."
+      );
       navigation.navigate("MainProducts");
     }
   };
@@ -169,7 +169,6 @@ const EditProduct = ({ route, navigation }) => {
   };
 
   useEffect(() => {
-    loadCategories();
     (async () => {
       if (Platform.OS !== "web") {
         const {
@@ -340,7 +339,9 @@ const EditProduct = ({ route, navigation }) => {
                   key={item.id}
                   style={{ alignItems: "flex-start", marginVertical: 5 }}
                 >
-                  <TouchableOpacity onPress={() => CategoryHandler(item)}>
+                  <TouchableOpacity
+                    onPress={() => handleCategoryPick(item.id, item.title)}
+                  >
                     <Text style={styles.category_text}>{item.title}</Text>
                   </TouchableOpacity>
                 </View>

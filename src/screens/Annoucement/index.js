@@ -42,6 +42,7 @@ const getFonts = () =>
 
 const CreateAnnouncement = ({ navigation }) => {
   const user = useSelector((state) => state.user);
+  const categoryList = useSelector((state) => state.categories.data);
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [isShowCategoryOpen, setIsShowCategory] = useState(false);
@@ -55,25 +56,13 @@ const CreateAnnouncement = ({ navigation }) => {
   const [delivery, setDelivery] = useState("");
   const [price, setPrice] = useState("");
 
-  const [categoryList, setCategoryList] = useState([]);
   const [imageList, setImageList] = useState([]);
-
-  const loadCategories = async () => {
-    if (categoryList != []) {
-      const response = await api.get("/categories");
-
-      if (response.status === 200 && response.data) {
-        setCategoryList([...response.data]);
-      }
-    }
-  };
 
   const HandleDeletePhoto = () => {
     setImageList([]);
   };
 
   useEffect(() => {
-    loadCategories();
     (async () => {
       if (Platform.OS !== "web") {
         const {

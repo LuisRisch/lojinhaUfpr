@@ -7,9 +7,11 @@ import {
   Modal,
   TouchableOpacity,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
+import { refreshCategories } from "../../store/modules/categories/actions";
 import { ListOfGeneral } from "../../../temp/Products/General";
 import { ListOfSweets } from "../../../temp/Products/Sweets";
 import { ListOfCrafts } from "../../../temp/Products/Crafts/";
@@ -36,7 +38,7 @@ const MainProducts = ({ navigation, route }) => {
   const { params } = route;
   const arrAddOneInLenght = [""];
   const defaultTitle = "Início";
-  const [categoriesList, setCategories] = useState([]);
+  const categoriesList = useSelector((state) => state.categories.data);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(-1);
@@ -45,6 +47,8 @@ const MainProducts = ({ navigation, route }) => {
   const [ListOfProducts, setListOfProduct] = useState(
     ListOfGeneral.concat(arrAddOneInLenght)
   ); // just to add one more in lenght
+
+  const dispatch = useDispatch();
 
   const loadApi = async () => {
     const response = await api.post(
@@ -65,7 +69,7 @@ const MainProducts = ({ navigation, route }) => {
   const loadCategories = async () => {
     const categories = await api.get("/categories");
     if (categories.status === 200 && categories.data) {
-      setCategories(categories.data);
+      dispatch(refreshCategories(categories.data));
     }
   };
 
@@ -293,7 +297,14 @@ const MainProducts = ({ navigation, route }) => {
               <Text style={styles.Filter_Layout}>Filtrar</Text>
             </TouchableOpacity>
           </View>
-          <View style={{ padding: 20, marginTop: -30 , height : '100%', marginBottom: -10 }}>
+          <View
+            style={{
+              padding: 20,
+              marginTop: -30,
+              height: "100%",
+              marginBottom: -10,
+            }}
+          >
             {isListVisualisationSelected ? (
               <FlatList
                 data={ListOfProducts}

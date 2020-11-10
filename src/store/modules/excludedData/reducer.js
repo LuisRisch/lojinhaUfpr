@@ -6,7 +6,7 @@ const INITIAL_STATE = {
   products: [],
 };
 
-export default function user(state = INITIAL_STATE, action) {
+export default function excludedData(state = INITIAL_STATE, action) {
   return produce(state, (draft) => {
     switch (action.type) {
       case "@exclude/REGISTER_USER": {
