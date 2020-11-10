@@ -44,7 +44,7 @@ export default function excludedData(state = INITIAL_STATE, action) {
       }
       case "@exclude/RESET": {
         draft.chats = [];
-        draft.passwords = [];
+        draft.products = [];
         draft.user_id = "";
         break;
       }

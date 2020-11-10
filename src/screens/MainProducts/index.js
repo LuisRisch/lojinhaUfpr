@@ -6,12 +6,17 @@ import {
   Image,
   Modal,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
 import { refreshCategories } from "../../store/modules/categories/actions";
+import {
+  excludeRegisterUser,
+  excludeReset,
+} from "../../store/modules/excludedData/actions";
 import { ListOfGeneral } from "../../../temp/Products/General";
 import { ListOfSweets } from "../../../temp/Products/Sweets";
 import { ListOfCrafts } from "../../../temp/Products/Crafts/";
@@ -39,6 +44,8 @@ const MainProducts = ({ navigation, route }) => {
   const arrAddOneInLenght = [""];
   const defaultTitle = "Início";
   const categoriesList = useSelector((state) => state.categories.data);
+  const user = useSelector((state) => state.user.data);
+  const excludedDataUser = useSelector((state) => state.excludedData.user_id);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [loadingData, setLoadingData] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(-1);
@@ -96,6 +103,26 @@ const MainProducts = ({ navigation, route }) => {
     loadApi();
     loadCategories();
     setLoadingData(false);
+
+    console.log(excludedDataUser);
+    console.log(user);
+
+    if (user && excludedDataUser != user._id) {
+      Alert.alert(
+        "Você entrou com uma nova conta!",
+        "Seus dados de produtos e chats excluídos serão resetados! Isso significa que se você logar novamente com sua conta antiga, terá que excluir seus produtos e chats novamente. Continuar?",
+        [
+          {
+            text: "Continuar",
+            onPress: () => {
+              dispatch(excludeReset());
+              dispatch(excludeRegisterUser(user._id));
+            },
+          },
+          { text: "Manter dados antigos" },
+        ]
+      );
+    }
   }, []);
 
   useEffect(() => {

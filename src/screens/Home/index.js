@@ -28,6 +28,7 @@ import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import { registerForPushNotificationsAsync } from "../../services/notifications";
 import { userUpdateExpoToken } from "../../store/modules/user/actions";
+import { excludeRegisterUser } from "../../store/modules/excludedData/actions";
 // Navegacao
 import api from "../../services/api";
 
@@ -43,6 +44,7 @@ const Home = ({ navigation }) => {
   const [loginModalVisible, setModalLoginVisible] = useState(true);
   const [isModalResetPassVisible, setIsModalResetPassVisible] = useState(false);
 
+  const excludedDataUser = useSelector((state) => state.excludedData.user_id);
   const user = useSelector((state) => state.user);
   const rememberPassword = useSelector((state) => state.user.rememberPassword);
 
@@ -143,6 +145,9 @@ const Home = ({ navigation }) => {
         })
         .then((res) => {
           if (res.status === 200) {
+            if (!excludedDataUser) {
+              dispatch(excludeRegisterUser(res.data._id));
+            }
             dispatch(userSignIn(res.data));
             navigation.navigate("Products");
             setErrorInCpf(false);

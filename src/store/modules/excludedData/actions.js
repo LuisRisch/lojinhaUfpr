@@ -33,9 +33,8 @@ export function restoreChat(id) {
   };
 }
 
-export function excludeReset(id) {
+export function excludeReset() {
   return {
     type: "@exclude/RESET",
-    payload: { id },
   };
 }
