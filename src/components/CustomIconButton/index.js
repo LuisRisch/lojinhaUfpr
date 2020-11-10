@@ -1,18 +1,27 @@
 import React, { useState } from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import Colors from "../../data/Colors";
-import { Feather } from '@expo/vector-icons'; 
+import { Feather } from '@expo/vector-icons';
+import { FontAwesome5 } from '@expo/vector-icons';
 
-export default function CustomButtons(props) { 
+export default function CustomButtons(props) {
     return (
         <TouchableOpacity
             style={[styles.viewStyle, props.viewStyle]}
             onPress={props.onPress}
         >
-            <Feather 
-                name={props.name || "trash-2"} 
-                style={[styles.iconStyle, props.iconStyle]}
-            />
+            {
+                props.restore ?
+                    <FontAwesome5
+                        name={props.name}
+                        style={[styles.iconStyle, props.iconStyle]}
+                    />
+                    :
+                    <Feather
+                        name={props.name}
+                        style={[styles.iconStyle, props.iconStyle]}
+                    />
+            }
         </TouchableOpacity>
     );
 }
