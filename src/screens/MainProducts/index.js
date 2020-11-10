@@ -293,7 +293,7 @@ const MainProducts = ({ navigation, route }) => {
               <Text style={styles.Filter_Layout}>Filtrar</Text>
             </TouchableOpacity>
           </View>
-          <View style={{ padding: 20, marginTop: -30 }}>
+          <View style={{ padding: 20, marginTop: -30 , height : '100%', marginBottom: -10 }}>
             {isListVisualisationSelected ? (
               <FlatList
                 data={ListOfProducts}

@@ -129,7 +129,12 @@ const styles = StyleSheet.create({
     alignContent: "center",
     marginTop: -20,
     padding: 20,
-  },
+  }, 
+  Deleted_Products: {
+    fontSize: FontSize.Lower,
+    fontFamily: "ralway-regular-semi",
+    color: Colors.mainRed,
+  },  
   Top_Secundary_Layout_Informations: {
     fontSize: FontSize.Lower,
     fontFamily: "ralway-regular-semi",
