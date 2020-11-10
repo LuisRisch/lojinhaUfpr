@@ -55,6 +55,6 @@ var product6 = {
 };
 
 product5
-var ListOfGeneral = [product5 , product6 , product6 , product6 , product6 , product6 , product6, product6, product6,product6,product6]
+var ListOfGeneral = [product5 , product6]
 
 export { ListOfGeneral };
