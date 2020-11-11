@@ -87,6 +87,7 @@ const ChatScreen = ({ route, navigation }) => {
         content: text,
         sent_by: userType,
         id: (messageList.length + 1).toString(),
+        room: chatID,
       };
 
       dispatch(newMessage(messageObj));

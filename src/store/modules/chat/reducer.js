@@ -17,8 +17,14 @@ export default function user(state = INITIAL_STATE, action) {
       }
       case "@chat/MESSAGE": {
         const { data } = action.payload;
+        console.log(data);
 
-        draft.messages.splice(0, 0, data);
+        console.log("Room: " + data.room);
+        console.log("ID: " + draft.id);
+
+        if (draft.id == data.room) {
+          draft.messages.splice(0, 0, data);
+        }
         break;
       }
       case "@chat/LEAVE": {

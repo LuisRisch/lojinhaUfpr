@@ -11,8 +11,10 @@ const chat = state.chat;
 io.on("connect", () => {
   io.on("receivedMessage", (data) => {
     const currentDate = new Date().getTime();
+
     const obj = {
       id: currentDate.toString(),
+      room: data.room,
       content: data.message,
       sent_by: data.sent_by,
     };

@@ -346,40 +346,23 @@ function Routes() {
         },
       }}
     >
-      <Drawer.Screen
-        name="UserPage"
-        component={UserPage}
-        options={{ title: "Sua conta" }}
-      />
-      <Drawer.Screen
-        name="Products"
-        component={StackRoutes}
-        options={{ title: "Loja" }}
-      />
+      <Drawer.Screen name="UserPage" component={UserPage} />
+      <Drawer.Screen name="Products" component={StackRoutes} />
       <Drawer.Screen
         name="ChatList"
         component={ChatList}
-        options={{ title: "Chat" }}
         listeners={{
           focus: () => {
             dispatch(chatLeave());
           },
         }}
       />
-      <Drawer.Screen
-        name="MyProducts"
-        component={MyProductsStack}
-        options={{ title: "Meus Produtos" }}
-      />
-      <Drawer.Screen
-        name="CreateAnnouncement"
-        component={CreateAnnouncement}
-        options={{ title: "Anunciar produto/serviço" }}
-      />
+      <Drawer.Screen name="MyProducts" component={MyProductsStack} />
+      <Drawer.Screen name="CreateAnnouncement" component={CreateAnnouncement} />
       <Drawer.Screen
         name="Login"
         component={LoginRoutes}
-        options={{ title: "", gestureEnabled: false }}
+        options={{ gestureEnabled: false }}
       />
     </Drawer.Navigator>
   );
