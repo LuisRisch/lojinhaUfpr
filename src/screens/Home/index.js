@@ -70,15 +70,12 @@ const Home = ({ navigation }) => {
   };
 
   const expoRegister = async () => {
-    await registerForPushNotificationsAsync().then((token) =>
-      dispatch(userUpdateExpoToken(token))
-    );
+    const token = await registerForPushNotificationsAsync();
+    dispatch(userUpdateExpoToken(token));
+    return token;
   };
 
   useEffect(() => {
-    if (!user.expoToken) {
-      expoRegister();
-    }
     if (user.data && rememberPassword) {
       navigation.navigate("Products");
     }
@@ -136,7 +133,12 @@ const Home = ({ navigation }) => {
       //   setCpfError("Número do CPF inválido!");
       //   return 0;
       // } COMENTADO DURANTE O DESENVOLVIMENTO
-      let notificationToken = user.expoToken || null;
+      let notificationToken = null;
+      if (!user.expoToken) {
+        notificationToken = await expoRegister();
+      }
+      console.log(notificationToken);
+
       await api
         .post("/login", {
           cpf: Cpf,

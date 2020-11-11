@@ -23,6 +23,7 @@ export default function user(state = INITIAL_STATE, action) {
         draft.signed = false;
         draft.rememberPassword = false;
         draft.token = "";
+        draft.expoToken = "";
         break;
       }
       case "@user/REMEMBER": {
