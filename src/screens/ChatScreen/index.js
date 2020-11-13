@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useMemo } from "react";
-import { View, TouchableOpacity, FlatList, Text, Alert } from "react-native";
+import {
+  View,
+  TouchableOpacity,
+  FlatList,
+  Text,
+  Alert,
+  AppState,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -68,6 +75,20 @@ const ChatScreen = ({ route, navigation }) => {
 
   useEffect(() => {
     loadChat();
+
+    navigation.addListener("focus", (e) => {
+      console.log("focus");
+      io.emit("online", user._id);
+    });
+
+    AppState.addEventListener("change", (data) => {
+      if (data === "background") {
+        io.emit("offline", user._id);
+      }
+      if (data === "active") {
+        io.emit("online", user._id);
+      }
+    });
 
     io.emit("join_room", chatID);
 

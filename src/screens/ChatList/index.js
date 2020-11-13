@@ -6,6 +6,7 @@ import {
   Text,
   Image,
   Alert,
+  AppState,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import CustomIcon from "../../components/CustomIconButton";
