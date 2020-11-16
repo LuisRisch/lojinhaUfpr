@@ -16,6 +16,7 @@ import { userRefreshInfo, userSignOut } from "../../store/modules/user/actions";
 import CustomInputs from "../../components/CustomInputs";
 import CustomButtons from "../../components/CustomButtons";
 import CustomTopLabel from "../../components/CustomTopLabelInput";
+import LoadingModal from "../../components/LoadingModal";
 import Spacing from "../../data/Spacing";
 import { Style } from "./styles";
 
@@ -35,6 +36,8 @@ const getFonts = () =>
   });
 
 const UserPage = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
+
   const [EditInfo, setEditInfo] = useState(false);
   const [newName, setNewName] = useState(null);
   const [newEmail, setNewEmail] = useState(null);
@@ -137,13 +140,16 @@ const UserPage = ({ navigation }) => {
     }
   };
   const handleEditUserInfo = async () => {
+    setLoading(true);
     if (newPassword && !oldPassword) {
+      setLoading(false);
       return setPasswordError({
         error: true,
         message: "Digite sua senha antiga para alterar!",
       });
     }
     if (newPassword && newPassword.length < 8) {
+      setLoading(false);
       return setPasswordError({
         error: true,
         message: "Senha nova muito pequena. Mínimo de tamanho é 8.",
@@ -194,7 +200,7 @@ const UserPage = ({ navigation }) => {
           err.response.data.error
         )
       );
-
+    setLoading(false);
     if (response.status === 200) {
       if (newPassword) {
         Alert.alert(
@@ -215,6 +221,7 @@ const UserPage = ({ navigation }) => {
   };
 
   const loadUserInfo = async () => {
+    setLoading(true);
     const response = await api
       .get(`/user/${user._id}`, {
         headers: {
@@ -231,9 +238,11 @@ const UserPage = ({ navigation }) => {
     if (response.data) {
       disptach(userRefreshInfo(response.data));
     }
+    setLoading(false);
   };
 
   const handleVerification = async () => {
+    setLoading(true);
     const response = await api
       .post(
         `/generate_code/${user._id}`,
@@ -250,6 +259,7 @@ const UserPage = ({ navigation }) => {
           err.response.data.error
         )
       );
+    setLoading(false);
     if (response.data) {
       Alert.alert(
         "Código gerado com sucesso!",
@@ -261,6 +271,7 @@ const UserPage = ({ navigation }) => {
 
   const content = (
     <View style={Style.screen}>
+      <LoadingModal visible={loading} />
       <View style={Style.header}>
         <TouchableOpacity onPress={() => navigation.openDrawer()}>
           <Icon name="align-left" size={20} color="#c4c4c4" />

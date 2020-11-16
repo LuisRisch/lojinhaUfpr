@@ -20,6 +20,7 @@ import CustomSubLabel from "../../components/CustomSubLabel";
 import BoxProduct from "../../components/CustomBoxesProductInformation";
 import CustomButton from "../../components/CustomButtons";
 import CustomCloseIcon from "../../components/CustomCloseIcon";
+import LoadingModal from "../../components/LoadingModal";
 import { CategoryList } from "../../data/Categories";
 
 import { styles } from "./styles";
@@ -43,6 +44,8 @@ const getFonts = () =>
 const CreateAnnouncement = ({ navigation }) => {
   const user = useSelector((state) => state.user);
   const categoryList = useSelector((state) => state.categories.data);
+
+  const [loading, setLoading] = useState(false);
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [isShowCategoryOpen, setIsShowCategory] = useState(false);
@@ -87,7 +90,9 @@ const CreateAnnouncement = ({ navigation }) => {
   const product = [];
 
   const handleSubmit = async () => {
+    setLoading(true);
     if (!user.data.student) {
+      setLoading(false);
       return Alert.alert(
         "Infelizmente você não pode fazer isso.",
         "Apenas estudantes da UFPR podem anunciar produtos!"
@@ -112,6 +117,7 @@ const CreateAnnouncement = ({ navigation }) => {
     };
 
     if (!(await schema.isValid(data))) {
+      setLoading(false);
       Alert.alert(
         "Informações inválidas",
         "Por favor, verifique as informações inseridas"
@@ -148,6 +154,7 @@ const CreateAnnouncement = ({ navigation }) => {
           "O máximo de imagens para publicação é 5."
         );
       }
+      setLoading(false);
       return 1;
     }
 
@@ -179,6 +186,7 @@ const CreateAnnouncement = ({ navigation }) => {
         )
       );
 
+    setLoading(true);
     if (productResponse.status === 200) {
       navigation.navigate("MainProducts");
     }
@@ -367,6 +375,7 @@ const CreateAnnouncement = ({ navigation }) => {
           </View>
         </Modal>
       </ScrollView>
+      <LoadingModal visible={loading} />
     </View>
   );
 

@@ -21,6 +21,7 @@ import CustomInputs from "../../components/CustomInputs";
 import CustomSwitchButton from "../../components/CustomSwitchButton";
 import CustomTopLabelInput from "../../components/CustomTopLabelInput";
 import CustomPasswordInput from "../../components/CustomPasswordInput";
+import LoadingModal from "../../components/LoadingModal";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { styles } from "./styles";
 import Colors from "../../data/Colors";
@@ -40,6 +41,8 @@ const getFonts = () =>
   });
 
 const Home = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
+
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [loginModalVisible, setModalLoginVisible] = useState(true);
   const [isModalResetPassVisible, setIsModalResetPassVisible] = useState(false);
@@ -94,6 +97,7 @@ const Home = ({ navigation }) => {
   };
 
   const ResetPassHandler = async () => {
+    setLoading(true);
     console.log(Email);
     if (Email.length >= 1 && Email.includes("@")) {
       const response = await api
@@ -104,11 +108,14 @@ const Home = ({ navigation }) => {
             err.response.data.error
           )
         );
+      setLoading(false);
       if (response.data) {
         navigation.navigate("ForgotPassword", { email: Email });
       }
       setIsModalResetPassVisible(false);
+      setLoading(false);
     } else {
+      setLoading(false);
       if (Email.length === 0) {
         setErrorInRedifinePass({
           error: true,
@@ -123,10 +130,12 @@ const Home = ({ navigation }) => {
         }
       }
     }
+    setLoading(false);
   };
 
   const height = Dimensions.get("window").height;
   const handleLogin = async () => {
+    setLoading(true);
     if (Cpf && Pass) {
       // if (!isCPFValid(Cpf)) {
       //   setErrorInCpf(true);
@@ -181,6 +190,7 @@ const Home = ({ navigation }) => {
         message: "Este campo não foi preenchido",
       });
     }
+    setLoading(false);
   };
 
   const RedifinePassHandler = (text) => {
@@ -341,6 +351,7 @@ const Home = ({ navigation }) => {
   if (fontsLoaded) {
     return (
       <SafeAreaView style={styles.screen}>
+        <LoadingModal visible={loading} />
         <Modal
           animationType="fade"
           visible={isModalResetPassVisible}

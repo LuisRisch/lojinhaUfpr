@@ -2,14 +2,16 @@ import React, { useState, useEffect } from "react";
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
 import { View, SafeAreaView, Text, Image, Modal, Alert } from "react-native";
+import { Colors } from "react-native/Libraries/NewAppScreen";
+import { ScrollView } from "react-native-gesture-handler";
+import { useSelector } from "react-redux";
+
 import CustomInput from "../../components/CustomInputs";
 import CustomButtons from "../../components/CustomButtons";
 import CustomTopLabel from "../../components/CustomTopLabelInput";
 import { styles } from "./styles";
 import FontSizes from "../../data/FontSizes";
-import { Colors } from "react-native/Libraries/NewAppScreen";
-import { ScrollView } from "react-native-gesture-handler";
-import { useSelector } from "react-redux";
+import LoadingModal from "../../components/LoadingModal";
 
 import api from "../../services/api";
 
@@ -31,6 +33,8 @@ const getRemaining = (time) => {
 };
 
 const ConfirmRegister = ({ navigation }) => {
+  const [loading, setLoading] = useState(false);
+
   const user = useSelector((state) => state.user.data);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [showModalSuccess, setShowModalSuccess] = useState(false);
@@ -65,6 +69,7 @@ const ConfirmRegister = ({ navigation }) => {
   };
 
   const onSubmitt = async () => {
+    setLoading(true);
     if (!isEmpty(code)) {
       const requestData = { verificationCode: code, user: user._id };
 
@@ -92,6 +97,7 @@ const ConfirmRegister = ({ navigation }) => {
       });
       setShowModalFail(true);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -113,6 +119,7 @@ const ConfirmRegister = ({ navigation }) => {
   if (fontsLoaded) {
     return (
       <SafeAreaView style={styles.screen}>
+        <LoadingModal visible={loading} />
         {/* Esse modal irá mostrar um Alerta customizado confirmando de sucessso */}
         <Modal
           visible={showModalSuccess}
