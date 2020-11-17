@@ -84,11 +84,14 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
         {/****************** Box que da espaçamento entre os dois ******************/}
         <View style={Styles.sizedBox}></View>
 
-        <View style={Styles.header}>
+        <TouchableOpacity
+          style={Styles.header}
+          onPress={() => navigation.navigate("MainProducts")}
+        >
           <Text style={Styles.textCategoryStyle}>
             {"Inicio " + "> " + categoryLabel}
           </Text>
-        </View>
+        </TouchableOpacity>
 
         {/****************** Box que da espaçamento entre os dois ******************/}
         <View style={Styles.sizedBox}></View>

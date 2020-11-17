@@ -57,7 +57,6 @@ const EditProduct = ({ route, navigation }) => {
       let result = await ImagePicker.launchImageLibraryAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [4, 4],
         quality: 0.7,
       });
 
@@ -187,7 +186,7 @@ const EditProduct = ({ route, navigation }) => {
   if (fontsLoaded) {
     return (
       <View style={styles.screen}>
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <BoxProduct>
             <CustomTopLabel label="Nome do produto/serviço" />
             <CustomSubLabel content="Este será o título. Lembre-se de que, quando você tiver vendas, não poderá editá-lo" />

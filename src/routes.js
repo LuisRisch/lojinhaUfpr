@@ -28,7 +28,6 @@ import EditProduct from "./screens/EditProduct";
 import FullScreenImage from "./screens/FullScreenImage";
 import ForgotPassword from "./screens/ForgotPassword";
 import MyProductsScreen from "./screens/MyProductsScreen";
-import LoadComponent from "./components/Load/LoadComponent";
 import CustomDrawer from "./components/CustomDrawer";
 import { StackActions } from "@react-navigation/native";
 

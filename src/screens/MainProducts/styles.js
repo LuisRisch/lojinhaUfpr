@@ -196,12 +196,13 @@ const styles = StyleSheet.create({
   loadMoreProductsContainer: {
     justifyContent: "center",
     alignItems: "center",
-    flex: 1,
+    margin: -15,
+    marginTop: 1,
   },
   loadProductsText: {
-    color: Colors.mainGrey,
+    color: Colors.darkGrey,
     fontFamily: "ralway-regular-semi",
-    fontSize: FontSize.Tall,
+    fontSize: FontSize.Normal,
     textAlign: "center",
     // fontWeight: "500",
   },

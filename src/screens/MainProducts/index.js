@@ -51,9 +51,7 @@ const MainProducts = ({ navigation, route }) => {
   const [currentCategory, setCurrentCategory] = useState(-1);
   const [currentPage, setCurrentPage] = useState(0);
   const [showLoadMoreItem, setShowMoreItem] = useState(false);
-  const [ListOfProducts, setListOfProduct] = useState(
-    ListOfGeneral.concat(arrAddOneInLenght)
-  ); // just to add one more in lenght
+  const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral); // just to add one more in lenght
 
   const dispatch = useDispatch();
 
@@ -127,7 +125,6 @@ const MainProducts = ({ navigation, route }) => {
 
   useEffect(() => {
     if (params && params.searchParams) {
-      console.log("oi");
       loadSearch(params.searchParams);
     }
   }, [params]);
@@ -167,7 +164,7 @@ const MainProducts = ({ navigation, route }) => {
         }
       );
       if (response.data) {
-        setListOfProduct([...ListOfProducts, ...response.data]);
+        setListOfProduct([...ListOfProducts, ...response.data, ""]);
       }
     } else {
       const response = await api.post(
@@ -183,7 +180,7 @@ const MainProducts = ({ navigation, route }) => {
       );
 
       if (response.data) {
-        setListOfProduct(response.data);
+        setListOfProduct([...response.data]);
       }
     }
   };
@@ -212,60 +209,38 @@ const MainProducts = ({ navigation, route }) => {
 
   const renderItemCard = ({ item, index }) =>
     isListVisualisationSelected ? (
-      index === ListOfProducts.length - 1 ? (
-        <TouchableOpacity
-          style={styles.loadMoreProductsContainer}
-          onPress={ChangePage}
-        >
-          <View style={{ height: Spacing.MainMargin }}></View>
-          <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
-          <Icon name="plus-circle" size={22} color={Colors.mainRed} />
-        </TouchableOpacity>
-      ) : (
-        <TouchableOpacity style={{}} onPress={() => onProductCardPressed(item)}>
-          <View style={styles.Products_Card_Horizontally}>
-            <Image
-              source={{
-                uri: item.picture === null ? null : item.picture[0].url,
-              }}
-              style={styles.Image_Horizontaly_Display}
-              resizeMode="cover"
-            />
-            <View style={styles.Products_Card_Informations}>
+      <TouchableOpacity style={{}} onPress={() => onProductCardPressed(item)}>
+        <View style={styles.Products_Card_Horizontally}>
+          <Image
+            source={{
+              uri: item.picture === null ? null : item.picture[0].url,
+            }}
+            style={styles.Image_Horizontaly_Display}
+            resizeMode="cover"
+          />
+          <View style={styles.Products_Card_Informations}>
+            <Text numberOfLines={2} style={styles.Products_Title_Horizontally}>
+              {item.title}
+            </Text>
+            <View style={styles.Price_Box_Horizontally}>
+              <Text style={styles.Price_Layout}>R$ {item.price}</Text>
+            </View>
+            <View>
               <Text
                 numberOfLines={2}
-                style={styles.Products_Title_Horizontally}
+                style={styles.AnnouncedBy_Horizontally_Label}
               >
-                {item.title}
+                Vendido por:
               </Text>
-              <View style={styles.Price_Box_Horizontally}>
-                <Text style={styles.Price_Layout}>R$ {item.price}</Text>
-              </View>
-              <View>
-                <Text
-                  numberOfLines={2}
-                  style={styles.AnnouncedBy_Horizontally_Label}
-                >
-                  Vendido por:
-                </Text>
-                <Text
-                  numberOfLines={2}
-                  style={styles.AnnouncedBy_Horizontally_Name}
-                >
-                  {item.user.name}
-                </Text>
-              </View>
+              <Text
+                numberOfLines={2}
+                style={styles.AnnouncedBy_Horizontally_Name}
+              >
+                {item.user.name}
+              </Text>
             </View>
           </View>
-        </TouchableOpacity>
-      )
-    ) : index === ListOfProducts.length - 1 ? (
-      <TouchableOpacity
-        style={styles.loadMoreProductsContainer}
-        onPress={ChangePage}
-      >
-        <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
-        <Icon name="plus-circle" size={22} color={Colors.mainRed} />
+        </View>
       </TouchableOpacity>
     ) : (
       <TouchableOpacity
@@ -324,10 +299,15 @@ const MainProducts = ({ navigation, route }) => {
               <Text style={styles.Filter_Layout}>Filtrar</Text>
             </TouchableOpacity>
           </View>
+          <TouchableOpacity
+            style={styles.loadMoreProductsContainer}
+            onPress={ChangePage}
+          >
+            <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
+          </TouchableOpacity>
           <View
             style={{
               padding: 20,
-              marginTop: -30,
               height: "100%",
               marginBottom: -10,
             }}
