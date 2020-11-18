@@ -8,6 +8,7 @@ import {
   ScrollView,
   Dimensions,
   Alert,
+  CheckBox,
 } from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
 import * as ImagePicker from "expo-image-picker";
@@ -15,6 +16,7 @@ import * as ImagePicker from "expo-image-picker";
 import * as Yup from "yup";
 
 import CustomInputs from "../../components/CustomInputs";
+import TermsModal from "../../components/TermsModal";
 import CustomTopLabel from "../../components/CustomTopLabelInput";
 import CustomSubLabel from "../../components/CustomSubLabel";
 import BoxProduct from "../../components/CustomBoxesProductInformation";
@@ -46,6 +48,8 @@ const CreateAnnouncement = ({ navigation }) => {
   const categoryList = useSelector((state) => state.categories.data);
 
   const [loading, setLoading] = useState(false);
+  const [termsVisible, setVisible] = useState(false);
+  const [readTerms, setReadTerms] = useState(false);
 
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [isShowCategoryOpen, setIsShowCategory] = useState(false);
@@ -90,6 +94,12 @@ const CreateAnnouncement = ({ navigation }) => {
   const product = [];
 
   const handleSubmit = async () => {
+    if (!readTerms) {
+      return Alert.alert(
+        "Por favor, leia os termos!",
+        "Antes de publicar seu produto, pedimos que você leia os termos e condições."
+      );
+    }
     setLoading(true);
     if (!user.data.student) {
       setLoading(false);
@@ -216,6 +226,11 @@ const CreateAnnouncement = ({ navigation }) => {
     }
   };
 
+  const handleTerms = () => {
+    setReadTerms(true);
+    setVisible(false);
+  };
+
   const content = (
     <View style={styles.screen}>
       <View style={styles.header}>
@@ -321,6 +336,15 @@ const CreateAnnouncement = ({ navigation }) => {
           )}
         </TouchableOpacity>
 
+        <View style={styles.CheckBoxContainer}>
+          <CheckBox value={readTerms} disabled={true} />
+          <TouchableOpacity onPress={() => setVisible(true)}>
+            <Text style={styles.lowerTextUnderline}>
+              Li e aceito os termos de responsabilidade com a plataforma
+            </Text>
+          </TouchableOpacity>
+        </View>
+
         <View style={{ justifyContent: "space-between", flex: 1 }}>
           <CustomButton Label="Anunciar" onButtonPressed={handleSubmit} />
           {imageList.length >= 1 ? (
@@ -374,6 +398,7 @@ const CreateAnnouncement = ({ navigation }) => {
           </View>
         </Modal>
       </ScrollView>
+      <TermsModal visible={termsVisible} onPress={handleTerms} />
       <LoadingModal visible={loading} />
     </View>
   );

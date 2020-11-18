@@ -17,7 +17,7 @@ import CustomButtons from "../../components/CustomButtons";
 import CustomInputs from "../../components/CustomInputs";
 import CustomTopLabelInput from "../../components/CustomTopLabelInput";
 import CustomPasswordInput from "../../components/CustomPasswordInput";
-import CustomCloseIcon from "../../components/CustomCloseIcon";
+import TermsModal from "../../components/TermsModal";
 import { styles } from "./styles";
 import Colors from "../../data/Colors";
 import * as ImagePicker from "expo-image-picker";
@@ -301,6 +301,10 @@ const Register = ({ navigation }) => {
   if (fontsLoaded) {
     return (
       <View style={styles.screen}>
+        <TermsModal
+          visible={isConsentTermsModalVisible}
+          onPress={onConsentTermsButtonPressed}
+        />
         {/* Esse modal irá mostrar um Alerta customizado confirmando o cadastro do novo usuário */}
         <Modal
           visible={isConfirmRegisterModalVisible}
@@ -328,59 +332,6 @@ const Register = ({ navigation }) => {
         </Modal>
 
         {/* Esse modal irá mostrar os termos de consentimento */}
-
-        <Modal
-          visible={isConsentTermsModalVisible}
-          transparent={true}
-          animationType={"slide"}
-        >
-          <View style={styles.BackModalScreen}>
-            <View style={styles.BackModalAlert}>
-              <TouchableOpacity
-                onPress={changeStateTermsModal}
-                style={{ flexDirection: "row", justifyContent: "flex-end" }}
-              >
-                <Icon name="close" color={Colors.mainRed} size={18} />
-              </TouchableOpacity>
-              <Text style={styles.TitleModalStyle}>
-                Termos de consentimento
-              </Text>
-              <View style={styles.sizedBox}></View>
-              <ScrollView showsVerticalScrollIndicator={false}>
-                <Text style={styles.SubTitleModalStyle}>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing lit. Nam
-                  non lectus elit. Ut orci ex, pulvinar a efficitur aliquam,
-                  faucibus at mi. Ut in sem magna. In hac habitasse platea
-                  dictumst. Cras imperdiet, odio a egestas aliquet, dui nulla
-                  egestas justo, ut tempus lectus lorem at urna. Phasellus
-                  pellentesque id tellus vel feugiat. Pellentesque bibendum
-                  euismod augue, vel vehicula nibh porttitor non. Fusce molestie
-                  a odio et aliquet. Phasellus faucibus iaculis nulla sodales
-                  porttitor. Aenean molestie, urna vel fermentum cursus, massa
-                  velit suscipit nibh, sed mollis quam augue id nunc. Ut
-                  fringilla auctor elit sed gravida. In ullamcorper eu magna eu
-                  dapibus. Phasellus sodales lacus est, id bibendum urna varius
-                  ut. Maecenas elementum sapien sed lacus commodo, eget
-                  ultricies lacus rhoncus. Suspendisse lorem libero, interdum
-                  eget neque et, sagittis dictum mauris. Curabitur ut erat vitae
-                  nisi auctor posuere a eget odio. Nam magna lorem, hendrerit
-                  eget suscipit et, ultricies in elit. Nunc commodo nunc eget
-                  turpis pretium laoreet. Phasellus lacinia id quam eu
-                  tristique. Nulla facilisis sodales bibendum. Quisque consequat
-                  aliquam pellentesque. Proin faucibus tincidunt est, vitae
-                  eleifend nulla vulputate interdum. Curabitur et sodales lacus.
-                  Pellentesque consequat erat auctor gravida varius.
-                </Text>
-                <TouchableOpacity
-                  style={styles.buttonContainer}
-                  onPress={onConsentTermsButtonPressed}
-                >
-                  <Text style={styles.buttonLabel}>Entendido</Text>
-                </TouchableOpacity>
-              </ScrollView>
-            </View>
-          </View>
-        </Modal>
 
         <ScrollView showsVerticalScrollIndicator={false}>
           {image === null ? (
@@ -457,11 +408,11 @@ const Register = ({ navigation }) => {
                 onValueChange={changeStateCheckBox}
                 disabled={true}
               />
-              <TouchableWithoutFeedback onPress={changeStateTermsModal}>
+              <TouchableOpacity onPress={changeStateTermsModal}>
                 <Text style={styles.lowerTextUnderline}>
                   Li e aceito os termos de responsabilidade com a plataforma
                 </Text>
-              </TouchableWithoutFeedback>
+              </TouchableOpacity>
             </View>
           </View>
           {/* Está acontecendo algum bug, por algum motivo separa-se o estilo da imagem em um file 

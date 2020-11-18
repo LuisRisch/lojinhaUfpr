@@ -104,6 +104,20 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
+  CheckBoxContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginVertical: 18,
+  },
+  lowerTextUnderline: {
+    color: Colors.mainGrey,
+    fontSize: FontSize.TooLower,
+    fontFamily: "ralway-regular-semi",
+    // fontWeight: "500",
+    textDecorationLine: "underline",
+    flexShrink: 1,
+  },
 });
 
 export { styles };
