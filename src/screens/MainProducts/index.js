@@ -164,7 +164,7 @@ const MainProducts = ({ navigation, route }) => {
         }
       );
       if (response.data) {
-        setListOfProduct([...ListOfProducts, ...response.data, ""]);
+        setListOfProduct([...ListOfProducts, ...response.data]);
       }
     } else {
       const response = await api.post(
@@ -308,7 +308,7 @@ const MainProducts = ({ navigation, route }) => {
           <View
             style={{
               padding: 20,
-              height: "100%",
+              height: "94%",
               marginBottom: -10,
             }}
           >

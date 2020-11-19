@@ -11,6 +11,10 @@ import {
 import Icon from "react-native-vector-icons/FontAwesome";
 import CustomIcon from "../../components/CustomIconButton";
 import { useSelector, useDispatch } from "react-redux";
+import {
+  excludeChat,
+  restoreChat,
+} from "../../store/modules/excludedData/actions";
 import { chatLeave } from "../../store/modules/chat/actions";
 
 import api from "../../services/api";
@@ -19,6 +23,7 @@ import styles from "./styles";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
+import Colors from "../../data/Colors";
 
 const getFonts = () =>
   Font.loadAsync({
@@ -41,29 +46,25 @@ const ChatScreen = ({ navigation }) => {
   const [chatSellList, setSellList] = useState([]);
   const [buyingListActive, setListActive] = useState(true);
 
+  const dispatch = useDispatch();
+
   const loadChats = async () => {
     setLoading(true);
     const excludedList = [];
     if (excluded != 0) {
       excluded.map((item) => excludedList.push(item.id));
     }
-    console.log(excludedList);
+    console.log(excluded);
     if (user.student) {
       const seller = await api
-        .post(
-          `/chats/${user._id}`,
-          {
-            exclude: excludedList,
+        .get(`/chats/${user._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
           },
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-            params: {
-              selling: true,
-            },
-          }
-        )
+          params: {
+            selling: true,
+          },
+        })
         .catch((err) =>
           Alert.alert(
             "Ocorreu um erro ao buscar suas informações!",
@@ -76,18 +77,14 @@ const ChatScreen = ({ navigation }) => {
       }
     }
     const buyer = await api
-      .post(
-        `/chats/${user._id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-          params: {
-            buying: true,
-          },
-        }
-      )
+      .get(`/chats/${user._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        params: {
+          buying: true,
+        },
+      })
       .catch((err) =>
         Alert.alert(
           "Ocorreu um erro ao buscar suas informações",
@@ -113,11 +110,20 @@ const ChatScreen = ({ navigation }) => {
     });
   };
 
-  const popUpMenuHandler = () => {
-    setpopUpMenu(true);
-    setTimeout(() => {
-      setpopUpMenu(false);
-    }, 10000);
+  const handleDeleteChat = (id, lastMessageObj) => {
+    if (buyingListActive) {
+      const index = chatBuyList.findIndex((item) => item._id == id);
+      if (index <= 0) {
+        chatBuyList.splice(index, 1);
+      }
+    } else {
+      const index = chatSellList.findIndex((item) => item._id == id);
+      if (index <= 0) {
+        chatBuyList.splice(index, 1);
+      }
+    }
+
+    dispatch(excludeChat({ id, lastMessage: lastMessageObj.content }));
   };
 
   const onIconPress = (index) => {
@@ -127,6 +133,18 @@ const ChatScreen = ({ navigation }) => {
   };
 
   const renderChatList = ({ item, index }) => {
+    const excludedIndex = excluded.findIndex((chat) => chat.id == item._id);
+
+    let itemLastMessage = item.last_message ? item.last_message.content : null;
+    let excludedLastMessage =
+      excludedIndex >= 0 ? excluded[index].lastMessage : null;
+
+    if (excludedIndex >= 0 && itemLastMessage === excludedLastMessage) {
+      return <View />;
+    } else {
+      dispatch(restoreChat(item._id));
+    }
+
     return (
       <View style={styles.chatHolder}>
         <TouchableOpacity
@@ -142,7 +160,6 @@ const ChatScreen = ({ navigation }) => {
             style={styles.avatar}
             source={{ uri: item.product ? item.product.picture[0].url : null }}
           />
-          <View style={styles.dot} />
         </TouchableOpacity>
         <TouchableOpacity
           style={styles.centerTextHolder}
@@ -174,9 +191,9 @@ const ChatScreen = ({ navigation }) => {
           ) : (
             <TouchableOpacity
               style={{ alignItems: "flex-end", marginTop: 5 }}
-              onPress={popUpMenuHandler}
+              onPress={() => handleDeleteChat(item._id, item.last_message)}
             >
-              <Icon name="ellipsis-h" size={20} color="#c4c4c4" />
+              <Icon name="trash" size={20} color={Colors.mainRed} />
             </TouchableOpacity>
           )}
         </View>

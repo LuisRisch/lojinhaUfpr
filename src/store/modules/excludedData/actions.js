@@ -12,10 +12,10 @@ export function excludeProduct({ id, title }) {
   };
 }
 
-export function excludeChat({ id, title }) {
+export function excludeChat({ id, lastMessage }) {
   return {
     type: "@exclude/CHAT",
-    payload: { id, title },
+    payload: { id, lastMessage },
   };
 }
 

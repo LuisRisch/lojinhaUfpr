@@ -20,8 +20,9 @@ export default function excludedData(state = INITIAL_STATE, action) {
         break;
       }
       case "@exclude/CHAT": {
-        const { id, title } = action.payload;
-        draft.chats.push({ id, title });
+        const { id, lastMessage } = action.payload;
+        console.log({ id, lastMessage });
+        draft.chats.push({ id, lastMessage });
         break;
       }
       case "@exclude/RESTORE_PRODUCT": {
