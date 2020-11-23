@@ -93,6 +93,24 @@ const CreateAnnouncement = ({ navigation }) => {
 
   const product = [];
 
+  const handleReset = () => {
+    HandleDeletePhoto();
+    setLoading(false);
+    setVisible(false);
+    setReadTerms(false);
+    setFontsLoaded(false);
+    setIsShowCategory(false);
+    setProductTitle("");
+    setCategory({
+      title: "Nenhuma categoria selecionada",
+      id: -1,
+    });
+    setProductDescription("");
+    setPayment("");
+    setDelivery("");
+    setPrice("");
+  };
+
   const handleSubmit = async () => {
     if (!readTerms) {
       return Alert.alert(
@@ -196,9 +214,10 @@ const CreateAnnouncement = ({ navigation }) => {
         )
       );
 
-    setLoading(true);
+    setLoading(false);
     if (productResponse.status === 200) {
       navigation.navigate("MainProducts");
+      handleReset();
     }
   };
 
