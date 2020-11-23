@@ -295,10 +295,8 @@ const MainProducts = ({ navigation, route }) => {
           </View>
           <View
             style={{
-              padding: 20,
-              height: "100%",
-              marginTop: -30,
-              marginBottom: -10,
+              height: "95%",
+              marginTop: -10,
             }}
           >
             {isListVisualisationSelected ? (

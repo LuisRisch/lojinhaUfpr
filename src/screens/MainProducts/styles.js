@@ -6,7 +6,7 @@ import { StatusBar } from "react-native";
 import FontSizes from "../../data/FontSizes";
 
 const { width } = Dimensions.get("window");
-const imageSize = Math.floor(width / 2) - 40;
+const imageSize = Math.floor(width / 2) - 30;
 
 const styles = StyleSheet.create({
   screen: {
@@ -68,18 +68,20 @@ const styles = StyleSheet.create({
     // fontWeight: "bold",
   },
   Box_Card_Grid_Products: {
-    marginHorizontal: 4,
+    marginHorizontal: 14,
     backgroundColor: "white",
     borderRadius: 10,
-    padding: 12,
-    width: "48%",
+    padding: 5,
+    margin: 10,
+    width: imageSize,
     justifyContent: "space-between",
   },
   Image_Layout_Grid: {
-    height: imageSize - 12,
-    width: imageSize - 12,
+    height: imageSize,
+    width: imageSize,
     alignSelf: "center",
     borderRadius: 5,
+    marginLeft: 5,
   },
   Product_Title_Grid: {
     fontSize: FontSize.Normal,
