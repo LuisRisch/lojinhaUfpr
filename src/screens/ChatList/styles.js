@@ -29,34 +29,34 @@ const styles = StyleSheet.create({
     width: "100%",
   },
   title: {
-    textAlign: "center", 
-    fontFamily : 'ralway-regular-semi', 
+    textAlign: "center",
+    fontFamily: "ralway-regular-semi",
     width: "90%",
     fontSize: FontSizes.SuperTall,
     // fontWeight: "600",
   },
   content: {
-    fontSize: FontSizes.Normal, 
-    fontFamily : 'ralway-regular'
+    fontSize: FontSizes.Normal,
+    fontFamily: "ralway-regular",
   },
   chatTitle: {
-    fontWeight: "bold", 
-    fontFamily : 'ralway-regular-bold',
+    opacity: 0.6,
+    fontFamily: "ralway-regular-bold",
     fontSize: FontSizes.Normal,
   },
   centerTextHolder: {
     justifyContent: "center",
-    fontFamily : 'ralway-regular',
+    fontFamily: "ralway-regular",
     width: "55%",
   },
   rightTextHolder: {
     justifyContent: "center",
-    fontFamily : 'ralway-regular',
+    fontFamily: "ralway-regular",
     width: "25%",
   },
   rightBoxText: {
     textAlign: "right",
-    fontFamily : 'ralway-regular',
+    fontFamily: "ralway-regular",
     fontSize: FontSizes.TooLower,
   },
   avatar: {
@@ -79,14 +79,13 @@ const styles = StyleSheet.create({
   },
   subText: {
     fontSize: FontSizes.TooLower,
-    fontFamily : 'ralway-regular',
-  }, 
-  ChatTypes:{
-    fontFamily : 'ralway-regular-semi',
-    color : Colors.mainRed, 
-    fontSize : FontSizes.Tall
-  
-  }
+    fontFamily: "ralway-regular",
+  },
+  ChatTypes: {
+    fontFamily: "ralway-regular-semi",
+    color: Colors.mainRed,
+    fontSize: FontSizes.Tall,
+  },
 });
 
 export default styles;

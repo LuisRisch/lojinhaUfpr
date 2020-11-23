@@ -37,6 +37,7 @@ const getFonts = () =>
 const ChatScreen = ({ navigation }) => {
   const { data: user, token } = useSelector((state) => state.user);
   const excluded = useSelector((state) => state.excludedData.chats);
+  const categories = useSelector((state) => state.categories.data);
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [chatList, setChatList] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -102,11 +103,18 @@ const ChatScreen = ({ navigation }) => {
     loadChats();
   }, []);
 
-  const handleChat = (id, title, url) => {
+  const handleChat = (id, title, url, item) => {
+    const data = {
+      seller: item.seller,
+      ...item.product,
+    };
+
     navigation.navigate("ChatScreen", {
       chatID: id,
       product: title,
       url,
+      item: data,
+      categoryLabel: categories[item.product.category].title,
     });
   };
 
@@ -167,7 +175,8 @@ const ChatScreen = ({ navigation }) => {
             handleChat(
               item._id,
               item.product.title,
-              item.product.picture[0].url
+              item.product.picture[0].url,
+              item
             )
           }
         >
@@ -178,7 +187,7 @@ const ChatScreen = ({ navigation }) => {
             {item.last_message.content}
           </Text>
           <Text style={styles.subText} numberOfLines={1}>
-            Lucas Cassilha
+            {item.seller.name}
           </Text>
         </TouchableOpacity>
         <View style={styles.rightTextHolder}>

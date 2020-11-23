@@ -196,6 +196,9 @@ const StackRoutes = ({ navigation, route }) => {
         component={ChatScreen}
         options={({ route }) => ({
           headerShown: true,
+          headerStyle: {
+            fontFamily: "ralway-regular-bold",
+          },
           title: route.params.product,
           headerLeft: () => (
             <TouchableOpacity
@@ -213,7 +216,12 @@ const StackRoutes = ({ navigation, route }) => {
           ),
           headerRight: () => (
             <TouchableOpacity
-              onPress={() => navigation.navigate("ProductSummary")}
+              onPress={() =>
+                navigation.navigate("ProductScreen", {
+                  item: route.params.item,
+                  categoryLabel: route.params.categoryLabel,
+                })
+              }
             >
               <Image
                 source={{ uri: route.params.url }}

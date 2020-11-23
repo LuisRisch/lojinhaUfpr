@@ -391,6 +391,18 @@ const UserPage = ({ navigation }) => {
             errorMessage={emailError.message}
           />
 
+          {user.siga_linked ? (
+            <Text
+              style={{
+                fontFamily: "ralway-regular",
+                fontSize: 12,
+                opacity: 0.8,
+              }}
+            >
+              *Eventuais problemas com o cadastro, acesse sua conta no SIGA.
+            </Text>
+          ) : null}
+
           <View style={{ height: 9 }}></View>
 
           <CustomButtons Label="Salvar" onButtonPressed={handleEditUserInfo} />
