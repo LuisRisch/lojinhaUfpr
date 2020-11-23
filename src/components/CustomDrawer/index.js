@@ -141,6 +141,14 @@ const CustomDrawer = ({ user, navigation, ...props }) => {
             />
           )}
         />
+        <View
+          style={{
+            borderBottomWidth: 1,
+            borderBottomColor: "#ddd",
+            width: "90%",
+            alignSelf: "center",
+          }}
+        />
         <DrawerItem
           label="Acolhimento UFPR"
           labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
@@ -165,14 +173,6 @@ const CustomDrawer = ({ user, navigation, ...props }) => {
               style={{ width: 25 }}
             />
           )}
-        />
-        <View
-          style={{
-            borderBottomWidth: 1,
-            borderBottomColor: "#ddd",
-            width: "90%",
-            alignSelf: "center",
-          }}
         />
         <Image
           source={require("../../assets/logo.png")}

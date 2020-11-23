@@ -72,9 +72,8 @@ const styles = StyleSheet.create({
     backgroundColor: "white",
     borderRadius: 10,
     padding: 5,
-    margin: 10,
+    margin: 5,
     width: imageSize,
-    justifyContent: "space-between",
   },
   Image_Layout_Grid: {
     height: imageSize,

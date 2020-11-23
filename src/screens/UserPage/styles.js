@@ -13,6 +13,8 @@ const Style = StyleSheet.create({
     backgroundColor: Colors.lightGrey,
     padding: 10,
     borderRadius: 75,
+    borderWidth: 2,
+    borderColor: Colors.mainRed,
     alignSelf: "center",
     marginVertical: Spacing.MainMargin,
   },
@@ -48,8 +50,8 @@ const Style = StyleSheet.create({
     justifyContent: "space-between",
   },
   titleStyle: {
-    fontSize: FontSize.SuperTall, 
-    fontFamily : 'ralway-regular-semi', 
+    fontSize: FontSize.SuperTall,
+    fontFamily: "ralway-regular-semi",
     color: Color.mainGrey,
     // fontWeight: "500",
   },
@@ -59,23 +61,23 @@ const Style = StyleSheet.create({
     alignItems: "center",
   },
   personNameStyle: {
-    fontSize: FontSize.Tall, 
-    fontFamily : 'ralway-regular-bold', 
+    fontSize: FontSize.Tall,
+    fontFamily: "ralway-regular-bold",
     color: Color.mainGrey,
     // fontWeight: "bold",
   },
   changePhotoStyle: {
     color: Color.mainRed,
-    fontFamily : 'ralway-regular-semi', 
+    fontFamily: "ralway-regular-semi",
     fontSize: FontSize.Lower,
     // fontWeight: "500",
   },
-  logoStyle: { alignSelf: "center", width: 55, height: 55, overflow:'hidden' }, 
-  TentInfo : {
-    fontSize : FontSize.Normal, 
-    fontFamily : 'ralway-regular-semi', 
-    color : Colors.mainGrey
-  }
+  logoStyle: { alignSelf: "center", width: 55, height: 55, overflow: "hidden" },
+  TentInfo: {
+    fontSize: FontSize.Normal,
+    fontFamily: "ralway-regular-semi",
+    color: Colors.mainGrey,
+  },
 });
 
 export { Style };
