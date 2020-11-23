@@ -286,7 +286,7 @@ const MainProducts = ({ navigation, route }) => {
               }
             >
               <Text style={styles.Top_Secundary_Layout_Informations}>
-                Navegar por: {isListVisualisationSelected ? "Linhas" : "Grades"}
+                {isListVisualisationSelected ? "Linhas" : "Grades"}
               </Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => setShowFilter(!showFilter)}>

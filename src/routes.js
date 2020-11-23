@@ -162,7 +162,7 @@ const StackRoutes = ({ navigation, route }) => {
         component={ProductScreen}
         options={{
           headerStyle: {
-            backgroundColor: Colors.backgroundWhite,
+            backgroundColor: "#fff",
             elevation: 0,
           },
           headerShown: true,

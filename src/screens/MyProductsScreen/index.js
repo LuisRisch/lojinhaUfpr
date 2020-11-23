@@ -199,18 +199,19 @@ export default function MyProducts({ navigation }) {
             resizeMode="cover"
           />
           <View style={styles.Products_Card_Informations}>
-            <Text numberOfLines={2} style={styles.Products_Title_Horizontally}>
+            <Text numberOfLines={1} style={styles.Products_Title_Horizontally}>
               {item.title}
             </Text>
             <View style={styles.Price_Box_Horizontally}>
-              <Text style={styles.Price_Layout}>R$ {item.price}</Text>
+              <Text numberOfLines={1} style={styles.Price_Layout}>
+                R$ {item.price}
+              </Text>
             </View>
             <View
               style={{
                 flexDirection: "row",
-                marginLeft: 10,
                 marginTop: 5,
-                justifyContent: "flex-end",
+                justifyContent: "flex-start",
               }}
             >
               <CustomIconButton

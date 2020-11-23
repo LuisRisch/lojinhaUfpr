@@ -13,6 +13,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from "react-native-gesture-handler";
+import Colors from "../../data/Colors";
 
 const getFonts = () =>
   Font.loadAsync({
@@ -81,9 +82,6 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
   const content = (
     <View style={Styles.screen}>
       <ScrollView showsVerticalScrollIndicator={false}>
-        {/****************** Box que da espaçamento entre os dois ******************/}
-        <View style={Styles.sizedBox}></View>
-
         <TouchableOpacity
           style={Styles.header}
           onPress={() => navigation.navigate("MainProducts")}
@@ -166,6 +164,7 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
                 fontFamily: "ralway-regular-semi",
                 margin: 20,
                 fontSize: 16,
+                color: Colors.mainRed,
               }}
             >
               Anúncio pausado!

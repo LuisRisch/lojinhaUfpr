@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
     // fontWeight: "bold",
   },
   Box_Card_Grid_Products: {
-    marginHorizontal: 14,
+    marginHorizontal: 13,
     backgroundColor: "white",
     borderRadius: 10,
     padding: 5,
@@ -81,7 +81,7 @@ const styles = StyleSheet.create({
     width: imageSize,
     alignSelf: "center",
     borderRadius: 5,
-    marginLeft: 5,
+    marginLeft: 10,
   },
   Product_Title_Grid: {
     fontSize: FontSize.Normal,
