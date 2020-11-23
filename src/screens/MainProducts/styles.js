@@ -11,7 +11,7 @@ const imageSize = Math.floor(width / 2) - 40;
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
-    backgroundColor: Colors.backgroundWhite,
+    backgroundColor: "#fff",
   },
   Products_Card_Horizontally: {
     marginTop: Spacing.MainMargin,
@@ -19,14 +19,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     borderRadius: 10,
     padding: 12,
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 1.5,
   },
   Image_Horizontaly_Display: {
     height: 100,
@@ -41,7 +33,7 @@ const styles = StyleSheet.create({
   },
   Products_Title_Horizontally: {
     fontSize: FontSize.Normal,
-    fontFamily: "ralway-regular-bold",
+    fontFamily: "ralway-regular",
     color: "#3b3b3b",
     // fontWeight: "bold",
     flexShrink: 1,
@@ -77,31 +69,23 @@ const styles = StyleSheet.create({
   },
   Box_Card_Grid_Products: {
     marginHorizontal: 4,
-    marginTop: Spacing.MainMargin,
     backgroundColor: "white",
     borderRadius: 10,
     padding: 12,
     width: "48%",
     justifyContent: "space-between",
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 1.5,
   },
   Image_Layout_Grid: {
     height: imageSize - 12,
     width: imageSize - 12,
     alignSelf: "center",
-    borderRadius: 10,
+    borderRadius: 5,
   },
   Product_Title_Grid: {
     fontSize: FontSize.Normal,
-    fontFamily: "ralway-regular-bold",
+    fontFamily: "ralway-regular",
     color: "#3b3b3b",
+    opacity: 0.7,
     flexShrink: 1,
     alignItems: "flex-start",
     maxWidth: "90%",
@@ -113,8 +97,9 @@ const styles = StyleSheet.create({
   },
   Price_Layout_Grid: {
     color: Colors.mainRed,
-    fontSize: FontSize.Normal,
+    fontSize: FontSize.Tall,
     fontFamily: "Mplus-bold",
+    marginTop: 5,
     // fontWeight: "bold",
   },
   Top_Container_Icons: {

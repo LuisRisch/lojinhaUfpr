@@ -56,6 +56,7 @@ const MainProducts = ({ navigation, route }) => {
   const dispatch = useDispatch();
 
   const loadApi = async () => {
+    setCurrentPage(0);
     const response = await api.post(
       "/products",
       {},
@@ -152,6 +153,7 @@ const MainProducts = ({ navigation, route }) => {
   const [title, setTitle] = useState(defaultTitle);
 
   const loadProductsWithParams = async (page, category) => {
+    setLoadingData(true);
     if (category === -1) {
       const response = await api.post(
         "/products",
@@ -183,6 +185,7 @@ const MainProducts = ({ navigation, route }) => {
         setListOfProduct([...response.data]);
       }
     }
+    setLoadingData(false);
   };
 
   const handleResetCaregories = () => {
@@ -194,6 +197,7 @@ const MainProducts = ({ navigation, route }) => {
   };
 
   const ChangePage = () => {
+    console.log("loading");
     let newPage = currentPage + 1;
     setCurrentPage(newPage);
     loadProductsWithParams(newPage, currentCategory);
@@ -254,6 +258,7 @@ const MainProducts = ({ navigation, route }) => {
           style={styles.Image_Layout_Grid}
           resizeMode="cover"
         />
+        <Text style={styles.Price_Layout_Grid}>R${item.price}</Text>
         <Text
           lineBreakMode={true}
           numberOfLines={2}
@@ -261,17 +266,6 @@ const MainProducts = ({ navigation, route }) => {
         >
           {item.title}
         </Text>
-        <View style={styles.Box_Price_Grid}>
-          <Text style={styles.Price_Layout_Grid}>R$ {item.price}</Text>
-        </View>
-        <View>
-          <Text numberOfLines={2} style={styles.AnnouncedBy_Horizontally_Label}>
-            Vendido por:
-          </Text>
-          <Text numberOfLines={2} style={styles.AnnouncedBy_Horizontally_Name}>
-            {item.user.name}
-          </Text>
-        </View>
       </TouchableOpacity>
     );
   if (fontsLoaded) {
@@ -299,16 +293,11 @@ const MainProducts = ({ navigation, route }) => {
               <Text style={styles.Filter_Layout}>Filtrar</Text>
             </TouchableOpacity>
           </View>
-          <TouchableOpacity
-            style={styles.loadMoreProductsContainer}
-            onPress={ChangePage}
-          >
-            <Text style={styles.loadProductsText}>Carregue mais produtos</Text>
-          </TouchableOpacity>
           <View
             style={{
               padding: 20,
-              height: "94%",
+              height: "100%",
+              marginTop: -30,
               marginBottom: -10,
             }}
           >
@@ -323,6 +312,8 @@ const MainProducts = ({ navigation, route }) => {
                 showsVerticalScrollIndicator={false}
                 onRefresh={loadApi}
                 refreshing={loadingData}
+                onEndReached={ChangePage}
+                onEndReachedThreshold={0.2}
               />
             ) : (
               <FlatList
@@ -335,6 +326,8 @@ const MainProducts = ({ navigation, route }) => {
                 showsVerticalScrollIndicator={false}
                 onRefresh={loadApi}
                 refreshing={loadingData}
+                onEndReached={ChangePage}
+                onEndReachedThreshold={0.2}
               />
             )}
           </View>
