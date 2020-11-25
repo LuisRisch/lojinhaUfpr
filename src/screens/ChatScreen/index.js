@@ -38,7 +38,7 @@ const getFonts = () =>
 
 const ChatScreen = ({ route, navigation }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
-  const { chatID } = route.params;
+  const { chatID, title } = route.params;
   const { data: user, token } = useSelector((state) => state.user);
   const messageList = useSelector((state) => state.chat.messages);
 
@@ -52,6 +52,7 @@ const ChatScreen = ({ route, navigation }) => {
   const [text, setText] = useState("");
 
   const loadChat = async () => {
+    console.log(title);
     const response = await api
       .get(`/chat/${chatID}/${user._id}`, {
         headers: {

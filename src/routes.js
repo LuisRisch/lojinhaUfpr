@@ -115,7 +115,7 @@ const LoginRoutes = ({ navigation, route }) => {
   );
 };
 
-const StackRoutes = ({ navigation, route }) => {
+const StackRoutes = ({ navigation }) => {
   const dispatch = useDispatch();
 
   return (
@@ -199,7 +199,7 @@ const StackRoutes = ({ navigation, route }) => {
           headerStyle: {
             fontFamily: "ralway-regular-bold",
           },
-          title: route.params.product,
+          title: route.params.title,
           headerLeft: () => (
             <TouchableOpacity
               onPress={() => {

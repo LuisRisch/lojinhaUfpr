@@ -63,7 +63,7 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
     if (response.status === 200) {
       navigation.navigate("ChatScreen", {
         chatID: response.data._id,
-        title: response.data.product.title,
+        title: product.title,
       });
     }
   };

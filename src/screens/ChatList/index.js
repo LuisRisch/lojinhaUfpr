@@ -111,7 +111,7 @@ const ChatScreen = ({ navigation }) => {
 
     navigation.navigate("ChatScreen", {
       chatID: id,
-      product: title,
+      title: title,
       url,
       item: data,
       categoryLabel: categories[item.product.category].title,
