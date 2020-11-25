@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   DrawerContentScrollView,
   DrawerItemList,
@@ -8,7 +8,7 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import { View, Alert, Text, Image } from "react-native";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { userSignOut } from "../../store/modules/user/actions";
 
 import { styles } from "./styles";
@@ -27,7 +27,13 @@ const getFonts = () =>
 
 const CustomDrawer = ({ user, navigation, ...props }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [userAbleToSell, setAbleToSell] = useState(false);
 
+  useEffect(() => {
+    if (user && user.student) {
+      setAbleToSell(true);
+    }
+  }, []);
   const dispatch = useDispatch();
 
   const logOut = () => {
@@ -115,32 +121,36 @@ const CustomDrawer = ({ user, navigation, ...props }) => {
             />
           )}
         />
-        <DrawerItem
-          onPress={() => navigation.navigate("MyProducts")}
-          label="Meus Produtos"
-          labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
-          icon={({}) => (
-            <Icon
-              name="archive"
-              size={23}
-              color={Colors.mainRed}
-              style={{ width: 25 }}
+        {userAbleToSell ? (
+          <>
+            <DrawerItem
+              onPress={() => navigation.navigate("MyProducts")}
+              label="Meus Produtos"
+              labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
+              icon={({}) => (
+                <Icon
+                  name="archive"
+                  size={23}
+                  color={Colors.mainRed}
+                  style={{ width: 25 }}
+                />
+              )}
             />
-          )}
-        />
-        <DrawerItem
-          onPress={() => navigation.navigate("CreateAnnouncement")}
-          label="Anunciar produto/serviço"
-          labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
-          icon={({}) => (
-            <Icon
-              name="external-link-square"
-              size={23}
-              color={Colors.mainRed}
-              style={{ width: 25 }}
+            <DrawerItem
+              onPress={() => navigation.navigate("CreateAnnouncement")}
+              label="Anunciar produto/serviço"
+              labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
+              icon={({}) => (
+                <Icon
+                  name="external-link-square"
+                  size={23}
+                  color={Colors.mainRed}
+                  style={{ width: 25 }}
+                />
+              )}
             />
-          )}
-        />
+          </>
+        ) : null}
         <View
           style={{
             borderBottomWidth: 1,
