@@ -30,3 +30,15 @@ export function userUpdateExpoToken(expoToken) {
     payload: { expoToken },
   };
 }
+
+export function userMailVerified() {
+  return {
+    type: "@user/MAIL_VERIFIED",
+  };
+}
+
+export function userMailChanged() {
+  return {
+    type: "@user/MAIL_CHANGED",
+  };
+}

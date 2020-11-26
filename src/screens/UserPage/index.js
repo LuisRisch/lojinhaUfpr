@@ -12,7 +12,11 @@ import {
 import { useSelector, useDispatch } from "react-redux";
 import * as ImagePicker from "expo-image-picker";
 
-import { userRefreshInfo, userSignOut } from "../../store/modules/user/actions";
+import {
+  userMailChanged,
+  userRefreshInfo,
+  userSignOut,
+} from "../../store/modules/user/actions";
 import CustomInputs from "../../components/CustomInputs";
 import CustomButtons from "../../components/CustomButtons";
 import CustomTopLabel from "../../components/CustomTopLabelInput";
@@ -211,6 +215,9 @@ const UserPage = ({ navigation }) => {
         handleResetState();
         return 0;
       }
+      if (newEmail) {
+        disptach(userMailChanged());
+      }
       handleResetState();
       loadUserInfo();
       Alert.alert(
@@ -235,6 +242,7 @@ const UserPage = ({ navigation }) => {
         )
       );
 
+    console.log(response.data);
     if (response.data) {
       disptach(userRefreshInfo(response.data));
     }
@@ -427,7 +435,8 @@ const UserPage = ({ navigation }) => {
           <View style={Style.TextBox}>
             <Text>{user ? user.cpf : ""}</Text>
           </View>
-          {user.mail_verification ? null : (
+          {user.mail_verification &&
+          user.mail_verification.isVerified ? null : (
             <CustomButtons
               Label="Verificar email"
               onButtonPressed={handleVerification}

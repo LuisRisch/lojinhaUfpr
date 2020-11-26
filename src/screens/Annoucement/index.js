@@ -126,6 +126,13 @@ const CreateAnnouncement = ({ navigation }) => {
         "Apenas estudantes da UFPR podem anunciar produtos!"
       );
     }
+    if (!user.data.mail_verification.isVerified) {
+      setLoading(false);
+      return Alert.alert(
+        "Infelizmente você não pode fazer isso.",
+        "Por favor, verifique seu email antes de postar produtos."
+      );
+    }
     const schema = Yup.object().shape({
       price: Yup.string().required(),
       title: Yup.string().required(),

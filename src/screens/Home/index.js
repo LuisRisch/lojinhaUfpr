@@ -230,7 +230,10 @@ const Home = ({ navigation }) => {
 
   const handleUfprRegister = () => {
     changeStateAlertModal();
-    navigation.navigate("UfprRegister");
+    Alert.alert(
+      "Olá discente!",
+      "O app lojinha utiliza o login com o SIGA. Portanto, é só fazer o login com seus dados na tela de login mesmo! Ah, e não esqueça de nos informar seu email na tela de usuário, e colocar uma boa foto de perfil!"
+    );
   };
 
   // Na tela de login, nas telas menores de celulares menores o Keyboard estava

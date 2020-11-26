@@ -6,6 +6,9 @@ import { Colors } from "react-native/Libraries/NewAppScreen";
 import { ScrollView } from "react-native-gesture-handler";
 import { useSelector } from "react-redux";
 
+import { useDispatch } from "react-redux";
+import { userMailVerified } from "../../store/modules/user/actions";
+
 import CustomInput from "../../components/CustomInputs";
 import CustomButtons from "../../components/CustomButtons";
 import CustomTopLabel from "../../components/CustomTopLabelInput";
@@ -34,6 +37,8 @@ const getRemaining = (time) => {
 
 const ConfirmRegister = ({ navigation }) => {
   const [loading, setLoading] = useState(false);
+
+  const dispatch = useDispatch();
 
   const user = useSelector((state) => state.user.data);
   const [fontsLoaded, setFontsLoaded] = useState(false);
@@ -79,15 +84,20 @@ const ConfirmRegister = ({ navigation }) => {
             Authorization: `Bearer ${user.token}`,
           },
         })
-        .catch((err) =>
+        .catch((err) => {
           Alert.alert(
             "Ocorreu um erro ao gerar seu código!",
             err.response.data.error
-          )
-        );
+          );
+          setLoading(false);
+        });
 
       if (response.data) {
-        setShowModalSuccess(true);
+        dispatch(userMailVerified());
+        Alert.alert(
+          "Email verificado com sucesso!",
+          "Seu email foi verificado."
+        );
         navigation.navigate("UserPage");
       }
     } else {
