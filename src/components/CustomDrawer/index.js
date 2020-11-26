@@ -1,14 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {
-  DrawerContentScrollView,
-  DrawerItemList,
-  DrawerItem,
-} from "@react-navigation/drawer";
+import { DrawerContentScrollView, DrawerItem } from "@react-navigation/drawer";
 import Icon from "react-native-vector-icons/FontAwesome";
 import { View, Alert, Text, Image } from "react-native";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { userSignOut } from "../../store/modules/user/actions";
 
 import { styles } from "./styles";
@@ -68,10 +64,12 @@ const CustomDrawer = ({ user, navigation, ...props }) => {
               marginLeft: Spacing.MainMargin - 9, //9px
             }}
           >
-            <Text style={styles.User_Name}>
+            <Text style={styles.User_Name} numberOfLines={2}>
               {user ? user.name : "Não logado"}
             </Text>
-            <Text style={styles.User_Email}>{user ? user.email : ""}</Text>
+            <Text style={styles.User_Email} numberOfLines={1}>
+              {user ? user.email : ""}
+            </Text>
           </View>
         </View>
         <View
