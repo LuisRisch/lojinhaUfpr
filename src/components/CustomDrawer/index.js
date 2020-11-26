@@ -161,6 +161,7 @@ const CustomDrawer = ({ user, navigation, ...props }) => {
         />
         <DrawerItem
           label="Acolhimento UFPR"
+          onPress={() => navigation.navigate("Acolhimento")}
           labelStyle={{ fontWeight: "bold", marginLeft: -20 }}
           icon={({}) => (
             <Icon

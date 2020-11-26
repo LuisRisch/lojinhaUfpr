@@ -29,6 +29,7 @@ import FullScreenImage from "./screens/FullScreenImage";
 import ForgotPassword from "./screens/ForgotPassword";
 import MyProductsScreen from "./screens/MyProductsScreen";
 import CustomDrawer from "./components/CustomDrawer";
+import Acolhimento from "./screens/Acolhimento";
 import { StackActions } from "@react-navigation/native";
 
 const Stack = createStackNavigator();
@@ -267,6 +268,29 @@ const StackRoutes = ({ navigation }) => {
         component={ConfirmAnnouncement}
       />
       <Stack.Screen name="SearchProduct" component={SearchProduct} />
+      <Stack.Screen
+        name="Acolhimento"
+        component={Acolhimento}
+        options={{
+          headerStyle: {
+            backgroundColor: "#fff",
+            elevation: 0,
+          },
+          headerShown: true,
+          title: "Acolhimento UFPR",
+          headerTitleAlign: "center",
+          headerLeft: () => (
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
+              <Icon
+                name="align-left"
+                size={20}
+                color="#c4c4c4"
+                style={{ marginLeft: 18 }}
+              />
+            </TouchableOpacity>
+          ),
+        }}
+      />
       <Stack.Screen name="ProductSummary" component={ProductSummary} />
     </Stack.Navigator>
   );
@@ -317,25 +341,6 @@ const MyProductsStack = ({ navigation, route }) => {
     </Stack.Navigator>
   );
 };
-
-const Tab = createBottomTabNavigator();
-
-function MyTabs() {
-  return (
-    <Tab.Navigator>
-      <Tab.Screen
-        name="MainProducts"
-        component={MainProducts}
-        options={{
-          tabBarLabel: "Home",
-          tabBarIcon: ({ color, size }) => (
-            <Icon name="home" color={"red"} size={20} />
-          ),
-        }}
-      />
-    </Tab.Navigator>
-  );
-}
 
 function Routes() {
   const user = useSelector((state) => state.user.data);
