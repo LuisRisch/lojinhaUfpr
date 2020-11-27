@@ -24,7 +24,7 @@ const getFonts = () =>
     "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
   });
 
-const ConfirmAnnouncement = ({ navigation, route }) => {
+const ProductScreen = ({ navigation, route }) => {
   const [fontsLoaded, setFontsLoaded] = useState(false);
   const [currCircle, setCurrCircle] = useState(0);
 
@@ -38,6 +38,14 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
   };
 
   const handleChat = async () => {
+    console.log(user.mail_verification);
+    if (!user.mail_verification.isVerified) {
+      Alert.alert(
+        "Você ainda não pode entrar em contato!",
+        "Por favor, verifique seu email antes de entrar em contato com o vendedor."
+      );
+      return 0;
+    }
     const data = {
       user: user._id,
       product: product._id,
@@ -220,4 +228,4 @@ const ConfirmAnnouncement = ({ navigation, route }) => {
   }
 };
 
-export default ConfirmAnnouncement;
+export default ProductScreen;

@@ -62,6 +62,7 @@ const CustomDrawer = ({ user, navigation, ...props }) => {
           <View
             style={{
               marginLeft: Spacing.MainMargin - 9, //9px
+              width: "80%",
             }}
           >
             <Text style={styles.User_Name} numberOfLines={2}>

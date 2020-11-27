@@ -105,7 +105,7 @@ const ChatScreen = ({ navigation }) => {
 
   const handleChat = (id, title, url, item) => {
     const data = {
-      seller: item.seller,
+      user: item.seller,
       ...item.product,
     };
 
@@ -119,19 +119,33 @@ const ChatScreen = ({ navigation }) => {
   };
 
   const handleDeleteChat = (id, lastMessageObj) => {
-    if (buyingListActive) {
-      const index = chatBuyList.findIndex((item) => item._id == id);
-      if (index <= 0) {
-        chatBuyList.splice(index, 1);
-      }
-    } else {
-      const index = chatSellList.findIndex((item) => item._id == id);
-      if (index <= 0) {
-        chatBuyList.splice(index, 1);
-      }
-    }
+    Alert.alert(
+      "Tem certeza que quer deletar esse chat?",
+      "Esse chat voltará a aparecer caso o outro usuário lhe mande uma nova mensagem!",
+      [
+        {
+          text: "Deletar",
+          onPress: () => {
+            if (buyingListActive) {
+              const index = chatBuyList.findIndex((item) => item._id == id);
+              if (index <= 0) {
+                chatBuyList.splice(index, 1);
+              }
+            } else {
+              const index = chatSellList.findIndex((item) => item._id == id);
+              if (index <= 0) {
+                chatBuyList.splice(index, 1);
+              }
+            }
 
-    dispatch(excludeChat({ id, lastMessage: lastMessageObj.content }));
+            dispatch(excludeChat({ id, lastMessage: lastMessageObj.content }));
+          },
+        },
+        {
+          text: "Cancelar",
+        },
+      ]
+    );
   };
 
   const onIconPress = (index) => {
@@ -145,7 +159,7 @@ const ChatScreen = ({ navigation }) => {
 
     let itemLastMessage = item.last_message ? item.last_message.content : null;
     let excludedLastMessage =
-      excludedIndex >= 0 ? excluded[index].lastMessage : null;
+      excludedIndex >= 0 ? excluded[excludedIndex].lastMessage : null;
 
     if (excludedIndex >= 0 && itemLastMessage === excludedLastMessage) {
       return <View />;
@@ -238,17 +252,19 @@ const ChatScreen = ({ navigation }) => {
           </TouchableOpacity>
           <Text style={styles.title}>Chat</Text>
         </View>
-        <TouchableOpacity onPress={handleListSwitch}>
-          <Text
-            style={{
-              textAlign: "center",
-              fontFamily: "ralway-regular-semi",
-              marginBottom: 10,
-            }}
-          >
-            {buyingListActive ? "Ver minhas vendas" : "Ver minhas compras"}
-          </Text>
-        </TouchableOpacity>
+        {user.student ? (
+          <TouchableOpacity onPress={handleListSwitch}>
+            <Text
+              style={{
+                textAlign: "center",
+                fontFamily: "ralway-regular-semi",
+                marginBottom: 10,
+              }}
+            >
+              {buyingListActive ? "Ver minhas vendas" : "Ver minhas compras"}
+            </Text>
+          </TouchableOpacity>
+        ) : null}
         <Text style={styles.ChatTypes}>
           {buyingListActive ? "Minhas compras" : "Minhas vendas"}
         </Text>

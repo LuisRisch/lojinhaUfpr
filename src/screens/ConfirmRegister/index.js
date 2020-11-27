@@ -98,6 +98,7 @@ const ConfirmRegister = ({ navigation }) => {
           "Email verificado com sucesso!",
           "Seu email foi verificado."
         );
+        navigation.navigate("Login");
         navigation.navigate("UserPage");
       }
     } else {
@@ -173,7 +174,7 @@ const ConfirmRegister = ({ navigation }) => {
           </View>
         </Modal>
 
-        <ScrollView>
+        <ScrollView showsVerticalScrollIndicator={false}>
           <View>
             <Text style={styles.title}>Seja Bem vindo novo usuário!</Text>
             <View style={{ height: 18 }}></View>

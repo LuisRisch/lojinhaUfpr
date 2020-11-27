@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     // fontWeight: "500",
     fontFamily: "ralway-regular-semi",
     fontSize: FontSize.Lower,
-    width: "80%",
+    width: "100%",
   },
   Tabs_User_Area: {
     flexDirection: "row",

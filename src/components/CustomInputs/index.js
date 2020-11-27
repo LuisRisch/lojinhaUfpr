@@ -3,7 +3,7 @@ import { View, TextInput, Text } from "react-native";
 import { styles } from "./Styles";
 import Colors from "../../data/Colors";
 import fontSize from "../../data/FontSizes";
-import FontSizes from "../../data/FontSizes"; 
+import FontSizes from "../../data/FontSizes";
 
 import * as Font from "expo-font";
 import { AppLoading } from "expo";
@@ -17,22 +17,24 @@ const getFonts = () =>
     "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
   });
 
-
 export default function CustomInputs(props) {
   const [fontsLoaded, setFontsLoaded] = useState(false);
 
-  if(fontsLoaded){
+  if (fontsLoaded) {
     return (
       <View style={{ width: "100%" }}>
         <View
-          style={props.error ? styles.errorContainer : styles.textInputContainer}
+          style={
+            props.error ? styles.errorContainer : styles.textInputContainer
+          }
         >
           <TextInput
             multiline={true}
             placeholder={props.hintText}
             onChangeText={(this, props.onChangeText)}
-            value={props.value} 
+            value={props.value}
             style={styles.textInputStyle}
+            maxLength={300}
           />
         </View>
         {props.error ? (
@@ -41,10 +43,8 @@ export default function CustomInputs(props) {
       </View>
     );
   } else {
-    return <AppLoading 
-      startAsync={getFonts} 
-      onFinish={() => setFontsLoaded(true)}
-    />
+    return (
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
   }
-  
 }

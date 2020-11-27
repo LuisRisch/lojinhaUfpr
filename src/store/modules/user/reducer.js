@@ -40,12 +40,15 @@ export default function user(state = INITIAL_STATE, action) {
       }
       case "@user/UPDATE_EXPO_TOKEN": {
         draft.expoToken = action.payload.expoToken;
+        break;
       }
       case "@user/MAIL_VERIFIED": {
         draft.data.mail_verification = { isVerified: true };
+        break;
       }
       case "@user/MAIL_CHANGED": {
         draft.data.mail_verification = { isVerified: false };
+        break;
       }
       default:
     }
