@@ -52,11 +52,14 @@ const MainProducts = ({ navigation, route }) => {
   const [currentPage, setCurrentPage] = useState(0);
   const [showLoadMoreItem, setShowMoreItem] = useState(false);
   const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral); // just to add one more in lenght
+  const [title, setTitle] = useState("Início");
 
   const dispatch = useDispatch();
 
   const loadApi = async () => {
     setCurrentPage(0);
+    setCurrentCategory(-1);
+    setTitle("Início");
     const response = await api.post(
       "/products",
       {},
@@ -150,7 +153,44 @@ const MainProducts = ({ navigation, route }) => {
       categoryLabel: categoriesList[item.category].title,
     });
   };
-  const [title, setTitle] = useState(defaultTitle);
+
+  const loadWithCategories = async (page, category) => {
+    setLoadingData(true);
+    if (page === 0 && category !== -1) {
+      const response = await api.post(
+        "/products",
+        {},
+        {
+          params: {
+            category,
+            page,
+            onlyActive: true,
+          },
+        }
+      );
+
+      if (response.data) {
+        setListOfProduct([...response.data]);
+      }
+    } else if (page !== 0) {
+      const response = await api.post(
+        "/products",
+        {},
+        {
+          params: {
+            category,
+            page,
+            onlyActive: true,
+          },
+        }
+      );
+
+      if (response.data) {
+        setListOfProduct([...ListOfProducts, ...response.data]);
+      }
+    }
+    setLoadingData(false);
+  };
 
   const loadProductsWithParams = async (page, category) => {
     setLoadingData(true);
@@ -197,17 +237,20 @@ const MainProducts = ({ navigation, route }) => {
   };
 
   const ChangePage = () => {
-    console.log("loading");
     let newPage = currentPage + 1;
     setCurrentPage(newPage);
-    loadProductsWithParams(newPage, currentCategory);
+    if (currentCategory === -1) {
+      loadProductsWithParams(newPage, -1);
+    } else {
+      loadWithCategories(newPage, currentCategory);
+    }
   };
   // Filtrará os produtos por uma certa categoria
   const ChangeCategory = (i) => {
     setTitle(defaultTitle + " > " + categoriesList[i].title);
     setCurrentPage(0);
     setCurrentCategory(i);
-    loadProductsWithParams(0, i);
+    loadWithCategories(0, i);
     setShowFilter(!showFilter);
   };
 
@@ -311,7 +354,7 @@ const MainProducts = ({ navigation, route }) => {
                 onRefresh={loadApi}
                 refreshing={loadingData}
                 onEndReached={ChangePage}
-                onEndReachedThreshold={0.2}
+                onEndReachedThreshold={0.1}
               />
             ) : (
               <FlatList
@@ -325,7 +368,7 @@ const MainProducts = ({ navigation, route }) => {
                 onRefresh={loadApi}
                 refreshing={loadingData}
                 onEndReached={ChangePage}
-                onEndReachedThreshold={0.2}
+                onEndReachedThreshold={0.1}
               />
             )}
           </View>
