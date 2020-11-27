@@ -38,7 +38,13 @@ const ProductScreen = ({ navigation, route }) => {
   };
 
   const handleChat = async () => {
-    console.log(user.mail_verification);
+    if (!user.name) {
+      Alert.alert(
+        "Você não pode entrar em contato!",
+        "Por favor, se cadastre e logue com sua conta para entrar em contato com o vendedor."
+      );
+      return 0;
+    }
     if (!user.mail_verification.isVerified) {
       Alert.alert(
         "Você ainda não pode entrar em contato!",

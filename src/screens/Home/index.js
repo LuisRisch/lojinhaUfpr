@@ -318,18 +318,35 @@ const Home = ({ navigation }) => {
               </TouchableOpacity>
             </View>
             <CustomButtons
-              Label="Fazer Login"
+              Label="fazer login"
               Color={{ Color: "#ed524a" }}
               onButtonPressed={handleLogin}
             />
-            <CustomButtons
-              Label="Entrar sem fazer login"
-              Color={{ Color: "#FA8072" }}
-              onButtonPressed={() => {
+            <TouchableOpacity
+              onPress={() => {
                 dispatch(userSignOut());
                 navigation.navigate("Products");
               }}
-            />
+              style={{
+                height: 35,
+                width: "100%",
+                justifyContent: "center",
+                alignItems: "center",
+                borderRadius: 5,
+                borderWidth: 1,
+                borderColor: "#ddd",
+                marginTop: 15,
+              }}
+            >
+              <Text
+                style={{
+                  fontFamily: "ralway-regular",
+                  color: "#c4c4c4",
+                }}
+              >
+                entrar sem uma conta
+              </Text>
+            </TouchableOpacity>
             <View
               style={{
                 flexDirection: "row",
