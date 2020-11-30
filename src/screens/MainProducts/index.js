@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Text,
@@ -6,20 +6,133 @@ import {
   Image,
   Modal,
   TouchableOpacity,
+  Alert,
 } from "react-native";
+import { useDispatch, useSelector } from "react-redux";
 import Icon from "react-native-vector-icons/FontAwesome";
-import CustomCloseIcon from "../../components/CustomCloseIcon";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
+import { refreshCategories } from "../../store/modules/categories/actions";
+import {
+  excludeRegisterUser,
+  excludeReset,
+} from "../../store/modules/excludedData/actions";
 import { ListOfGeneral } from "../../../temp/Products/General";
 import { ListOfSweets } from "../../../temp/Products/Sweets";
 import { ListOfCrafts } from "../../../temp/Products/Crafts/";
 import { Items } from "../../data/Tabs";
 import { styles } from "./styles";
-import { CategoryList } from "../../data/Categories";
 
-const MainProducts = () => {
+import api from "../../services/api";
+import FontSizes from "../../data/FontSizes";
+
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
+import { useSafeArea } from "react-native-safe-area-context";
+
+const getFonts = () =>
+  Font.loadAsync({
+    "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+    "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+    "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
+    "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
+  });
+
+const MainProducts = ({ navigation, route }) => {
+  const { params } = route;
+  const arrAddOneInLenght = [""];
   const defaultTitle = "Início";
+  const categoriesList = useSelector((state) => state.categories.data);
+  const user = useSelector((state) => state.user.data);
+  const excludedDataUser = useSelector((state) => state.excludedData.user_id);
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const [loadingData, setLoadingData] = useState(false);
+  const [currentCategory, setCurrentCategory] = useState(-1);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [showLoadMoreItem, setShowMoreItem] = useState(false);
+  const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral); // just to add one more in lenght
+  const [title, setTitle] = useState("Início");
+
+  const dispatch = useDispatch();
+
+  const loadApi = async () => {
+    setCurrentPage(0);
+    setCurrentCategory(-1);
+    setTitle("Início");
+    const response = await api.post(
+      "/products",
+      {},
+      {
+        params: {
+          onlyActive: true,
+        },
+      }
+    );
+    if (response.status === 200 && response.data) {
+      setListOfProduct([...response.data]);
+    }
+    // setListOfProduct(ListOfGeneral);
+  };
+
+  const loadCategories = async () => {
+    const categories = await api.get("/categories");
+    if (categories.status === 200 && categories.data) {
+      dispatch(refreshCategories(categories.data));
+    }
+  };
+
+  const loadSearch = async (searchParams) => {
+    setLoadingData(true);
+    console.log("oi");
+    const response = await api.post(
+      "/products",
+      {},
+      {
+        params: { title: searchParams, onlyActive: true },
+      }
+    );
+    if (response.status === 200 && response.data) {
+      setListOfProduct([...response.data]);
+      console.log(response.data);
+    }
+    setLoadingData(false);
+    // setListOfProduct(ListOfGeneral);
+  };
+
+  useEffect(() => {
+    setLoadingData(true);
+    loadApi();
+    loadCategories();
+    setLoadingData(false);
+
+    console.log(excludedDataUser);
+    console.log(user);
+
+    if (user && excludedDataUser != user._id) {
+      Alert.alert(
+        "Você entrou com uma nova conta!",
+        "Seus dados de produtos e chats excluídos serão resetados! Isso significa que se você logar novamente com sua conta antiga, terá que excluir seus produtos e chats novamente. Continuar?",
+        [
+          {
+            text: "Continuar",
+            onPress: () => {
+              dispatch(excludeReset());
+              dispatch(excludeRegisterUser(user._id));
+            },
+          },
+          { text: "Manter dados antigos" },
+        ]
+      );
+    }
+  }, []);
+
+  useEffect(() => {
+    if (params && params.searchParams) {
+      loadSearch(params.searchParams);
+    }
+  }, [params]);
+
   const [
     isListVisualisationSelected,
     setIsListVisualisationSelected,
@@ -34,299 +147,319 @@ const MainProducts = () => {
   const [isModalUserAreaVisible, setIsModalUserAreaVisible] = useState(false);
   const [showFilter, setShowFilter] = useState(false);
 
-  const onProductCardPressed = (name, productId) => {
-    // Essa função é responsável por ir para a tela de produto
-    // navegação não foi feita ainda.
-
-    console.log(name, productId); //Teste para ver se recebe os dados direito.
+  const onProductCardPressed = (item) => {
+    navigation.navigate("ProductScreen", {
+      item,
+      categoryLabel: categoriesList[item.category].title,
+    });
   };
-  const [title, setTitle] = useState(defaultTitle);
 
-  const [ListOfProducts, setListOfProduct] = useState(ListOfGeneral);
+  const loadWithCategories = async (page, category) => {
+    setLoadingData(true);
+    if (page === 0 && category !== -1) {
+      const response = await api.post(
+        "/products",
+        {},
+        {
+          params: {
+            category,
+            page,
+            onlyActive: true,
+          },
+        }
+      );
 
+      if (response.data) {
+        setListOfProduct([...response.data]);
+      }
+    } else if (page !== 0) {
+      const response = await api.post(
+        "/products",
+        {},
+        {
+          params: {
+            category,
+            page,
+            onlyActive: true,
+          },
+        }
+      );
+
+      if (response.data) {
+        setListOfProduct([...ListOfProducts, ...response.data]);
+      }
+    }
+    setLoadingData(false);
+  };
+
+  const loadProductsWithParams = async (page, category) => {
+    setLoadingData(true);
+    if (category === -1) {
+      const response = await api.post(
+        "/products",
+        {},
+        {
+          params: {
+            page,
+            onlyActive: true,
+          },
+        }
+      );
+      if (response.data) {
+        setListOfProduct([...ListOfProducts, ...response.data]);
+      }
+    } else {
+      const response = await api.post(
+        "/products",
+        {},
+        {
+          params: {
+            category,
+            page,
+            onlyActive: true,
+          },
+        }
+      );
+
+      if (response.data) {
+        setListOfProduct([...response.data]);
+      }
+    }
+    setLoadingData(false);
+  };
+
+  const handleResetCaregories = () => {
+    loadApi();
+    setCurrentPage(0);
+    setTitle(defaultTitle);
+    setCurrentCategory(-1);
+    setShowFilter(false);
+  };
+
+  const ChangePage = () => {
+    let newPage = currentPage + 1;
+    setCurrentPage(newPage);
+    if (currentCategory === -1) {
+      loadProductsWithParams(newPage, -1);
+    } else {
+      loadWithCategories(newPage, currentCategory);
+    }
+  };
   // Filtrará os produtos por uma certa categoria
   const ChangeCategory = (i) => {
-    setTitle(defaultTitle + " > " + CategoryList[i]);
-    if (i === 0) {
-      //Como nao há um arquivo para esse tipo de categoria coloque a lista geral, mas quando haver o backend
-      //deve-se ser a lista de salgados aqui
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 1) {
-      //deve-se ser a lista de doces
-      setListOfProduct(ListOfSweets);
-    } else if (i === 2) {
-      //deve-se ser a lista de artesanatos
-      setListOfProduct(ListOfCrafts);
-    } else if (i === 3) {
-      //deve-se ser a lista de Roupas
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 4) {
-      //deve-se ser a lista de Livros
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 5) {
-      //deve-se ser a lista de Servicos
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 6) {
-      //deve-se ser a lista de eletronicos
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 7) {
-      //deve-se ser a lista de moveis
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 8) {
-      //deve-se ser a lista de esporte
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 9) {
-      //deve-se ser a lista de calaçados
-      setListOfProduct(ListOfGeneral);
-    } else if (i === 10) {
-      //deve-se ser a lista de outros
-      setListOfProduct(ListOfGeneral);
-    }
+    setTitle(defaultTitle + " > " + categoriesList[i].title);
+    setCurrentPage(0);
+    setCurrentCategory(i);
+    loadWithCategories(0, i);
     setShowFilter(!showFilter);
   };
 
-  const renderItemCard = ({ item }) =>
+  const renderItemCard = ({ item, index }) =>
     isListVisualisationSelected ? (
-      <TouchableOpacity
-        onPress={() => onProductCardPressed(item.AnnouncedBy, item.id)}
-      >
+      <TouchableOpacity style={{}} onPress={() => onProductCardPressed(item)}>
         <View style={styles.Products_Card_Horizontally}>
           <Image
-            source={{ uri: item.imgUrl }}
+            source={{
+              uri: item.picture === null ? null : item.picture[0].url,
+            }}
             style={styles.Image_Horizontaly_Display}
             resizeMode="cover"
           />
           <View style={styles.Products_Card_Informations}>
             <Text numberOfLines={2} style={styles.Products_Title_Horizontally}>
-              {item.Title}
+              {item.title}
             </Text>
             <View style={styles.Price_Box_Horizontally}>
-              <Text style={styles.Price_Layout}>R$ {item.Price}</Text>
-
-              {/* Espaçamento entre palavras de 5px */}
-              <View style={{ width: 5 }}></View>
-
-              <Text style={styles.Per_Unity_Horizontally}>a unidade</Text>
+              <Text style={styles.Price_Layout}>R$ {item.price}</Text>
             </View>
             <View>
-              <Text style={styles.AnnouncedBy_Horizontally_Label}>
-                Anunciado por:
+              <Text
+                numberOfLines={2}
+                style={styles.AnnouncedBy_Horizontally_Label}
+              >
+                Vendido por:
               </Text>
-              <Text style={styles.AnnouncedBy_Horizontally_Name}>
-                {item.AnnouncedBy}
+              <Text
+                numberOfLines={2}
+                style={styles.AnnouncedBy_Horizontally_Name}
+              >
+                {item.user.name}
               </Text>
             </View>
           </View>
         </View>
       </TouchableOpacity>
     ) : (
-      <View style={styles.Box_Card_Grid_Products}>
-        <TouchableOpacity
-          onPress={() => onProductCardPressed(item.AnnouncedBy, item.id)}
-        >
-          <Image
-            source={{ uri: item.imgUrl }}
-            style={styles.Image_Layout_Grid}
-            resizeMode="cover"
-          />
-        </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.Box_Card_Grid_Products}
+        onPress={() => onProductCardPressed(item)}
+      >
+        <Image
+          source={{
+            uri: item.picture === null ? null : item.picture[0].url,
+          }}
+          style={styles.Image_Layout_Grid}
+          resizeMode="cover"
+        />
+        <Text style={styles.Price_Layout_Grid}>R${item.price}</Text>
         <Text
           lineBreakMode={true}
           numberOfLines={2}
-          style={styles.Product_Title_Grid}
+          style={styles.Products_Title_Horizontally}
         >
-          {item.Title}
+          {item.title}
         </Text>
-        <View style={styles.Box_Price_Grid}>
-          <Text style={styles.Price_Layout_Grid}>R$ {item.Price}</Text>
-          {/* Espaçamento entre palavras de 5px */}
-          <View style={{ width: 5 }}></View>
-          {/* Mesmas propriedades */}
-          <Text style={styles.Per_Unity_Horizontally}>a unidade</Text>
-        </View>
-        <View>
-          <Text style={styles.AnnouncedBy_Horizontally_Label}>
-            Anunciado por:
-          </Text>
-          <Text style={styles.AnnouncedBy_Horizontally_Name}>
-            {item.AnnouncedBy}
-          </Text>
-        </View>
-      </View>
+      </TouchableOpacity>
     );
-
-  return (
-    <View style={{ flex: 1 }}>
-      <View style={styles.Top_Container_Icons}>
-        {/* Não foi adicionado a funcionalidade de quando for pressionado, mas quando
-                    for implementado aparecerá um Drawer com informações do usuário */}
-        <TouchableOpacity
-          onPress={() => setIsModalUserAreaVisible(!isModalUserAreaVisible)}
-        >
-          <Icon name="bars" size={20} />
-        </TouchableOpacity>
-        {/* Não foi implementado a funcionalidade de quando for pressionado, mas quando 
-                    for implementado aparecerá uma área de pesquisa de produtos */}
-        <Icon name="search" size={20} />
-      </View>
-      <View>
-        <View style={styles.Top_Secundary_Informations}>
-          <Text style={styles.Top_Secundary_Layout_Informations}>{title}</Text>
-
-          {/* Implementado para ter maior interatividade com o usuário, permitindo-lhe
-                        escolher a forma que deseja navegar pelos produtos */}
-
-          <TouchableOpacity
-            onPress={() => setIsModalOptionsSelected(!isModalOfOptionsSelected)}
-          >
+  if (fontsLoaded) {
+    return (
+      <View style={styles.screen}>
+        <View>
+          <View style={styles.Top_Secundary_Informations}>
             <Text style={styles.Top_Secundary_Layout_Informations}>
-              Navegar por: {isListVisualisationSelected ? "Linhas" : "Grades"}
+              {title}
             </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => setShowFilter(!showFilter)}>
-            <Text style={styles.Filter_Layout}>Filtrar</Text>
-          </TouchableOpacity>
-        </View>
-        {isListVisualisationSelected ? (
-          <FlatList
-            data={ListOfProducts}
-            renderItem={renderItemCard}
-            key={"_"}
-            keyExtractor={(item) => "_" + item.id}
-            scrollEnabled={true}
-            scrollIndicatorInsets={false}
-          />
-        ) : (
-          <FlatList
-            data={ListOfProducts}
-            renderItem={renderItemCard}
-            key={"#"}
-            keyExtractor={(item) => "#" + item.id}
-            numColumns={2}
-            scrollEnabled={true}
-          />
-        )}
-      </View>
 
-      {/**************** Este modal mostra a area do usuário ***************/}
+            {/* Implementado para ter maior interatividade com o usuário, permitindo-lhe
+							escolher a forma que deseja navegar pelos produtos */}
 
-      <Modal
-        visible={isModalUserAreaVisible}
-        transparent={true}
-        animationType="slide"
-      >
-        <View style={styles.User_Modal_Container}>
-          <View>
-            <View style={{ alignSelf: "flex-end" }}>
-              <TouchableOpacity
-                onPress={() =>
-                  setIsModalUserAreaVisible(!isModalUserAreaVisible)
-                }
-              >
-                <Icon
-                  name="arrow-circle-left"
-                  size={20}
-                  color={Colors.mainPink}
-                />
-              </TouchableOpacity>
-            </View>
-            <View style={styles.User_Top_Information}>
-              <View style={styles.Circle_Box_Photo}>
-                <Icon name="camera" size={15} color="white" />
-              </View>
-              <View
-                style={{
-                  marginLeft: Spacing.MainMargin - 9, //9px
-                }}
-              >
-                <Text style={styles.User_Name}>Luis Felipe Risch</Text>
-                <Text style={styles.User_Email}>lfr20@inf.ufpr.br</Text>
-              </View>
-            </View>
-
-            {/* Função que cria as abas da área do usuário */}
-
-            {Items.map((item, index) => (
-              <View style={{ marginTop: Spacing.MainMargin }} key={index}>
-                <View style={styles.Tabs_User_Area}>
-                  <Icon name={item.icon} size={20} color={Colors.mainRed} />
-                  <Text style={styles.Tabs_User_Label}>{item.label}</Text>
-                </View>
-              </View>
-            ))}
+            <TouchableOpacity
+              onPress={() =>
+                setIsModalOptionsSelected(!isModalOfOptionsSelected)
+              }
+            >
+              <Text style={styles.Top_Secundary_Layout_Informations}>
+                {isListVisualisationSelected ? "Linhas" : "Grades"}
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => setShowFilter(!showFilter)}>
+              <Text style={styles.Filter_Layout}>Filtrar</Text>
+            </TouchableOpacity>
           </View>
-          <Image
-            source={require("../../assets/logo.png")}
-            style={styles.Bottom_Logo}
-          />
-        </View>
-      </Modal>
-
-      {/*****************  Este modal mostra a área a barra horizontal no final da tela com as opções d
-                de visualizar os dados em forma de lista ou grade *****************/}
-
-      <Modal
-        visible={isModalOfOptionsSelected}
-        animationType="slide"
-        transparent={true}
-      >
-        <View style={{ flexDirection: "column-reverse", flex: 1 }}>
-          <View style={styles.Bottom_Container_Options_Of_Navigation}>
-            <View style={styles.Bottom_Spacing_Icons}>
-              <TouchableOpacity onPress={changeStateOfModalOptionsSelected}>
-                {/* Icone de grade */}
-
-                <Icon
-                  name="th"
-                  size={20}
-                  color={
-                    isListVisualisationSelected
-                      ? Colors.mainGrey
-                      : Colors.mainRed
-                  }
-                />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={changeStateOfModalOptionsSelected}>
-                {/* Icone de Lista */}
-
-                <Icon
-                  name="list"
-                  size={20}
-                  color={
-                    isListVisualisationSelected
-                      ? Colors.mainRed
-                      : Colors.mainGrey
-                  }
-                />
-              </TouchableOpacity>
-            </View>
+          <View
+            style={{
+              height: "95%",
+              marginTop: -10,
+            }}
+          >
+            {isListVisualisationSelected ? (
+              <FlatList
+                data={ListOfProducts}
+                renderItem={renderItemCard}
+                key={"_"}
+                keyExtractor={(item) => "_" + item._id}
+                scrollEnabled={true}
+                scrollIndicatorInsets={false}
+                showsVerticalScrollIndicator={false}
+                onRefresh={loadApi}
+                refreshing={loadingData}
+                onEndReached={ChangePage}
+                onEndReachedThreshold={0.1}
+              />
+            ) : (
+              <FlatList
+                data={ListOfProducts}
+                renderItem={renderItemCard}
+                key={"#"}
+                keyExtractor={(item) => "#" + item._id}
+                numColumns={2}
+                scrollEnabled={true}
+                showsVerticalScrollIndicator={false}
+                onRefresh={loadApi}
+                refreshing={loadingData}
+                onEndReached={ChangePage}
+                onEndReachedThreshold={0.1}
+              />
+            )}
           </View>
         </View>
-      </Modal>
 
-      {/**************** Este modal irá mostra o filtro de categorias ****************/}
+        {/**************** Este modal mostra a area do usuário ***************/}
 
-      <Modal visible={showFilter} transparent={true} animationType={"slide"}>
-        <View style={styles.BackModalScreen}>
-          <View style={styles.BackModalAlert}>
-            <CustomCloseIcon onIconPressed={() => setShowFilter(!showFilter)} />
-            <Text style={styles.TitleModalStyle}>Categorias</Text>
-            <View style={styles.sizedBox}></View>
-            {CategoryList.map((c, index) => (
-              <View
-                key={index}
-                style={{ alignItems: "flex-start", marginVertical: 5 }}
-              >
-                <TouchableOpacity onPress={() => ChangeCategory(index)}>
-                  <Text style={styles.category_text}>{c}</Text>
+        <Modal
+          visible={isModalOfOptionsSelected}
+          animationType="slide"
+          transparent={true}
+        >
+          <View style={{ flexDirection: "column-reverse", flex: 1 }}>
+            <View style={styles.Bottom_Container_Options_Of_Navigation}>
+              <View style={styles.Bottom_Spacing_Icons}>
+                <TouchableOpacity onPress={changeStateOfModalOptionsSelected}>
+                  {/* Icone de grade */}
+
+                  <Icon
+                    name="th"
+                    size={20}
+                    color={
+                      isListVisualisationSelected
+                        ? Colors.mainGrey
+                        : Colors.mainRed
+                    }
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity onPress={changeStateOfModalOptionsSelected}>
+                  {/* Icone de Lista */}
+
+                  <Icon
+                    name="list"
+                    size={20}
+                    color={
+                      isListVisualisationSelected
+                        ? Colors.mainRed
+                        : Colors.mainGrey
+                    }
+                  />
                 </TouchableOpacity>
               </View>
-            ))}
+            </View>
           </View>
-        </View>
-      </Modal>
-    </View>
-  );
+        </Modal>
+
+        {/**************** Este modal irá mostra o filtro de categorias ****************/}
+
+        <Modal visible={showFilter} transparent={true} animationType={"slide"}>
+          <View style={styles.BackModalScreen}>
+            <View style={styles.BackModalAlert}>
+              <View
+                style={{ flexDirection: "row", justifyContent: "flex-end" }}
+              >
+                <TouchableOpacity onPress={() => setShowFilter(!showFilter)}>
+                  <Icon name="close" color={Colors.mainRed} size={18} />
+                </TouchableOpacity>
+              </View>
+              <Text style={styles.TitleModalStyle}>Categorias</Text>
+              <TouchableOpacity onPress={handleResetCaregories}>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontFamily: "ralway-regular-semi",
+                    marginTop: 10,
+                  }}
+                >
+                  Nenhuma categoria
+                </Text>
+              </TouchableOpacity>
+              <View style={styles.sizedBox}></View>
+              {categoriesList.map((item) => (
+                <View
+                  key={item.id}
+                  style={{ alignItems: "flex-start", marginVertical: 5 }}
+                >
+                  <TouchableOpacity onPress={() => ChangeCategory(item.id)}>
+                    <Text style={styles.category_text}>{item.title}</Text>
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </View>
+        </Modal>
+      </View>
+    );
+  } else {
+    return (
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
+  }
 };
 
 export default MainProducts;

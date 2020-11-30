@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, StatusBar } from "react-native";
 import Colors from "../../data/Colors";
 import FontSizes from "../../data/FontSizes";
 
@@ -9,8 +9,8 @@ const styles = StyleSheet.create({
     flexDirection: "column",
     flex: 1,
     backgroundColor: "#fff",
-    margin: -18,
     padding: 18,
+    marginTop: StatusBar.currentHeight,
   },
   header: {
     flexDirection: "row",
@@ -30,26 +30,33 @@ const styles = StyleSheet.create({
   },
   title: {
     textAlign: "center",
+    fontFamily: "ralway-regular-semi",
     width: "90%",
     fontSize: FontSizes.SuperTall,
+    // fontWeight: "600",
   },
   content: {
     fontSize: FontSizes.Normal,
+    fontFamily: "ralway-regular",
   },
   chatTitle: {
-    fontWeight: "bold",
+    opacity: 0.6,
+    fontFamily: "ralway-regular-bold",
     fontSize: FontSizes.Normal,
   },
   centerTextHolder: {
     justifyContent: "center",
+    fontFamily: "ralway-regular",
     width: "55%",
   },
   rightTextHolder: {
     justifyContent: "center",
+    fontFamily: "ralway-regular",
     width: "25%",
   },
   rightBoxText: {
     textAlign: "right",
+    fontFamily: "ralway-regular",
     fontSize: FontSizes.TooLower,
   },
   avatar: {
@@ -72,6 +79,12 @@ const styles = StyleSheet.create({
   },
   subText: {
     fontSize: FontSizes.TooLower,
+    fontFamily: "ralway-regular",
+  },
+  ChatTypes: {
+    fontFamily: "ralway-regular-semi",
+    color: Colors.mainRed,
+    fontSize: FontSizes.Tall,
   },
 });
 

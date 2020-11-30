@@ -1,11 +1,17 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import Spacing from "../../data/Spacing";
 import FontSize from "../../data/FontSizes";
 import Color from "../../data/Colors";
 
+import { StatusBar } from "react-native";
+
+const { width } = Dimensions.get("window");
+
 const Styles = StyleSheet.create({
   screen: {
     flex: 1,
+    paddingHorizontal: 18,
+    backgroundColor: "#fff",
   },
   sizedBox: {
     height: Spacing.MainMargin,
@@ -17,8 +23,9 @@ const Styles = StyleSheet.create({
   },
   textCategoryStyle: {
     fontSize: FontSize.Normal,
+    fontFamily: "ralway-regular-semi",
     color: Color.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   popUpContainer: {
     justifyContent: "center",
@@ -26,7 +33,8 @@ const Styles = StyleSheet.create({
   },
   deleteAnnoucement: {
     color: Color.mainRed,
-    fontWeight: "500",
+    fontFamily: "ralway-regular-semi",
+    // fontWeight: "500",
     fontSize: FontSize.Lower,
   },
   divider: {
@@ -37,17 +45,19 @@ const Styles = StyleSheet.create({
   },
   editAnnoucement: {
     fontSize: FontSize.Lower,
+    fontFamily: "ralway-regular-semi",
     fontWeight: "500",
   },
   imageStyle: {
-    height: 200,
-    borderRadius: 16,
-    width: "100%",
+    height: width - 36,
+    width: width - 36,
+    borderRadius: 18,
   },
   title: {
-    fontSize: FontSize.Tall,
-    fontWeight: "bold",
-    color: Color.mainGrey,
+    fontSize: FontSize.SuperTall,
+    // fontWeight: "bold",
+    fontFamily: "ralway-regular-bold",
+    color: "#000",
   },
   priceBox: {
     flexDirection: "row",
@@ -56,17 +66,20 @@ const Styles = StyleSheet.create({
   },
   priceStyle: {
     color: Color.mainRed,
-    fontWeight: "bold",
+    fontFamily: "Mplus-bold",
+    // fontWeight: "bold",
     fontSize: FontSize.Tall,
   },
   perUnity: {
     color: Color.mainGrey,
-    fontWeight: "500",
+    fontFamily: "ralway-regular-semi",
+    // fontWeight: "500",
     fontSize: FontSize.Tall,
   },
   AnnouncedBy: {
     color: Color.mainGrey,
-    fontWeight: "500",
+    fontFamily: "ralway-regular-semi",
+    // fontWeight: "500",
     fontSize: FontSize.Lower,
   },
   boxInformation: {
@@ -76,13 +89,15 @@ const Styles = StyleSheet.create({
   labelStyle: {
     fontSize: FontSize.Tall,
     color: Color.mainRed,
-    fontWeight: "500",
+    fontFamily: "ralway-regular-bold",
+    // fontWeight: "bold",
     textDecorationLine: "underline",
   },
   subLabel: {
     color: Color.mainGrey,
     fontSize: FontSize.Lower,
-    fontWeight: "500",
+    fontFamily: "ralway-regular-semi",
+    // fontWeight: "500",
   },
   logoBox: {
     flexDirection: "column-reverse",
@@ -90,9 +105,33 @@ const Styles = StyleSheet.create({
   },
   logoStyle: {
     alignSelf: "center",
-    width: 70,
-    height: 70,
+    width: 55,
+    height: 55,
     bottom: 0,
+  },
+  wihiteCircle: {
+    width: 6,
+    height: 6,
+    borderRadius: 3,
+    margin: 5,
+    backgroundColor: "#fff",
+  },
+  currCircle: {
+    width: 8,
+    height: 8,
+    borderRadius: 4,
+    margin: 5,
+    backgroundColor: "#fff",
+  },
+  circlesContainer: {
+    position: "absolute",
+    bottom: 15,
+    height: 10,
+    width: "100%",
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
   },
 });
 

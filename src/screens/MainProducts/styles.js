@@ -1,15 +1,23 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, Dimensions } from "react-native";
 import Spacing from "../../data/Spacing";
 import FontSize from "../../data/FontSizes";
 import Colors from "../../data/Colors";
+import { StatusBar } from "react-native";
+import FontSizes from "../../data/FontSizes";
+
+const { width } = Dimensions.get("window");
+const imageSize = Math.floor(width / 2) - 30;
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "#fff",
+  },
   Products_Card_Horizontally: {
     marginTop: Spacing.MainMargin,
     backgroundColor: "white",
-    borderRadius: 16,
-    elevation: 3.0,
     flexDirection: "row",
+    borderRadius: 10,
     padding: 12,
   },
   Image_Horizontaly_Display: {
@@ -25,8 +33,9 @@ const styles = StyleSheet.create({
   },
   Products_Title_Horizontally: {
     fontSize: FontSize.Normal,
+    fontFamily: "ralway-regular",
     color: "#3b3b3b",
-    fontWeight: "bold",
+    // fontWeight: "bold",
     flexShrink: 1,
     maxWidth: "80%",
   },
@@ -38,7 +47,8 @@ const styles = StyleSheet.create({
   Price_Layout: {
     color: Colors.mainRed,
     fontSize: FontSize.Normal,
-    fontWeight: "bold",
+    fontFamily: "Mplus-bold",
+    // fontWeight: "bold",
   },
   Per_Unity_Horizontally: {
     color: Colors.mainGrey,
@@ -47,36 +57,39 @@ const styles = StyleSheet.create({
   },
   AnnouncedBy_Horizontally_Label: {
     fontSize: FontSize.TooLower,
+    fontFamily: "ralway-regular-semi",
     color: Colors.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   AnnouncedBy_Horizontally_Name: {
     fontSize: FontSize.TooLower,
+    fontFamily: "ralway-regular-bold",
     color: "#3b3b3b",
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   Box_Card_Grid_Products: {
-    marginHorizontal: 4,
-    marginTop: Spacing.MainMargin,
+    marginHorizontal: 13,
     backgroundColor: "white",
-    borderRadius: 16,
-    elevation: 3.0,
-    padding: 12,
-    width: "48%",
-    justifyContent: "space-between",
+    borderRadius: 10,
+    padding: 5,
+    margin: 5,
+    width: imageSize,
   },
   Image_Layout_Grid: {
-    height: 120,
-    width: "100%",
+    height: imageSize,
+    width: imageSize,
     alignSelf: "center",
-    borderRadius: 10,
+    borderRadius: 5,
+    marginLeft: 10,
   },
   Product_Title_Grid: {
     fontSize: FontSize.Normal,
+    fontFamily: "ralway-regular",
     color: "#3b3b3b",
-    fontWeight: "bold",
+    opacity: 0.7,
     flexShrink: 1,
     alignItems: "flex-start",
+    maxWidth: "90%",
   },
   Box_Price_Grid: {
     flexDirection: "row",
@@ -85,29 +98,35 @@ const styles = StyleSheet.create({
   },
   Price_Layout_Grid: {
     color: Colors.mainRed,
-    fontSize: FontSize.Normal,
-    fontWeight: "bold",
+    fontSize: FontSize.Tall,
+    fontFamily: "Mplus-bold",
+    marginTop: 5,
+    // fontWeight: "bold",
   },
   Top_Container_Icons: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center",
+    padding: 20,
   },
   Top_Secundary_Informations: {
     flexDirection: "row",
     justifyContent: "space-between",
     alignContent: "center",
-    marginTop: Spacing.MainMargin,
+    marginTop: -20,
+    padding: 20,
   },
   Top_Secundary_Layout_Informations: {
     fontSize: FontSize.Lower,
+    fontFamily: "ralway-regular-semi",
     color: Colors.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   Filter_Layout: {
     fontSize: FontSize.Normal,
+    fontFamily: "ralway-regular-bold",
     color: Colors.mainRed,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   Bottom_Container_Options_Of_Navigation: {
     height: 50,
@@ -120,66 +139,11 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignContent: "center",
   },
-  User_Modal_Container: {
-    flex: 1,
-    width: "70%",
-    backgroundColor: "white",
-    paddingHorizontal: Spacing.MainPadding,
-    justifyContent: "space-between",
-    paddingTop: Spacing.MainPadding,
-    backgroundColor: Colors.backgroundWhite,
-    shadowColor: "black",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  User_Top_Information: {
-    flexDirection: "row",
-    justifyContent: "flex-start",
-    alignItems: "center",
-  },
-  Circle_Box_Photo: {
-    height: 50,
-    width: 50,
-    borderRadius: 25,
-    backgroundColor: Colors.mainGrey,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  User_Name: {
-    fontSize: FontSize.Tall,
-    color: "black",
-    fontWeight: "bold",
-  },
-  User_Email: {
-    color: Colors.mainGrey,
-    fontWeight: "500",
-    fontSize: FontSize.Lower,
-  },
-  Tabs_User_Area: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "flex-start",
-    marginTop: Spacing.MainMargin - 9,
-  },
-  Tabs_User_Label: {
-    color: Colors.mainGrey,
-    fontSize: FontSize.Tall,
-    marginLeft: Spacing.MainMargin,
-  },
-  Bottom_Logo: {
-    alignSelf: "center",
-    width: 70,
-    height: 70,
-  },
   category_text: {
     color: Colors.mainRed,
+    fontFamily: "ralway-regular-semi",
     fontSize: FontSize.Tall,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   sizedBox: {
     height: 18,
@@ -198,20 +162,35 @@ const styles = StyleSheet.create({
     padding: Spacing.MainPadding,
     width: "90%",
     opacity: 1,
-    borderRadius: 28,
+    borderRadius: 15,
   },
   TitleModalStyle: {
     alignSelf: "center",
     color: Colors.mainGrey,
+    fontFamily: "ralway-regular-bold",
     fontSize: FontSize.Tall,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   SubTitleModalStyle: {
     alignSelf: "center",
     color: Colors.lightGrey,
+    fontFamily: "ralway-regular-semi",
     fontSize: FontSize.Normal,
-    fontWeight: "500",
+    // fontWeight: "500",
     textAlign: "justify",
+  },
+  loadMoreProductsContainer: {
+    justifyContent: "center",
+    alignItems: "center",
+    margin: -15,
+    marginTop: 1,
+  },
+  loadProductsText: {
+    color: Colors.darkGrey,
+    fontFamily: "ralway-regular-semi",
+    fontSize: FontSize.Normal,
+    textAlign: "center",
+    // fontWeight: "500",
   },
 });
 

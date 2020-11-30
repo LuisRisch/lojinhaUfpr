@@ -8,15 +8,17 @@ const styles = StyleSheet.create({
     backgroundColor: Colors.mainRed,
     marginTop: Spacing.MainMargin,
     height: 35,
+    width : '100%',
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 16,
+    borderRadius: 5,
   },
 
   buttonLabel: {
     color: "white",
     fontSize: FontSizes.Normal,
-    fontWeight: "500",
+    fontFamily : 'ralway-regular-semi'
+    // fontWeight: "500",
   },
 });
 

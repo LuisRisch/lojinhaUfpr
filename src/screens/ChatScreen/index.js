@@ -1,53 +1,143 @@
-import React, { useState } from "react";
-import { View, TouchableOpacity, FlatList, Text } from "react-native";
+import React, { useState, useEffect, useMemo } from "react";
+import {
+  View,
+  TouchableOpacity,
+  FlatList,
+  Text,
+  Alert,
+  AppState,
+} from "react-native";
 import Icon from "react-native-vector-icons/FontAwesome";
+import { useSelector, useDispatch } from "react-redux";
+
+import { io } from "../../services/socket";
 import Colors from "../../data/Colors";
 import CustomTextInput from "../../components/CustomInputs";
 
+import {
+  chatLeave,
+  chatSave,
+  newMessage,
+} from "../../store/modules/chat/actions";
+
+import api from "../../services/api";
+
 import styles from "./styles";
 
-const ChatScreen = () => {
-  const [text, setText] = useState("");
-  const [MessageList, setMessageList] = useState([
-    {
-      id: 0,
-      content:
-        "Bem vindo ao chat da lojinha! Tome cuidado com quais informações com quais informações compartilhar!",
-      sent_by: "chat",
-    },
-    {
-      id: 1,
-      content: "Bom dia!",
-      sent_by: "buyer",
-      day: "18/09/2020",
-      hour: "13:00",
-    },
-    {
-      id: 2,
-      content: "Boa tarde!",
-      sent_by: "seller",
-      day: "18/09/2020",
-      hour: "13:00",
-    },
-  ]);
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
 
-  const currentUser = "buyer";
+const getFonts = () =>
+  Font.loadAsync({
+    "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+    "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+    "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
+    "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
+  });
+
+const ChatScreen = ({ route, navigation }) => {
+  const [fontsLoaded, setFontsLoaded] = useState(false);
+  const { chatID, title } = route.params;
+  const { data: user, token } = useSelector((state) => state.user);
+  const messageList = useSelector((state) => state.chat.messages);
+
+  const [focused, setFocused] = useState(false);
+  const [connected, setConnected] = useState(false);
+
+  const dispatch = useDispatch();
+
+  const [userType, setUserType] = useState("buyer");
+
+  const [text, setText] = useState("");
+
+  const loadChat = async () => {
+    console.log(title);
+    const response = await api
+      .get(`/chat/${chatID}/${user._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .catch((err) =>
+        Alert.alert(
+          "Ocorreu um erro ao buscar esse chat!",
+          err.response.data.error
+        )
+      );
+
+    if (response) {
+      if (response.data.buyer._id != user._id) {
+        setUserType("seller");
+      }
+      dispatch(chatSave(response.data.messages, response.data._id));
+    }
+  };
+
+  useEffect(() => {
+    loadChat();
+
+    navigation.addListener("focus", (e) => {
+      console.log("focus");
+      io.emit("online", user._id);
+    });
+
+    AppState.addEventListener("change", (data) => {
+      if (data === "background") {
+        io.emit("offline", user._id);
+      }
+      if (data === "active") {
+        io.emit("online", user._id);
+      }
+    });
+
+    io.emit("join_room", chatID);
+
+    return () => {
+      io.emit("disconnect");
+      setConnected(false);
+    };
+  }, []);
 
   const onChangeText = (EnteredText) => {
     setText(EnteredText);
   };
 
-  const submitMessage = () => {
+  const submitMessage = async () => {
     if (text.length >= 1) {
-      const messages = [...MessageList];
-      messages.push({
-        content:
-          "Bem vindo ao chat da lojinha! Tome cuidado com quais informações ASFasfaksbf aBSFJKbasbfasj fabsfjABsbB fBAJSBFASB",
-        sent_by: "seller",
-        id: messages.length + 1,
-      });
-      setMessageList(messages);
+      const messageObj = {
+        content: text,
+        sent_by: userType,
+        id: (messageList.length + 1).toString(),
+        room: chatID,
+      };
+
+      dispatch(newMessage(messageObj));
       setText("");
+
+      io.emit("message", { room: chatID, message: text, sent_by: userType });
+
+      await api
+        .put(
+          "/chat",
+          {
+            message: text,
+            sent_by: userType,
+            user: user._id,
+            chat: chatID,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
+        .catch((err) =>
+          Alert.alert(
+            "Ops...Ocorreu um erro ao enviar sua mensagem!",
+            err.response.data.error
+          )
+        );
     }
     // console.log(MessageList);
     // console.log(MessageList.length)
@@ -58,7 +148,7 @@ const ChatScreen = () => {
     let textStyle = {};
     let subTextViewStyle = {};
 
-    if (currentUser === item.sent_by) {
+    if (userType === item.sent_by) {
       messageStyle = styles.userMessage;
       textStyle = styles.userTextStyle;
       subTextViewStyle = styles.userSubTextView;
@@ -90,27 +180,34 @@ const ChatScreen = () => {
       </View>
     );
   };
-  return (
-    <View style={styles.screen}>
-      <FlatList
-        data={MessageList}
-        renderItem={RenderMessage}
-        keyExtractor={(item) => item.id}
-        scrollEnabled={true}
-        showsVerticalScrollIndicator={false}
-      />
-      <View style={styles.inputView}>
-        <CustomTextInput
-          hintText="Digite alguma mensagem..."
-          onChangeText={(text) => onChangeText(text)}
-          value={text}
+  if (fontsLoaded) {
+    return (
+      <View style={styles.screen}>
+        <FlatList
+          data={messageList}
+          renderItem={RenderMessage}
+          keyExtractor={(item) => item.id}
+          scrollEnabled={true}
+          showsVerticalScrollIndicator={false}
+          inverted
         />
-        <TouchableOpacity onPress={submitMessage} style={styles.submitButton}>
-          <Icon name="paper-plane" color="#fff" size={18} />
-        </TouchableOpacity>
+        <View style={styles.inputView}>
+          <CustomTextInput
+            hintText="Digite alguma mensagem..."
+            onChangeText={(text) => onChangeText(text)}
+            value={text}
+          />
+          <TouchableOpacity onPress={submitMessage} style={styles.submitButton}>
+            <Icon name="paper-plane" color="#fff" size={18} />
+          </TouchableOpacity>
+        </View>
       </View>
-    </View>
-  );
+    );
+  } else {
+    return (
+      <AppLoading startAsync={getFonts} onFinish={() => setFontsLoaded(true)} />
+    );
+  }
 };
 
 export default ChatScreen;

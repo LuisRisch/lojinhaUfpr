@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 import FontSize from "../../data/FontSizes";
 import Colors from "../../data/Colors";
 import Spacing from "../../data/Spacing";
@@ -6,10 +6,17 @@ import Spacing from "../../data/Spacing";
 const styles = StyleSheet.create({
   screen: {
     flex: 1,
+    padding: 18,
+  },
+  header: {
+    marginTop: StatusBar.currentHeight,
+    marginLeft: -18,
+    paddingBottom: 10,
   },
   title: {
-    fontWeight: "bold",
+    // fontWeight: "bold",
     fontSize: FontSize.SuperTall,
+    fontFamily: "ralway-regular-bold",
     color: Colors.mainGrey,
   },
   category_box: {
@@ -43,7 +50,8 @@ const styles = StyleSheet.create({
   category_text: {
     color: Colors.mainRed,
     fontSize: FontSize.Tall,
-    fontWeight: "500",
+    fontFamily: "ralway-regular-semi",
+    // fontWeight: "500",
   },
   sizedBox: {
     height: 18,
@@ -67,15 +75,48 @@ const styles = StyleSheet.create({
   TitleModalStyle: {
     alignSelf: "center",
     color: Colors.mainGrey,
+    fontFamily: "ralway-regular-bold",
     fontSize: FontSize.Tall,
-    fontWeight: "bold",
+    // fontWeight: "bold",
   },
   SubTitleModalStyle: {
     alignSelf: "center",
     color: Colors.lightGrey,
     fontSize: FontSize.Normal,
-    fontWeight: "500",
+    // fontWeight: "500",
+    fontFamily: "ralway-regular-semi",
     textAlign: "justify",
+  },
+  pictureBox: {
+    width: "100%",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 40,
+    borderStyle: "dashed",
+    borderRadius: 10,
+    borderColor: Colors.mainRed,
+    borderWidth: 2,
+    marginVertical: 20,
+  },
+  pictureComponent: {
+    height: 200,
+    width: 200,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  CheckBoxContainer: {
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    alignItems: "center",
+    marginVertical: 18,
+  },
+  lowerTextUnderline: {
+    color: Colors.mainGrey,
+    fontSize: FontSize.TooLower,
+    fontFamily: "ralway-regular-semi",
+    // fontWeight: "500",
+    textDecorationLine: "underline",
+    flexShrink: 1,
   },
 });
 

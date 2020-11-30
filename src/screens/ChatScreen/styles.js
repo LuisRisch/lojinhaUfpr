@@ -8,6 +8,8 @@ const styles = StyleSheet.create({
   screen: {
     flexDirection: "column",
     flex: 1,
+    paddingHorizontal: 18,
+    backgroundColor: "#f0f0f0",
   },
   inputView: {
     flexDirection: "row",
@@ -69,19 +71,23 @@ const styles = StyleSheet.create({
     paddingHorizontal: 2,
   },
   userTextStyle: {
-    color: "black",
+    color: "black", 
+    fontFamily : 'ralway-regular'
   },
   chatTextStyle: {
     width: "90%",
     color: "black",
+    fontFamily : 'ralway-regular'
   },
   personTextStyle: {
     color: "white",
+    fontFamily : 'ralway-regular'
   },
   subTextStyle: {
     color: Colors.mainGrey,
     fontSize: FontSizes.TooLower,
     marginBottom: 10,
+    fontFamily : 'ralway-regular'
   },
 });
 

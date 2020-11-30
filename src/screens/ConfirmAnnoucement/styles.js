@@ -16,9 +16,10 @@ const Styles = StyleSheet.create({
     alignItems: "center",
   },
   textCategoryStyle: {
-    fontSize: FontSize.Normal,
+    fontSize: FontSize.Normal, 
+    fontFamily : 'ralway-regular-semi',
     color: Color.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500",
   },
   popUpContainer: {
     justifyContent: "center",
@@ -26,7 +27,8 @@ const Styles = StyleSheet.create({
   },
   deleteAnnoucement: {
     color: Color.mainRed,
-    fontWeight: "500",
+    fontFamily : 'ralway-regular-semi',
+    // fontWeight: "500",
     fontSize: FontSize.Lower,
   },
   divider: {
@@ -37,7 +39,8 @@ const Styles = StyleSheet.create({
   },
   editAnnoucement: {
     fontSize: FontSize.Lower,
-    fontWeight: "500",
+    fontFamily : 'ralway-regular-semi',
+    // fontWeight: "500",
   },
   imageStyle: {
     height: 200,
@@ -46,7 +49,8 @@ const Styles = StyleSheet.create({
   },
   title: {
     fontSize: FontSize.Tall,
-    fontWeight: "bold",
+    fontFamily : 'ralway-regular-bold',
+    // fontWeight: "bold",
     color: Color.mainGrey,
   },
   priceBox: {
@@ -56,17 +60,20 @@ const Styles = StyleSheet.create({
   },
   priceStyle: {
     color: Color.mainRed,
-    fontWeight: "bold",
+    fontFamily : 'ralway-regular-bold',
+    // fontWeight: "bold",
     fontSize: FontSize.Tall,
   },
   perUnity: {
     color: Color.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500",
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSize.Tall,
   },
   AnnouncedBy: {
     color: Color.mainGrey,
-    fontWeight: "500",
+    // fontWeight: "500",
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSize.Lower,
   },
   boxInformation: {
@@ -74,15 +81,17 @@ const Styles = StyleSheet.create({
     alignItems: "flex-start",
   },
   labelStyle: {
+    fontFamily : 'ralway-regular-semi',
     fontSize: FontSize.Tall,
     color: Color.mainRed,
-    fontWeight: "500",
+    // fontWeight: "500",
     textDecorationLine: "underline",
   },
   subLabel: {
     color: Color.mainGrey,
     fontSize: FontSize.Lower,
-    fontWeight: "500",
+    fontFamily : 'ralway-regular-semi',
+    // fontWeight: "500",
   },
   logoBox: {
     flexDirection: "column-reverse",
@@ -90,8 +99,8 @@ const Styles = StyleSheet.create({
   },
   logoStyle: {
     alignSelf: "center",
-    width: 70,
-    height: 70,
+    width: 55,
+    height: 55,
     bottom: 0,
   },
 });

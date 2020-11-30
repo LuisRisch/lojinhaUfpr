@@ -13,9 +13,22 @@ import { ListOfCrafts } from "../../../temp/Products/Crafts";
 import Color from "../../data/Colors";
 import Spacing from "../../data/Spacing";
 import CustomButton from "../../components/CustomButtons";
-import { Styles } from "./styles";
+import { Styles } from "./styles"; 
 
-const ConfirmAnnouncement = () => {
+import * as Font from "expo-font";
+import { AppLoading } from "expo";
+
+const getFonts = () =>
+  Font.loadAsync({
+    "ralway-regular": require("../../assets/fonts/Raleway-Regular.ttf"),
+    "ralway-regular-semi": require("../../assets/fonts/Raleway-SemiBold.ttf"),
+    "ralway-regular-bold": require("../../assets/fonts/Raleway-Bold.ttf"),
+    "Mplus-semi": require("../../assets/fonts/MPLUSRounded1c-Medium.ttf"),
+    "Mplus-bold": require("../../assets/fonts/MPLUSRounded1c-Bold.ttf"),
+  });
+
+const ConfirmAnnouncement = () => { 
+  const [fontsLoaded, setFontsLoaded] = useState(false);
   const height = Dimensions.get("window").height;
 
   const ClosePage = () => {
@@ -144,11 +157,17 @@ const ConfirmAnnouncement = () => {
       </View>
     </View>
   );
-
-  if (height < 670) {
-    return <ScrollView>{content}</ScrollView>;
+  if(fontsLoaded){
+    if (height < 670) {
+      return <ScrollView>{content}</ScrollView>;
+    }
+    return content;
+  } else {
+    return <AppLoading
+      startAsync={getFonts} 
+      onFinish = {() => setFontsLoaded(true)}
+    />
   }
-  return content;
 };
 
 export default ConfirmAnnouncement;

@@ -5,17 +5,26 @@
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./src/assets/icon.png",
+    "notification":{
+      "icon":"./src/assets/notification.png",
+      "color": "#ed524a"
+    },
     "splash": {
       "image": "./src/assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
+    }, 
+    "android": {
+      "useNextNotificationsApi": true,
+      "icon": "./src/assets/icon.png"
     },
     "updates": {
       "fallbackToCacheTimeout": 0
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": false,
+      "icon": "./src/assets/notification.png",
     },
     "web": {
       "favicon": "./src/assets/favicon.png"

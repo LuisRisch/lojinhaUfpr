@@ -38,9 +38,6 @@ $ yarn
 $ npm install
 ```
 
-**OBS: A aplicação ainda está em desenvolvimento. Para testar a brach mais avançada, acesse a [final](https://github.com/LuisRisch/lojinhaUfpr/tree/final)**
-
-
 ### **Passo 2 - Ajustes do backend**
 
 Por ainda estar em faze de desenvolvimento, o url da ligação com o backend pode estar diferente do que é necessário para funcionar. Caso esteja, por favor altere o host para o correto (localhost, endereço de ip, etc.).
@@ -61,7 +58,7 @@ $ yarn start
 ou:
 
 ```bash
-$ npm run start
+$ npm start
 ```
 
 Esse comando irá iniciar a **instância do Expo na sua máquina**. A partir disso, abra um emulador e selecione a opção de rodar em um emulador. Outra opção é ter em um aparelho físico o aplicativo Expo, e rodar a partir do QRCode. Clique [aqui](https://expo.io/learn) para mais informações.
