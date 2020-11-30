@@ -46,6 +46,7 @@ Esse ajuste precisa ser realizado nos arquivos **api.js** e **socket.js**, local
 
 Não esqueça de iniciar o backend, antes de iniciar a aplicação mobile.
 
+
 ### **Passo 3 - Rode a aplicação**
 
 Dentro do diretório do projeto, rode:
@@ -60,7 +61,7 @@ ou:
 $ npm start
 ```
 
-Esse comando irá iniciar a **instância do Expo na sua máquina**. A partir disso, abra um emulador e selecione a opção de rodar em um emulador. Outra opção é ter em um aparelho físico o aplicativo Expo, e rodar a partir do QRCode. Clique [aqui](https://www.youtube.com/watch?v=eSjFDWYkdxM&ab_channel=Rocketseat) para mais informações.
+Esse comando irá iniciar a **instância do Expo na sua máquina**. A partir disso, abra um emulador e selecione a opção de rodar em um emulador. Outra opção é ter em um aparelho físico o aplicativo Expo, e rodar a partir do QRCode. Clique [aqui](https://expo.io/learn) para mais informações.
 
 ## :wrench: Tecnologias usadas:
 
